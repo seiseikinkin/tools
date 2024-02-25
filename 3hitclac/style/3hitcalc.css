@@ -1,0 +1,56 @@
+#hit {
+    display: none;
+}
+
+#calc_result {
+    margin: 16px;
+}
+
+#damage {
+    margin: 16px;
+}
+
+#result {
+    margin: 16px;
+}
+
+#result_table1, #result_table2, #result_table3, #result_table4, #result_table5 {
+    display: inline-block;
+}
+
+table {
+    border-collapse: collapse;
+    border: solid 1px black;
+}
+
+th {
+    background-color: #eee;
+    border: solid 1px black;
+}
+
+td {
+    border: solid 1px black;
+}
+
+.damage_head {
+    width: 42px;
+    height: 16px;
+}
+
+.damage_cell {
+    text-align: center;
+    width: 42px;
+    height: 16px;
+}
+
+.result_haed {
+    text-align: center;
+    width: 64px;
+    height: 16px;
+}
+
+.result_cell {
+    text-align: center;
+    width: 84px;
+    height: 16px;
+}
