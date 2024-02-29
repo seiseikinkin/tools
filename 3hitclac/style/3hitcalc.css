@@ -1,3 +1,7 @@
+html {
+    font-family: Verdana;
+}
+
 #hit {
     display: none;
 }
@@ -34,23 +38,23 @@ td {
 
 .damage_head {
     width: 42px;
-    height: 16px;
+    height: 18px;
 }
 
 .damage_cell {
     text-align: center;
     width: 42px;
-    height: 16px;
+    height: 18px;
 }
 
 .result_haed {
     text-align: center;
     width: 64px;
-    height: 16px;
+    height: 18px;
 }
 
 .result_cell {
     text-align: center;
     width: 84px;
-    height: 16px;
+    height: 18px;
 }
