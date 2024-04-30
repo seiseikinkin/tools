@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="us">
+<head>
+<meta charset="utf-8">
+<title>3hitcalc</title>
+<link rel="stylesheet" href="./style/3hitcalc.css" type="text/css">
+<link rel="icon" href="./image/urshifu-rapid-strike.png" />
+</head>
+<body>
+
+    <div id="calc_result">
+        <span id="calc_result_label">Calc result(comma separated):</span><br/>
+        <textarea id="calc_result_textarea" rows="2" cols="72"></textarea>
+    </div>
+
+    <div id="damage">
+        <span id="damage_label">Damage:</span><br/>
+        <table id="damage_table">
+            <tr>
+                <th id="damage_h1" class="damage_head">1</th>
+                <th id="damage_h1" class="damage_head">2</th>
+                <th id="damage_h1" class="damage_head">3</th>
+                <th id="damage_h1" class="damage_head">4</th>
+                <th id="damage_h1" class="damage_head">5</th>
+                <th id="damage_h1" class="damage_head">6</th>
+                <th id="damage_h1" class="damage_head">7</th>
+                <th id="damage_h1" class="damage_head">8</th>
+                <th id="damage_h1" class="damage_head">9</th>
+                <th id="damage_h1" class="damage_head">10</th>
+                <th id="damage_h1" class="damage_head">11</th>
+                <th id="damage_h1" class="damage_head">12</th>
+                <th id="damage_h1" class="damage_head">13</th>
+                <th id="damage_h1" class="damage_head">14</th>
+                <th id="damage_h1" class="damage_head">15</th>
+                <th id="damage_h1" class="damage_head">16</th>
+            </tr>
+            <tr>
+                <td id="damage_d1" class="damage_cell"></td>
+                <td id="damage_d2" class="damage_cell"></td>
+                <td id="damage_d3" class="damage_cell"></td>
+                <td id="damage_d4" class="damage_cell"></td>
+                <td id="damage_d5" class="damage_cell"></td>
+                <td id="damage_d6" class="damage_cell"></td>
+                <td id="damage_d7" class="damage_cell"></td>
+                <td id="damage_d8" class="damage_cell"></td>
+                <td id="damage_d9" class="damage_cell"></td>
+                <td id="damage_d10" class="damage_cell"></td>
+                <td id="damage_d11" class="damage_cell"></td>
+                <td id="damage_d12" class="damage_cell"></td>
+                <td id="damage_d13" class="damage_cell"></td>
+                <td id="damage_d14" class="damage_cell"></td>
+                <td id="damage_d15" class="damage_cell"></td>
+                <td id="damage_d16" class="damage_cell"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="hit">
+        <span id="hit_label">Hit:</span><br/>
+        <input type="radio" id="2hit" name="hit" value="2"/><label for="2hit">2Hit</label>
+        <input type="radio" id="3hit" name="hit" value="3" checked/><label for="3hit">3Hit</label>
+        <input type="radio" id="4hit" name="hit" value="4"/><label for="4hit">4Hit</label>
+        <input type="radio" id="5hit" name="hit" value="5"/><label for="5hit">5Hit</label>
+        <input type="radio" id="10hit" name="hit" value="10"/><label for="10hit">10Hit</label><br/>
+    </div>
+
+    <div id="result">
+    <span id="result_label">Chance to 1HKO:</span><br/>
+        <div id="result_table1">
+            <table>
+                <tr>
+                    <th id="result_h1" class="result_haed"></th>
+                    <td id="result_d1" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h2" class="result_haed"></th>
+                    <td id="result_d2" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h3" class="result_haed"></th>
+                    <td id="result_d3" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h4" class="result_haed"></th>
+                    <td id="result_d4" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h5" class="result_haed"></th>
+                    <td id="result_d5" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h6" class="result_haed"></th>
+                    <td id="result_d6" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h7" class="result_haed"></th>
+                    <td id="result_d7" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h8" class="result_haed"></th>
+                    <td id="result_d8" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h9" class="result_haed"></th>
+                    <td id="result_d9" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h10" class="result_haed"></th>
+                    <td id="result_d10" class="result_cell"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="result_table2">
+            <table>
+                <tr>
+                    <th id="result_h11" class="result_haed"></th>
+                    <td id="result_d11" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h12" class="result_haed"></th>
+                    <td id="result_d12" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h13" class="result_haed"></th>
+                    <td id="result_d13" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h14" class="result_haed"></th>
+                    <td id="result_d14" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h15" class="result_haed"></th>
+                    <td id="result_d15" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h16" class="result_haed"></th>
+                    <td id="result_d16" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h17" class="result_haed"></th>
+                    <td id="result_d17" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h18" class="result_haed"></th>
+                    <td id="result_d18" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h19" class="result_haed"></th>
+                    <td id="result_d19" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h20" class="result_haed"></th>
+                    <td id="result_d20" class="result_cell"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="result_table3">
+            <table>
+                <tr>
+                    <th id="result_h21" class="result_haed"></th>
+                    <td id="result_d21" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h22" class="result_haed"></th>
+                    <td id="result_d22" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h23" class="result_haed"></th>
+                    <td id="result_d23" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h24" class="result_haed"></th>
+                    <td id="result_d24" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h25" class="result_haed"></th>
+                    <td id="result_d25" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h26" class="result_haed"></th>
+                    <td id="result_d26" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h27" class="result_haed"></th>
+                    <td id="result_d27" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h28" class="result_haed"></th>
+                    <td id="result_d28" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h29" class="result_haed"></th>
+                    <td id="result_d29" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h30" class="result_haed"></th>
+                    <td id="result_d30" class="result_cell"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="result_table4">
+            <table>
+                <tr>
+                    <th id="result_h31" class="result_haed"></th>
+                    <td id="result_d31" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h32" class="result_haed"></th>
+                    <td id="result_d32" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h33" class="result_haed"></th>
+                    <td id="result_d33" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h34" class="result_haed"></th>
+                    <td id="result_d34" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h35" class="result_haed"></th>
+                    <td id="result_d35" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h36" class="result_haed"></th>
+                    <td id="result_d36" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h37" class="result_haed"></th>
+                    <td id="result_d37" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h38" class="result_haed"></th>
+                    <td id="result_d38" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h39" class="result_haed"></th>
+                    <td id="result_d39" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h40" class="result_haed"></th>
+                    <td id="result_d40" class="result_cell"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="result_table5">
+            <table>
+                <tr>
+                    <th id="result_h41" class="result_haed"></th>
+                    <td id="result_d41" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h42" class="result_haed"></th>
+                    <td id="result_d42" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h43" class="result_haed"></th>
+                    <td id="result_d43" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h44" class="result_haed"></th>
+                    <td id="result_d44" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h45" class="result_haed"></th>
+                    <td id="result_d45" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h46" class="result_haed"></th>
+                    <td id="result_d46" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h47" class="result_haed"></th>
+                    <td id="result_d47" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h48" class="result_haed"></th>
+                    <td id="result_d48" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h49" class="result_haed"></th>
+                    <td id="result_d49" class="result_cell"></td>
+                </tr>
+                <tr>
+                    <th id="result_h50" class="result_haed"></th>
+                    <td id="result_d50" class="result_cell"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="./script/3hitcalc.js"></script>
+</body>
+</html>
