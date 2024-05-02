@@ -82,8 +82,8 @@
     hideElement(deleteCustomSetsButtonElement);
     hideElement(description2Element);
     hideElement(afdElement);
-    hideElement(currentHpAreaElementPokemon1);
-    hideElement(currentHpAreaElementPokemon2);
+    //hideElement(currentHpAreaElementPokemon1);
+    //hideElement(currentHpAreaElementPokemon2);
 
     // 非活性
     const baseHpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(2) > input");
@@ -234,6 +234,14 @@
     teraTypeButtonElementPokemon2.style.padding = '2px';
     teraTypeButtonElementPokemon2.style.fontSize = '12px';
 
+    // 現在HPの位置を変更
+    typeLevelAreaElementPokemon1.after(currentHpAreaElementPokemon1);
+    currentHpAreaElementPokemon1.style.marginTop = '-6px';
+    currentHpAreaElementPokemon1.style.marginBottom = '12px';
+    typeLevelAreaElementPokemon2.after(currentHpAreaElementPokemon2);
+    currentHpAreaElementPokemon2.style.marginTop = '-6px';
+    currentHpAreaElementPokemon2.style.marginBottom = '12px';
+
     // フィールド情報を追加
     // 未実装
     // addFieldInfo(panelElementField);
@@ -253,12 +261,8 @@
     teraTypeAreaElementPokemon2.style.marginTop = '-4px';
     statusAreaElementPokemon1.style.marginTop = '-8px';
     statusAreaElementPokemon1.style.marginBottom = '-8px';
-    currentHpAreaElementPokemon1.style.marginTop = '-4px';
-    currentHpAreaElementPokemon1.style.marginBottom = '8px';
     statusAreaElementPokemon2.style.marginTop = '-8px';
     statusAreaElementPokemon2.style.marginBottom = '-8px';
-    currentHpAreaElementPokemon2.style.marginTop = '-4px';
-    currentHpAreaElementPokemon2.style.marginBottom = '8px';
 
     baseHpInputElementPokemon1.style.width = '26px';
     baseAtInputElementPokemon1.style.width = '26px';
@@ -603,6 +607,10 @@
         const type2 = type2SelectBoxElementPokemon1.value;
         teraTypeFlagPokemon1.value = 0;
         addTypeIcon('typeIconPokemon1', type1, type2, '', nameSelectBoxElementPokemon1);
+        teraTypeButtonElementPokemon1.style.color = '#555555';
+        teraTypeButtonElementPokemon1.style.background = '#e3e3e3';
+        teraTypeButtonElementPokemon1.style.fontWeight = 'normal';
+        teraTypeFlagPokemon1.value = 0;
 
         document.querySelector("head > link:nth-child(1)").href = getPokemonImagePath(pokemonName);
     });
@@ -620,6 +628,10 @@
         const type2 = type2SelectBoxElementPokemon2.value;
         teraTypeFlagPokemon2.value = 0;
         addTypeIcon('typeIconPokemon2', type1, type2, '', nameSelectBoxElementPokemon2);
+        teraTypeButtonElementPokemon2.style.color = '#555555';
+        teraTypeButtonElementPokemon2.style.background = '#e3e3e3';
+        teraTypeButtonElementPokemon2.style.fontWeight = 'normal';
+        teraTypeFlagPokemon2.value = 0;
     });
     observerSelectPokemon2.observe(document.querySelector("#s2id_autogen3 > a > span.select2-chosen"), {
         childList: true
