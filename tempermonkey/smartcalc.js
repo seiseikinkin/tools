@@ -1336,6 +1336,9 @@ function createSlotElement(pokemonNum, slotNum) {
         if (document.querySelector('#' + key + '_pokemon')) {
             document.querySelector('#' + key + '_pokemon').remove();
         }
+        if (document.querySelector('#' + key + '_item')) {
+            document.querySelector('#' + key + '_item').remove();
+        }
         slotElement.style.border = '1px dashed #ffffff';
         localStorage.setItem(key, JSON.stringify({}));
 
