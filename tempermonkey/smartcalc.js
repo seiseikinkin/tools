@@ -11,8 +11,18 @@
 
 (function() {
 
+    // 右クリックイベントを無効
+    document.oncontextmenu = function () {
+        return false;
+    };
+
+    // バージョン
+    const version = "3.0.0 alpha"
+
     // 非表示
     const headerElement = document.querySelector("body > div.header");
+    const headerLogoElement = document.querySelector("body > div.header > div > span.header-logo");
+    const headerNavElement = document.querySelector("body > div.header > div > span.nav")
     const titleElement = document.querySelector("body > div.wrapper > div:nth-child(1)");
     const titleUnderLineElement = document.querySelector("body > div.wrapper > hr");
     const credit3Element = document.querySelector("body > div.wrapper > p:nth-child(3)");
@@ -32,6 +42,8 @@
     const levelAreaElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(4) > div:nth-child(4)");
     const customSetsOnlyAreaElementPokemon2 = document.querySelector("#p2 > div.panel-body > div.gen-specific.g5.g6.g7.g8.g9");
     const panelHeaderElementField = document.querySelector("#field-panel > div.panel-heading");
+    const panelHeaderTitleElementField = document.querySelector("#field-panel > div.panel-heading > h4");
+    const panelHeaderAutoLevelElementField = document.querySelector("#autolevel");
     const fieldUnderLineElementField = document.querySelector("#field-panel > div.panel-body > hr:nth-child(3)");
     const reflectAreaElement = document.querySelector("#field-panel > div.panel-body > div:nth-child(14)");
     const seaOfFireAreaElement = document.querySelector("#field-panel > div.panel-body > div:nth-child(17)");
@@ -48,26 +60,29 @@
     const afdElement = document.querySelector("body > div.wrapper > button");
     const currentHpAreaElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(7)");
     const currentHpAreaElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(7)");
-    hideElement(headerElement);
+    //hideElement(headerElement);
+    hideElement(headerLogoElement);
+    hideElement(headerNavElement);
     hideElement(titleElement);
     hideElement(titleUnderLineElement);
     hideElement(credit3Element);
     hideElement(credit4Element);
     hideElement(credit5Element);
     hideElement(credit6Element);
-    hideElement(footerElement);
+    //hideElement(footerElement);
     hideElement(footerBlankElement);
-    hideElement(panelHeaderElementPokemon1);
-    hideElement(panelHeaderTitleElementPokemon1);
+    //hideElement(panelHeaderElementPokemon1);
+    //hideElement(panelHeaderTitleElementPokemon1);
     hideElement(typeAreaElementPokemon1);
     hideElement(levelAreaElementPokemon1);
     hideElement(customSetsOnlyAreaElementPokemon1);
-    hideElement(panelHeaderElementPokemon2);
-    hideElement(panelHeaderTitleElementPokemon2);
+    //hideElement(panelHeaderElementPokemon2);
+    //hideElement(panelHeaderTitleElementPokemon2);
     hideElement(typeAreaElementPokemon2);
     hideElement(levelAreaElementPokemon2);
     hideElement(customSetsOnlyAreaElementPokemon2);
-    hideElement(panelHeaderElementField);
+    //hideElement(panelHeaderElementField);
+    hideElement(panelHeaderAutoLevelElementField);
     hideElement(fieldUnderLineElementField);
     hideElement(reflectAreaElement);
     hideElement(seaOfFireAreaElement);
@@ -224,6 +239,26 @@
 
     const customMonTextAreaElement = document.querySelector("#customMon");
 
+    const headerWrapperElement = document.querySelector("body > div.header > div");
+
+    // ヘッダーのスタイルを変更
+    const headerTitleElement = document.createElement('span');
+    headerTitleElement.innerText = 'VGC 2024: Scarlet & Violet Damage Calculator';
+    headerTitleElement.style.fontSize = '14px';
+    headerTitleElement.style.fontWeight = 'bold';
+    headerTitleElement.style.paddingLeft = '8px';
+    const headerTitleVersionElement = document.createElement('span');
+    headerTitleVersionElement.innerText = ' - Expansion v' + version;
+    headerTitleVersionElement.style.fontSize = '10px';
+    headerWrapperElement.append(headerTitleElement);
+    headerWrapperElement.append(headerTitleVersionElement);
+    headerWrapperElement.style.paddingTop = '10px';
+    headerElement.style.borderBottom = '0px';
+    headerElement.style.boxShadow = '0px';
+    headerElement.style.minHeight = '40px';
+    headerElement.style.background = '#404040';
+    headerElement.style.verticalAlign = 'middle';
+
     // テラスタルボタンの位置を変更
     teraTypeSelectBoxElementPokemon1.after(teraTypeButtonElementPokemon1);
     teraTypeSelectBoxElementPokemon2.after(teraTypeButtonElementPokemon2);
@@ -235,12 +270,15 @@
     teraTypeButtonElementPokemon2.style.fontSize = '12px';
 
     // 現在HPの位置を変更
-    typeLevelAreaElementPokemon1.after(currentHpAreaElementPokemon1);
+    //typeLevelAreaElementPokemon1.after(currentHpAreaElementPokemon1);
     currentHpAreaElementPokemon1.style.marginTop = '-6px';
-    currentHpAreaElementPokemon1.style.marginBottom = '12px';
-    typeLevelAreaElementPokemon2.after(currentHpAreaElementPokemon2);
+    currentHpAreaElementPokemon1.style.marginBottom = '6px';
+    //currentHpAreaElementPokemon1.style.marginBottom = '12px';
+    //typeLevelAreaElementPokemon2.after(currentHpAreaElementPokemon2);
     currentHpAreaElementPokemon2.style.marginTop = '-6px';
-    currentHpAreaElementPokemon2.style.marginBottom = '12px';
+    currentHpAreaElementPokemon2.style.marginBottom = '6px';
+    //currentHpAreaElementPokemon2.style.marginTop = '-6px';
+    //currentHpAreaElementPokemon2.style.marginBottom = '12px';
 
     // フィールド情報を追加
     // 未実装
@@ -347,75 +385,178 @@
     moveResultGroup.after(panelElementResult);
 
     // パネルヘッダーに拡張スロットを作成
-    /*panelHeaderElementPokemon1.style.borderBottom = '0px';
+    panelHeaderElementPokemon1.style.borderBottom = '0px';
     panelHeaderElementPokemon1.style.borderTopRightRadius = '8px';
     panelHeaderElementPokemon1.style.borderTopLeftRadius = '8px';
-    panelHeaderElementPokemon1.style.backgroundColor = '#aaaaaa';
-    panelHeaderElementPokemon1.style.paddingTop = '6px';
+    panelHeaderElementPokemon1.style.backgroundColor = '#404040';
+    panelHeaderElementPokemon1.style.paddingTop = '2px';
     panelHeaderElementPokemon1.style.paddingLeft = '6px';
     panelHeaderElementPokemon1.style.paddingBottom = '2px';
+    panelHeaderElementPokemon1.style.verticalAlign = 'top';
+    panelHeaderElementPokemon1.style.height = '40px';
+    panelHeaderElementPokemon1.style.display = 'flex';
+    panelHeaderElementPokemon1.style.alignItems = 'center';
+    //panelHeaderTitleElementPokemon1.style.color = '#000000';
+    panelHeaderTitleElementPokemon1.style.fontSize = '14px';
+    panelHeaderTitleElementPokemon1.style.marginLeft = '8px';
+    panelHeaderTitleElementPokemon1.style.marginRight = '4px';
+    panelHeaderTitleElementPokemon1.style.display = 'inline-block';
+    panelHeaderTitleElementPokemon1.style.width = '100px';
 
-    const slot1ElementPokemon1 = createSlotElement('slot1ElementPokemon1');
-    const slot2ElementPokemon1 = createSlotElement('slot2ElementPokemon1');
-    const slot3ElementPokemon1 = createSlotElement('slot3ElementPokemon1');
-    const slot4ElementPokemon1 = createSlotElement('slot4ElementPokemon1');
-    const slot5ElementPokemon1 = createSlotElement('slot5ElementPokemon1');
-    const slot6ElementPokemon1 = createSlotElement('slot6ElementPokemon1');
-    const slot7ElementPokemon1 = createSlotElement('slot7ElementPokemon1');
-    const slot8ElementPokemon1 = createSlotElement('slot8ElementPokemon1');
+    const slot1ElementPokemon1 = createSlotElement(1, 1);
+    const slot2ElementPokemon1 = createSlotElement(1, 2);
+    const slot3ElementPokemon1 = createSlotElement(1, 3);
+    const slot4ElementPokemon1 = createSlotElement(1, 4);
+    const slot5ElementPokemon1 = createSlotElement(1, 5);
+    const slot6ElementPokemon1 = createSlotElement(1, 6);
     panelHeaderElementPokemon1.append(slot1ElementPokemon1);
     panelHeaderElementPokemon1.append(slot2ElementPokemon1);
     panelHeaderElementPokemon1.append(slot3ElementPokemon1);
     panelHeaderElementPokemon1.append(slot4ElementPokemon1);
     panelHeaderElementPokemon1.append(slot5ElementPokemon1);
     panelHeaderElementPokemon1.append(slot6ElementPokemon1);
-    panelHeaderElementPokemon1.append(slot7ElementPokemon1);
-    panelHeaderElementPokemon1.append(slot8ElementPokemon1);
 
     panelHeaderElementPokemon2.style.borderBottom = '0px';
     panelHeaderElementPokemon2.style.borderTopRightRadius = '8px';
     panelHeaderElementPokemon2.style.borderTopLeftRadius = '8px';
-    panelHeaderElementPokemon2.style.backgroundColor = '#aaaaaa';
-    panelHeaderElementPokemon2.style.paddingTop = '6px';
+    panelHeaderElementPokemon2.style.backgroundColor = '#404040';
+    panelHeaderElementPokemon2.style.paddingTop = '2px';
     panelHeaderElementPokemon2.style.paddingLeft = '6px';
     panelHeaderElementPokemon2.style.paddingBottom = '2px';
+    panelHeaderElementPokemon2.style.verticalAlign = 'top';
+    panelHeaderElementPokemon2.style.height = '40px';
+    panelHeaderElementPokemon2.style.display = 'flex';
+    panelHeaderElementPokemon2.style.alignItems = 'center';
+    panelHeaderTitleElementPokemon2.style.fontSize = '14px';
+    panelHeaderTitleElementPokemon2.style.marginLeft = '8px';
+    panelHeaderTitleElementPokemon2.style.marginRight = '4px';
+    panelHeaderTitleElementPokemon2.style.display = 'inline-block';
+    panelHeaderTitleElementPokemon2.style.width = '100px';
 
-    const slot1ElementPokemon2 = createSlotElement('slot1ElementPokemon2');
-    const slot2ElementPokemon2 = createSlotElement('slot2ElementPokemon2');
-    const slot3ElementPokemon2 = createSlotElement('slot3ElementPokemon2');
-    const slot4ElementPokemon2 = createSlotElement('slot4ElementPokemon2');
-    const slot5ElementPokemon2 = createSlotElement('slot5ElementPokemon2');
-    const slot6ElementPokemon2 = createSlotElement('slot6ElementPokemon2');
-    const slot7ElementPokemon2 = createSlotElement('slot7ElementPokemon2');
-    const slot8ElementPokemon2 = createSlotElement('slot8ElementPokemon2');
+    const slot1ElementPokemon2 = createSlotElement(2, 1);
+    const slot2ElementPokemon2 = createSlotElement(2, 2);
+    const slot3ElementPokemon2 = createSlotElement(2, 3);
+    const slot4ElementPokemon2 = createSlotElement(2, 4);
+    const slot5ElementPokemon2 = createSlotElement(2, 5);
+    const slot6ElementPokemon2 = createSlotElement(2, 6);
     panelHeaderElementPokemon2.append(slot1ElementPokemon2);
     panelHeaderElementPokemon2.append(slot2ElementPokemon2);
     panelHeaderElementPokemon2.append(slot3ElementPokemon2);
     panelHeaderElementPokemon2.append(slot4ElementPokemon2);
     panelHeaderElementPokemon2.append(slot5ElementPokemon2);
     panelHeaderElementPokemon2.append(slot6ElementPokemon2);
-    panelHeaderElementPokemon2.append(slot7ElementPokemon2);
-    panelHeaderElementPokemon2.append(slot8ElementPokemon2);*/
+
+    panelHeaderElementField.style.borderBottom = '0px';
+    panelHeaderElementField.style.borderTopRightRadius = '8px';
+    panelHeaderElementField.style.borderTopLeftRadius = '8px';
+    panelHeaderElementField.style.backgroundColor = '#404040';
+    panelHeaderElementField.style.paddingTop = '2px';
+    panelHeaderElementField.style.paddingLeft = '6px';
+    panelHeaderElementField.style.paddingBottom = '2px';
+    panelHeaderElementField.style.verticalAlign = 'top';
+    panelHeaderElementField.style.height = '40px';
+    panelHeaderElementField.style.display = 'flex';
+    panelHeaderElementField.style.alignItems = 'center';
+    panelHeaderTitleElementField.style.fontSize = '14px';
+    panelHeaderTitleElementField.style.marginLeft = '8px';
+    panelHeaderTitleElementField.style.marginRight = '4px';
+    panelHeaderTitleElementField.style.display = 'inline-block';
 
     // 履歴パネルを作成
     const panelElementHistory = document.createElement('div');
-    panelElementHistory.id = 'result';
+    panelElementHistory.id = 'panelElementHistory';
     panelElementHistory.style.display = 'inline-block';
-    panelElementHistory.style.width = '1108px';
+    panelElementHistory.style.width = '1104px';
     panelElementHistory.style.backgroundColor = '#fcfcfc';
     panelElementHistory.style.marginLeft = '5px';
     panelElementHistory.style.marginTop = '4px';
     panelElementHistory.style.marginBottom = '4px';
-    panelElementHistory.style.paddingLeft = '12px';
+    panelElementHistory.style.paddingLeft = '8px';
+    panelElementHistory.style.paddingRight = '8px';
     panelElementHistory.style.paddingTop = '8px';
     panelElementHistory.style.paddingBottom = '8px';
     panelElementHistory.style.borderRadius = '8px';
-    panelElementHistory.style.minHeight = '80px';
+    panelElementHistory.style.minHeight = '10px';
     panelElementHistory.style.display = 'none';
     panelElementPokemon2.after(panelElementHistory);
 
     const historyTableElement = document.createElement('table');
+    historyTableElement.style.borderCollapse = 'collapse';
+    historyTableElement.style.border = 'solid 1px #000000';
     panelElementHistory.prepend(historyTableElement);
+
+    const historyThOffenseInfoElement = document.createElement('th');
+    historyThOffenseInfoElement.innerText = 'Offense';
+    const historyThDefenceInfoElement = document.createElement('th');
+    historyThDefenceInfoElement.innerText = 'Defence';
+    const historyThDamageInfoElement = document.createElement('th');
+    historyThDamageInfoElement.innerText = 'Damage';
+    const historyThDamageRateInfoElement = document.createElement('th');
+    historyThDamageRateInfoElement.innerText = 'Percentage';
+    const historyThKoChanceInfoElement = document.createElement('th');
+    historyThKoChanceInfoElement.innerText = 'KO Chance';
+    const historyThButtonAreaElement = document.createElement('th');
+    historyThButtonAreaElement.innerText = '';
+
+    historyThOffenseInfoElement.style.border = 'solid 1px #000000';
+    historyThDefenceInfoElement.style.border = 'solid 1px #000000';
+    historyThDamageInfoElement.style.border = 'solid 1px #000000';
+    historyThDamageRateInfoElement.style.border = 'solid 1px #000000';
+    historyThKoChanceInfoElement.style.border = 'solid 1px #000000';
+    historyThButtonAreaElement.style.border = 'solid 1px #000000';
+
+    //historyThOffenseInfoElement.style.width = '240px';
+    historyThOffenseInfoElement.style.width = '300px';
+    //historyThDefenceInfoElement.style.width = '240px';
+    historyThDefenceInfoElement.style.width = '300px';
+    //historyThDamageInfoElement.style.width = '368px';
+    historyThDamageInfoElement.style.width = '230px';
+    //historyThDamageRateInfoElement.style.width = '82px';
+    historyThDamageRateInfoElement.style.width = '100px';
+    historyThKoChanceInfoElement.style.width = '120px';
+    historyThButtonAreaElement.style.width = '60px';
+
+    historyThOffenseInfoElement.style.backgroundColor = '#eeeeee';
+    historyThDefenceInfoElement.style.backgroundColor = '#eeeeee';
+    historyThDamageInfoElement.style.backgroundColor = '#eeeeee';
+    historyThDamageRateInfoElement.style.backgroundColor = '#eeeeee';
+    historyThKoChanceInfoElement.style.backgroundColor = '#eeeeee';
+    historyThButtonAreaElement.style.backgroundColor = '#eeeeee';
+
+    const historyTrHeaderElement = document.createElement('tr');
+    historyTrHeaderElement.id = 'historyTrHeaderElement';
+    historyTrHeaderElement.append(historyThOffenseInfoElement);
+    historyTrHeaderElement.append(historyThDefenceInfoElement);
+    historyTrHeaderElement.append(historyThDamageInfoElement);
+    historyTrHeaderElement.append(historyThDamageRateInfoElement);
+    historyTrHeaderElement.append(historyThKoChanceInfoElement);
+    historyTrHeaderElement.append(historyThButtonAreaElement);
+    historyTableElement.prepend(historyTrHeaderElement);
+
+    // ローカルストレージの履歴情報を読み込み
+    const historyJson = localStorage.getItem('history');
+    if (historyJson == null) {
+        localStorage.setItem('history', JSON.stringify({}));
+    }
+    const historyObj = JSON.parse(historyJson);
+    let count = 0;
+    for (const index in historyObj) {
+        addHistory(historyObj[index]['mainResult'], historyObj[index]['damageValues'], index);
+        count = index;
+    }
+    count++;
+
+    // ローカルストレージのポケモン選択情報を読み込み
+    const setNamePokemon1 = localStorage.getItem('p1_set_name');
+    if (setNamePokemon1) {
+        $("#p1 .set-selector").val(setNamePokemon1).trigger('change');
+        document.querySelector("#s2id_autogen1 > a > span.select2-chosen").innerText = setNamePokemon1;
+    }
+    const setNamePokemon2 = localStorage.getItem('p2_set_name');
+    if (setNamePokemon2) {
+        $("#p2 .set-selector").val(setNamePokemon2).trigger('change');
+        document.querySelector("#s2id_autogen3 > a > span.select2-chosen").innerText = setNamePokemon2;
+    }
 
     // ポケモンの画像を挿入
     //const fullNamePokemon1 = document.querySelector("#s2id_autogen1 > a > span.select2-chosen").innerText;
@@ -450,6 +591,8 @@
         const namePokemon = fullNamePokemon.split('(')[0].trim();
         const setNamePokemon = fullNamePokemon.replaceAll(/^(.*?)\(|\)$/g, '');
         deleteset(namePokemon, setNamePokemon);
+
+        localStorage.setItem('p1_set_name', '');
     });
     exportButtonElementPokemon1.addEventListener('click' , function() {
         alert('Copied to clipboard.');
@@ -466,6 +609,8 @@
         const namePokemon = fullNamePokemon.split('(')[0].trim();
         const setNamePokemon = fullNamePokemon.replaceAll(/^(.*?)\(|\)$/g, '');
         deleteset(namePokemon, setNamePokemon);
+
+        localStorage.setItem('p2_set_name', '');
     });
     exportButtonElementPokemon2.addEventListener('click' , function() {
         alert('Copied to clipboard.');
@@ -498,8 +643,8 @@
     document.querySelector("html").appendChild(teraTypeFlagPokemon2);
 
     // タイプの画像を挿入
-    addTypeIcon('typeIconPokemon1', type1SelectBoxElementPokemon1.value, type2SelectBoxElementPokemon1.value, '', nameSelectBoxElementPokemon1);
-    addTypeIcon('typeIconPokemon2', type1SelectBoxElementPokemon2.value, type2SelectBoxElementPokemon2.value, '', nameSelectBoxElementPokemon2);
+    addTypeIcon('typeIconPokemon1', type1SelectBoxElementPokemon1.value, type2SelectBoxElementPokemon1.value, teraTypeSelectBoxElementPokemon1.value, false, nameSelectBoxElementPokemon1);
+    addTypeIcon('typeIconPokemon2', type1SelectBoxElementPokemon2.value, type2SelectBoxElementPokemon2.value, teraTypeSelectBoxElementPokemon2.value, false, nameSelectBoxElementPokemon2);
 
     // 実数値をテキストボックスに変換
     totalLabelElementPokemon1.innerText = 'Stats';
@@ -606,11 +751,13 @@
         const type1 = type1SelectBoxElementPokemon1.value;
         const type2 = type2SelectBoxElementPokemon1.value;
         teraTypeFlagPokemon1.value = 0;
-        addTypeIcon('typeIconPokemon1', type1, type2, '', nameSelectBoxElementPokemon1);
+        addTypeIcon('typeIconPokemon1', type1, type2, teraTypeSelectBoxElementPokemon1.value, false, nameSelectBoxElementPokemon1);
         teraTypeButtonElementPokemon1.style.color = '#555555';
         teraTypeButtonElementPokemon1.style.background = '#e3e3e3';
         teraTypeButtonElementPokemon1.style.fontWeight = 'normal';
         teraTypeFlagPokemon1.value = 0;
+
+        localStorage.setItem('p1_set_name', document.querySelector("#s2id_autogen1 > a > span.select2-chosen").innerText);
 
         document.querySelector("head > link:nth-child(1)").href = getPokemonImagePath(pokemonName);
     });
@@ -627,11 +774,13 @@
         const type1 = type1SelectBoxElementPokemon2.value;
         const type2 = type2SelectBoxElementPokemon2.value;
         teraTypeFlagPokemon2.value = 0;
-        addTypeIcon('typeIconPokemon2', type1, type2, '', nameSelectBoxElementPokemon2);
+        addTypeIcon('typeIconPokemon2', type1, type2, teraTypeSelectBoxElementPokemon2.value, false, nameSelectBoxElementPokemon2);
         teraTypeButtonElementPokemon2.style.color = '#555555';
         teraTypeButtonElementPokemon2.style.background = '#e3e3e3';
         teraTypeButtonElementPokemon2.style.fontWeight = 'normal';
         teraTypeFlagPokemon2.value = 0;
+
+        localStorage.setItem('p2_set_name', document.querySelector("#s2id_autogen3 > a > span.select2-chosen").innerText);
     });
     observerSelectPokemon2.observe(document.querySelector("#s2id_autogen3 > a > span.select2-chosen"), {
         childList: true
@@ -895,13 +1044,13 @@
         const type2 = type2SelectBoxElementPokemon1.value;
         const typeTera = teraTypeSelectBoxElementPokemon1.value;
         if (teraTypeFlagPokemon1.value == 1) {
-            addTypeIcon('typeIconPokemon1', type1, type2, '', nameSelectBoxElementPokemon1);
+            addTypeIcon('typeIconPokemon1', type1, type2, typeTera, false, nameSelectBoxElementPokemon1);
             teraTypeButtonElementPokemon1.style.color = '#555555';
             teraTypeButtonElementPokemon1.style.background = '#e3e3e3';
             teraTypeButtonElementPokemon1.style.fontWeight = 'normal';
             teraTypeFlagPokemon1.value = 0;
         } else {
-            addTypeIcon('typeIconPokemon1', type1, type2, typeTera, nameSelectBoxElementPokemon1);
+            addTypeIcon('typeIconPokemon1', type1, type2, typeTera, true, nameSelectBoxElementPokemon1);
             teraTypeButtonElementPokemon1.style.color = '#111111';
             teraTypeButtonElementPokemon1.style.background = '#f5f5f5';
             teraTypeButtonElementPokemon1.style.fontWeight = 'bold';
@@ -926,13 +1075,13 @@
         const type2 = type2SelectBoxElementPokemon2.value;
         const typeTera = teraTypeSelectBoxElementPokemon2.value;
         if (teraTypeFlagPokemon2.value == 1) {
-            addTypeIcon('typeIconPokemon2', type1, type2, '', nameSelectBoxElementPokemon2);
+            addTypeIcon('typeIconPokemon2', type1, type2, typeTera, false, nameSelectBoxElementPokemon2);
             teraTypeButtonElementPokemon2.style.color = '#555555';
             teraTypeButtonElementPokemon2.style.background = '#e3e3e3';
             teraTypeButtonElementPokemon2.style.fontWeight = 'normal';
             teraTypeFlagPokemon2.value = 0;
         } else {
-            addTypeIcon('typeIconPokemon2', type1, type2, typeTera, nameSelectBoxElementPokemon2);
+            addTypeIcon('typeIconPokemon2', type1, type2, typeTera, true, nameSelectBoxElementPokemon2);
             teraTypeButtonElementPokemon2.style.color = '#111111';
             teraTypeButtonElementPokemon2.style.background = '#f5f5f5';
             teraTypeButtonElementPokemon2.style.fontWeight = 'bold';
@@ -951,6 +1100,30 @@
         }
     });
 
+    // ポケモン1のテラスタイプが変更されたとき
+    teraTypeSelectBoxElementPokemon1.addEventListener('change' , function() {
+        const type1 = type1SelectBoxElementPokemon1.value;
+        const type2 = type2SelectBoxElementPokemon1.value;
+        const typeTera = teraTypeSelectBoxElementPokemon1.value;
+        if (teraTypeFlagPokemon1.value == 1) {
+            addTypeIcon('typeIconPokemon1', type1, type2, typeTera, true, nameSelectBoxElementPokemon1);
+        } else {
+            addTypeIcon('typeIconPokemon1', type1, type2, typeTera, false, nameSelectBoxElementPokemon1);
+        }
+    });
+
+    // ポケモン2のテラスタイプが変更されたとき
+    teraTypeSelectBoxElementPokemon2.addEventListener('change' , function() {
+        const type1 = type1SelectBoxElementPokemon2.value;
+        const type2 = type2SelectBoxElementPokemon2.value;
+        const typeTera = teraTypeSelectBoxElementPokemon2.value;
+        if (teraTypeFlagPokemon2.value == 1) {
+            addTypeIcon('typeIconPokemon2', type1, type2, typeTera, true, nameSelectBoxElementPokemon2);
+        } else {
+            addTypeIcon('typeIconPokemon2', type1, type2, typeTera, false, nameSelectBoxElementPokemon2);
+        }
+    });
+
     // 計算結果が押下されたとき
     mainResultElement.addEventListener('click' , function() {
         alert('Copied to clipboard.');
@@ -963,16 +1136,96 @@
 
     // 計算結果のSaveボタンが押下されたとき
     saveResultButton.addEventListener('click' , function() {
-        const historyTdElement = document.createElement('td');
-        historyTdElement.innerText = mainResultElement.innerText;
-
-        const historyTrElement = document.createElement('tr');
-        historyTrElement.append(historyTdElement);
-        historyTableElement.prepend(historyTrElement);
-        panelElementHistory.style.display = 'inline-block';
+        addHistory(document.querySelector("#mainResult").innerText, document.querySelector("#damageValues").innerText, count);
+        historyObj[count] = {};
+        historyObj[count]['mainResult'] = document.querySelector("#mainResult").innerText;
+        historyObj[count]['damageValues'] = document.querySelector("#damageValues").innerText;
+        localStorage.setItem('history', JSON.stringify(historyObj));
+        count++;
     });
 
 })();
+
+function addHistory(mainResultText, damageValuesText, index) {
+
+    // テキストを抽出
+    const offenseInfo = mainResultText.replace(/ vs\..*/g, '');
+    const defenceInfo = mainResultText.replace(/.*vs\. /g, '').replace(/: .*/g, '');
+    const damageInfo = damageValuesText.replace(/\(|\)/g, '').replace(/^([^,]+,){8}/g, '$&\r\n');
+    const damageRateInfo = mainResultText.replace(/.*\(/g, '').replace(/\).*/g, '');
+    const koChanceInfo = mainResultText.replace(/.* -- /g, '');
+
+    // tdオブジェクトを作成
+    const historyTdOffenseInfoElement = document.createElement('td');
+    const historyTdDefenceInfoElement = document.createElement('td');
+    const historyTdDamageInfoElement = document.createElement('td');
+    const historyTdDamageRateInfoElement = document.createElement('td');
+    const historyTdKoChanceInfoElement = document.createElement('td');
+    const historyTdButtonAreaElement = document.createElement('td');
+
+    // trオブジェクトを作成
+    const historyTrElement = document.createElement('tr');
+    historyTrElement.id = 'historyTrElement' + index;
+    historyTrElement.append(historyTdOffenseInfoElement);
+    historyTrElement.append(historyTdDefenceInfoElement);
+    historyTrElement.append(historyTdDamageInfoElement);
+    historyTrElement.append(historyTdDamageRateInfoElement);
+    historyTrElement.append(historyTdKoChanceInfoElement);
+    historyTrElement.append(historyTdButtonAreaElement);
+
+    // ラベルを設定
+    historyTdOffenseInfoElement.innerText = offenseInfo;
+    historyTdDefenceInfoElement.innerText = defenceInfo;
+    historyTdDamageInfoElement.innerText = damageInfo;
+    historyTdDamageRateInfoElement.innerText = damageRateInfo;
+    historyTdKoChanceInfoElement.innerText = koChanceInfo;
+
+    // 削除ボタンの動作
+    const historyTdDeleteButtonElement = document.createElement('button');
+    historyTdDeleteButtonElement.type = 'button';
+    //historyTdDeleteButtonElement.id = 'deleteHistory' + index;
+    historyTdDeleteButtonElement.innerText = 'Delete';
+    //historyTdDeleteButtonElement.style.fontSize = '10px';
+    historyTdDeleteButtonElement.style.fontSize = '12px';
+    historyTdDeleteButtonElement.style.fontFamily = 'Open Sans';
+    //historyTdDeleteButtonElement.disabled = true;
+    historyTdDeleteButtonElement.addEventListener('click' , function() {
+        deleteHistory(historyTrElement.id);
+        const json = localStorage.getItem('history');
+        const obj = JSON.parse(json);
+        delete obj[index];
+        localStorage.setItem('history', JSON.stringify(obj));
+    });
+    historyTdButtonAreaElement.append(historyTdDeleteButtonElement);
+
+    // スタイルを適用
+    historyTdOffenseInfoElement.style.border = '1px solid #000000';
+    historyTdOffenseInfoElement.style.padding = '4px 6px';
+    historyTdDefenceInfoElement.style.border = '1px solid #000000';
+    historyTdDefenceInfoElement.style.padding = '4px 6px';
+    historyTdDamageInfoElement.style.border = '1px solid #000000';
+    historyTdDamageInfoElement.style.padding = '4px 6px';
+    historyTdDamageRateInfoElement.style.border = '1px solid #000000';
+    historyTdDamageRateInfoElement.style.padding = '4px 6px';
+    historyTdKoChanceInfoElement.style.border = '1px solid #000000';
+    historyTdKoChanceInfoElement.style.padding = '4px 6px';
+    historyTdButtonAreaElement.style.border = '1px solid #000000';
+    historyTdButtonAreaElement.style.padding = '4px 6px';
+
+    historyTdOffenseInfoElement.style.fontSize = '12px';
+    historyTdDefenceInfoElement.style.fontSize = '12px';
+    historyTdDamageInfoElement.style.fontSize = '12px';
+    historyTdDamageRateInfoElement.style.fontSize = '12px';
+    historyTdKoChanceInfoElement.style.fontSize = '12px';
+    //historyTdButtonAreaElement.style.height = '24px';
+
+    document.querySelector("#historyTrHeaderElement").after(historyTrElement);
+    document.querySelector("#panelElementHistory").style.display = 'inline-block';
+}
+
+function deleteHistory(id) {
+    document.getElementById(id).style.display = 'none';
+}
 
 function hideElement(element) {
     element.style.display = 'none';
@@ -1044,17 +1297,156 @@ function addFieldInfo(panelElement) {
     panelElement.prepend(fieldInfoLeftDiv);
 }
 
-function createSlotElement(id) {
+function createSlotElement(pokemonNum, slotNum) {
     const slotElement = document.createElement('div');
-    slotElement.id = id;
-    slotElement.style.display = 'inline-block';
-    slotElement.style.height = '32px';
-    slotElement.style.width = '32px';
+    slotElement.id = 'slot' + slotNum + 'Pokemon' + pokemonNum;
+    slotElement.style.display = 'flex';
+    slotElement.style.height = '28px';
+    slotElement.style.width = '28px';
     slotElement.style.border = '1px dashed #ffffff';
     slotElement.style.borderRadius = '8px';
-    slotElement.style.margin = '4px';
-    slotElement.style.backgroundColor = '#bfbfbf';
+    slotElement.style.marginRight = '12px';
+    slotElement.style.backgroundColor = '#404040';
+    slotElement.style.justifyContent = 'center';
+    slotElement.style.alignItems = 'center';
+
+    const addIconDiv = document.createElement('div');
+    addIconDiv.style.backgroundImage = 'url(https://seiseikinkin.github.io/tools/image/common/add-24.png)';
+    addIconDiv.style.display = 'none';
+    addIconDiv.style.backgroundRepeat = 'no-repeat';
+    addIconDiv.style.width = '16px';
+    addIconDiv.style.height = '16px';
+    addIconDiv.style.backgroundSize = '16px';
+    addIconDiv.style.backgroundPosition = 'center';
+    slotElement.append(addIconDiv);
+
+    // マウスオーバー時の挙動を設定
+    slotElement.addEventListener('mouseover', function() {
+        slotElement.style.backgroundColor = '#606060';
+        addIconDiv.style.display = 'inline-block';
+    });
+    slotElement.addEventListener('mouseleave', function() {
+        slotElement.style.backgroundColor = '#404040';
+        addIconDiv.style.display = 'none';
+    });
+
+    // 右クリックで登録情報を削除
+    const key = 'p' + pokemonNum + '_slot' + slotNum + '_set_name';
+    slotElement.addEventListener('contextmenu',function(e){
+        if (document.querySelector('#' + key + '_pokemon')) {
+            document.querySelector('#' + key + '_pokemon').remove();
+        }
+        slotElement.style.border = '1px dashed #ffffff';
+        localStorage.setItem(key, JSON.stringify({}));
+
+        // マウスオーバー時の挙動を再設定
+        slotElement.addEventListener('mouseover', function() {
+            slotElement.style.backgroundColor = '#606060';
+            addIconDiv.style.display = 'inline-block';
+        });
+        slotElement.addEventListener('mouseleave', function() {
+            slotElement.style.backgroundColor = '#404040';
+            addIconDiv.style.display = 'none';
+        });
+    });
+
+    // 左クリックでスロットに登録
+    slotElement.addEventListener('click' , function() {
+        if (addIconDiv.style.display !== 'none') {
+            // スロットに登録
+            let setName;
+            let itemName;
+            if (pokemonNum === 1) {
+                setName = document.querySelector("#s2id_autogen1 > a > span.select2-chosen").innerText;
+                itemName = document.querySelector("#s2id_autogen25 > a > span.select2-chosen").innerText;
+            } else {
+                setName = document.querySelector("#s2id_autogen3 > a > span.select2-chosen").innerText;
+                itemName = document.querySelector("#s2id_autogen27 > a > span.select2-chosen").innerText;
+            }
+            const slotObj = {};
+            slotObj['setName'] = setName;
+            slotObj['itemName'] = itemName;
+            localStorage.setItem(key, JSON.stringify(slotObj));
+            setSlotIcon(slotElement, key, setName.replace(/ \(.*/g, ''), itemName);
+            slotElement.style.border = '1px solid #404040';
+
+            // マウスオーバー時の挙動を再設定
+            slotElement.addEventListener('mouseover', function() {
+                slotElement.style.backgroundColor = '#f5f5f5';
+                addIconDiv.style.display = 'none';
+            });
+            slotElement.addEventListener('mouseleave', function() {
+                slotElement.style.backgroundColor = '#e3e3e3';
+                addIconDiv.style.display = 'none';
+            });
+        } else {
+            // スロットの情報を読み込み
+            const slotObj = JSON.parse(localStorage.getItem(key));
+            const setName = slotObj['setName'];
+            if (pokemonNum === 1) {
+                $("#p1 .set-selector").val(setName).trigger('change');
+                document.querySelector("#s2id_autogen1 > a > span.select2-chosen").innerText = setName;
+            } else {
+                $("#p2 .set-selector").val(setName).trigger('change');
+                document.querySelector("#s2id_autogen3 > a > span.select2-chosen").innerText = setName;
+            }
+        }
+    });
+
+    // 初期設定
+    const slotObj = JSON.parse(localStorage.getItem(key));
+    if (slotObj && slotObj['setName']) {
+        const setName = slotObj['setName'];
+        const itemName = slotObj['itemName'];
+        setSlotIcon(slotElement, key, setName.replace(/ \(.*/g, ''), itemName);
+        slotElement.style.border = '1px solid #404040';
+        slotElement.style.backgroundColor = '#e3e3e3';
+        addIconDiv.style.display = 'none';
+
+        // マウスオーバー時の挙動を再設定
+        slotElement.addEventListener('mouseover', function() {
+            slotElement.style.backgroundColor = '#f5f5f5';
+            addIconDiv.style.display = 'none';
+        });
+        slotElement.addEventListener('mouseleave', function() {
+            slotElement.style.backgroundColor = '#e3e3e3';
+            addIconDiv.style.display = 'none';
+        });
+    }
+
     return slotElement;
+}
+
+function setSlotIcon(element, id, pokemonName, itemName) {
+    if (document.querySelector('#' + id + '_pokemon')) {
+        document.querySelector('#' + id + '_pokemon').remove();
+    }
+    if (document.querySelector('#' + id + '_item')) {
+        document.querySelector('#' + id + '_item').remove();
+    }
+
+    const pokemonIconElement = document.createElement('div');
+    pokemonIconElement.id = id + '_pokemon';
+    pokemonIconElement.style.display = 'flex';
+    pokemonIconElement.style.height = '50px';
+    pokemonIconElement.style.minWidth = '58px';
+    pokemonIconElement.style.justifyContent = 'center';
+    pokemonIconElement.style.alignItems = 'center';
+    pokemonIconElement.style.marginLeft = '-3px';
+
+    const pokemonIcon = document.createElement('img');
+    pokemonIcon.src = getPokemonImagePath(pokemonName);
+    pokemonIcon.style.transform = 'scale(0.66)';
+    pokemonIconElement.append(pokemonIcon);
+    element.append(pokemonIconElement);
+
+    const itemIconElement = document.createElement('img');
+    itemIconElement.id = id + '_item';
+    itemIconElement.src = getItemImagePath(itemName);
+    itemIconElement.style.transform = 'scale(0.4)';
+    itemIconElement.style.marginLeft = '-43px';
+    itemIconElement.style.marginBottom = '-12px';
+    element.append(itemIconElement);
 }
 
 function getPokemonImagePath(pokemonName) {
@@ -1146,7 +1538,7 @@ function getTeraTypeImagePath(typeName) {
     return itemImagePath;
 }
 
-function addTypeIcon(id, typeName1, typeName2, typeNameTera, preElement) {
+function addTypeIcon(id, typeName1, typeName2, typeNameTera, isTera, preElement) {
     if (document.querySelector('#' + id)) {
         document.querySelector('#' + id).remove();
     }
@@ -1175,6 +1567,8 @@ function addTypeIcon(id, typeName1, typeName2, typeNameTera, preElement) {
         type2IconDiv.style.backgroundSize = '70px 14px';
         type2IconDiv.style.backgroundRepeat = 'no-repeat';
         type2IconDiv.style.backgroundPosition = 'center';
+    } else {
+        type2IconDiv.style.display = 'none';
     }
     const typeTeraIconDiv = document.createElement('div');
     typeTeraIconDiv.style.display = 'inline-block';
@@ -1182,11 +1576,20 @@ function addTypeIcon(id, typeName1, typeName2, typeNameTera, preElement) {
     typeTeraIconDiv.style.marginRight = '2px';
     typeTeraIconDiv.style.width = '70px';
     typeTeraIconDiv.style.height = '16.66px';
-    if (typeNameTera) {
-        typeTeraIconDiv.style.backgroundImage = 'url(' + getTeraTypeImagePath(typeNameTera) + ')';
-        typeTeraIconDiv.style.backgroundSize = '70px 16.66px';
-        typeTeraIconDiv.style.backgroundRepeat = 'no-repeat';
-        typeTeraIconDiv.style.backgroundPosition = 'center';
+    typeTeraIconDiv.style.backgroundImage = 'url(' + getTeraTypeImagePath(typeNameTera) + ')';
+    typeTeraIconDiv.style.backgroundSize = '70px 16.66px';
+    typeTeraIconDiv.style.backgroundRepeat = 'no-repeat';
+    typeTeraIconDiv.style.backgroundPosition = 'center';
+    //if (typeNameTera) {
+    //    typeTeraIconDiv.style.backgroundImage = 'url(' + getTeraTypeImagePath(typeNameTera) + ')';
+    //    typeTeraIconDiv.style.backgroundSize = '70px 16.66px';
+    //    typeTeraIconDiv.style.backgroundRepeat = 'no-repeat';
+    //    typeTeraIconDiv.style.backgroundPosition = 'center';
+    //}
+    if (isTera) {
+        typeTeraIconDiv.style.opacity = '1';
+    } else {
+        typeTeraIconDiv.style.opacity = '0.33';
     }
     // 画像を挿入
     const typeIconDiv = document.createElement('div');
