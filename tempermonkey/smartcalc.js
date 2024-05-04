@@ -17,7 +17,7 @@
     };
 
     // バージョン
-    const version = "3.0.0 alpha"
+    const version = "3.1.0 alpha"
 
     // 非表示
     const headerElement = document.querySelector("body > div.header");
@@ -602,7 +602,6 @@
     deleteButtonElementPokemon2.id = 'delete';
     deleteButtonElementPokemon2.innerText = 'Delete';
     deleteButtonElementPokemon2.style.marginLeft = '3px';
-    deleteButtonElementPokemon2.onclick = 'deleteset2()';
     exportButtonElementPokemon2.after(deleteButtonElementPokemon2);
     deleteButtonElementPokemon2.addEventListener('click' , function() {
         const fullNamePokemon = document.querySelector("#s2id_autogen3 > a > span.select2-chosen").innerText;
@@ -1144,6 +1143,74 @@
         count++;
     });
 
+    // カスタムセットのSaveボタンが押下されたとき
+    calcSetSaveButtonElementPokemon1.id = 'calcSetSaveButton1';
+    calcSetSaveButtonElementPokemon1.setAttribute('onclick', '');
+    calcSetSaveButtonElementPokemon1.addEventListener('click' , function() {
+        savecalc1(); // setdex_custom.js
+        const pokemonName = document.getElementById('resultHeaderL').innerText.replace(/'s.*/, '');
+        const setName = pokemonName + ' (' + document.querySelector("#setName1").value + ')';
+        $("#p1 .set-selector").val(setName).trigger('change');
+        document.querySelector("#s2id_autogen1 > a > span.select2-chosen").innerText = setName;
+
+        // スロットの登録情報を更新
+        const slotListObj1 = JSON.parse(localStorage.getItem('p1_slot_info'));
+        for (let i = 1; i <= 6; i++) {
+            if (slotListObj1[i] && slotListObj1[i]['setName'] === setName) {
+                const itemName = document.querySelector("#s2id_autogen25 > a > span.select2-chosen").innerText;
+                slotListObj1[i]['itemName'] = itemName;
+                const id = 'p1_slot_info_' + i;
+                const slotElement = document.querySelector('#slot' + i + 'Pokemon1');
+                setSlotIcon(slotElement, id, setName.replace(/ \(.*/g, ''), itemName);
+            }
+        }
+        const slotListObj2 = JSON.parse(localStorage.getItem('p2_slot_info'));
+        for (let i = 1; i <= 6; i++) {
+            if (slotListObj2[i] && slotListObj2[i]['setName'] === setName) {
+                const itemName = document.querySelector("#s2id_autogen25 > a > span.select2-chosen").innerText;
+                slotListObj2[i]['itemName'] = itemName;
+                const id = 'p2_slot_info_' + i;
+                const slotElement = document.querySelector('#slot' + i + 'Pokemon2');
+                setSlotIcon(slotElement, id, setName.replace(/ \(.*/g, ''), itemName);
+            }
+        }
+        localStorage.setItem('p1_slot_info', JSON.stringify(slotListObj1));
+        localStorage.setItem('p2_slot_info', JSON.stringify(slotListObj2));
+    });
+    calcSetSaveButtonElementPokemon2.id = 'calcSetSaveButton2';
+    calcSetSaveButtonElementPokemon2.setAttribute('onclick', '');
+    calcSetSaveButtonElementPokemon2.addEventListener('click' , function() {
+        savecalc2(); // setdex_custom.js
+        const pokemonName = document.getElementById('resultHeaderR').innerText.replace(/'s.*/, '');
+        const setName = pokemonName + ' (' + document.querySelector("#setName2").value + ')';
+        $("#p2 .set-selector").val(setName).trigger('change');
+        document.querySelector("#s2id_autogen3 > a > span.select2-chosen").innerText = setName;
+
+        // スロットの登録情報を更新
+        const slotListObj1 = JSON.parse(localStorage.getItem('p1_slot_info'));
+        for (let i = 1; i <= 6; i++) {
+            if (slotListObj1[i] && slotListObj1[i]['setName'] === setName) {
+                const itemName = document.querySelector("#s2id_autogen27 > a > span.select2-chosen").innerText;
+                slotListObj1[i]['itemName'] = itemName;
+                const id = 'p1_slot_info_' + i;
+                const slotElement = document.querySelector('#slot' + i + 'Pokemon1');
+                setSlotIcon(slotElement, id, setName.replace(/ \(.*/g, ''), itemName);
+            }
+        }
+        const slotListObj2 = JSON.parse(localStorage.getItem('p2_slot_info'));
+        for (let i = 1; i <= 6; i++) {
+            if (slotListObj2[i] && slotListObj2[i]['setName'] === setName) {
+                const itemName = document.querySelector("#s2id_autogen27 > a > span.select2-chosen").innerText;
+                slotListObj2[i]['itemName'] = itemName;
+                const id = 'p2_slot_info_' + i;
+                const slotElement = document.querySelector('#slot' + i + 'Pokemon2');
+                setSlotIcon(slotElement, id, setName.replace(/ \(.*/g, ''), itemName);
+            }
+        }
+        localStorage.setItem('p1_slot_info', JSON.stringify(slotListObj1));
+        localStorage.setItem('p2_slot_info', JSON.stringify(slotListObj2));
+    });
+
 })();
 
 function addHistory(mainResultText, damageValuesText, index) {
@@ -1311,6 +1378,7 @@ function createSlotElement(pokemonNum, slotNum) {
     slotElement.style.alignItems = 'center';
 
     const addIconDiv = document.createElement('div');
+    addIconDiv.id = 'slot' + slotNum + 'AddIcon' + pokemonNum;
     addIconDiv.style.backgroundImage = 'url(https://seiseikinkin.github.io/tools/image/common/add-24.png)';
     addIconDiv.style.display = 'none';
     addIconDiv.style.backgroundRepeat = 'no-repeat';
@@ -1331,16 +1399,24 @@ function createSlotElement(pokemonNum, slotNum) {
     });
 
     // 右クリックで登録情報を削除
-    const key = 'p' + pokemonNum + '_slot' + slotNum + '_set_name';
+    //const key = 'p' + pokemonNum + '_slot' + slotNum + '_set_name';
+    const key = 'p' + pokemonNum + '_slot_info';
     slotElement.addEventListener('contextmenu',function(e){
-        if (document.querySelector('#' + key + '_pokemon')) {
-            document.querySelector('#' + key + '_pokemon').remove();
+        const id = key + '_' + slotNum;
+        if (document.querySelector('#' + id + '_pokemon')) {
+            document.querySelector('#' + id + '_pokemon').remove();
         }
-        if (document.querySelector('#' + key + '_item')) {
-            document.querySelector('#' + key + '_item').remove();
+        if (document.querySelector('#' + id + '_item')) {
+            document.querySelector('#' + id + '_item').remove();
         }
+
+        // スタイルを適用
         slotElement.style.border = '1px dashed #ffffff';
-        localStorage.setItem(key, JSON.stringify({}));
+
+        // 削除後の情報を保存
+        const slotListObj = JSON.parse(localStorage.getItem(key));
+        delete slotListObj[slotNum];
+        localStorage.setItem(key, JSON.stringify(slotListObj));
 
         // マウスオーバー時の挙動を再設定
         slotElement.addEventListener('mouseover', function() {
@@ -1356,21 +1432,38 @@ function createSlotElement(pokemonNum, slotNum) {
     // 左クリックでスロットに登録
     slotElement.addEventListener('click' , function() {
         if (addIconDiv.style.display !== 'none') {
-            // スロットに登録
+
+            // 名称を取得
+            let pokemonName;
+            let customSetName;
             let setName;
             let itemName;
             if (pokemonNum === 1) {
+                pokemonName = document.getElementById('resultHeaderL').innerText.replace(/'s.*/, '');
+                customSetName = pokemonName + ' (' + document.querySelector("#setName1").value + ')';
                 setName = document.querySelector("#s2id_autogen1 > a > span.select2-chosen").innerText;
                 itemName = document.querySelector("#s2id_autogen25 > a > span.select2-chosen").innerText;
             } else {
+                pokemonName = document.getElementById('resultHeaderR').innerText.replace(/'s.*/, '');
+                customSetName = pokemonName + ' (' + document.querySelector("#setName2").value + ')';
                 setName = document.querySelector("#s2id_autogen3 > a > span.select2-chosen").innerText;
                 itemName = document.querySelector("#s2id_autogen27 > a > span.select2-chosen").innerText;
             }
+
+            // スロットに登録
             const slotObj = {};
             slotObj['setName'] = setName;
             slotObj['itemName'] = itemName;
-            localStorage.setItem(key, JSON.stringify(slotObj));
-            setSlotIcon(slotElement, key, setName.replace(/ \(.*/g, ''), itemName);
+
+            const slotListObj = JSON.parse(localStorage.getItem(key));
+            slotListObj[slotNum] = slotObj;
+            localStorage.setItem(key, JSON.stringify(slotListObj));
+
+            // アイコンを作成
+            const id = key + '_' + slotNum;
+            setSlotIcon(slotElement, id, setName.replace(/ \(.*/g, ''), itemName);
+
+            // スタイルを適用
             slotElement.style.border = '1px solid #404040';
 
             // マウスオーバー時の挙動を再設定
@@ -1382,9 +1475,25 @@ function createSlotElement(pokemonNum, slotNum) {
                 slotElement.style.backgroundColor = '#e3e3e3';
                 addIconDiv.style.display = 'none';
             });
+
+            // Saveボタンを自動押下
+            if (pokemonNum === 1) {
+                if (setName !== customSetName) {
+                    document.querySelector("#setName1").value = 'My Custom Slot Set';
+                }
+                document.querySelector("#calcSetSaveButton1").click();
+            } else {
+                if (setName !== customSetName) {
+                    document.querySelector("#setName2").value = 'My Custom Slot Set';
+                }
+                document.querySelector("#calcSetSaveButton2").click();
+            }
+
         } else {
+
             // スロットの情報を読み込み
-            const slotObj = JSON.parse(localStorage.getItem(key));
+            const slotListObj = JSON.parse(localStorage.getItem(key));
+            const slotObj = slotListObj[slotNum];
             const setName = slotObj['setName'];
             if (pokemonNum === 1) {
                 $("#p1 .set-selector").val(setName).trigger('change');
@@ -1397,11 +1506,17 @@ function createSlotElement(pokemonNum, slotNum) {
     });
 
     // 初期設定
-    const slotObj = JSON.parse(localStorage.getItem(key));
-    if (slotObj && slotObj['setName']) {
-        const setName = slotObj['setName'];
-        const itemName = slotObj['itemName'];
-        setSlotIcon(slotElement, key, setName.replace(/ \(.*/g, ''), itemName);
+    //const slotObj = JSON.parse(localStorage.getItem(key));
+    const slotListObj = JSON.parse(localStorage.getItem(key));
+    //if (slotObj && slotObj['setName']) {
+    if (slotListObj == null) {
+        localStorage.setItem(key, JSON.stringify({}));
+    }
+    if (slotListObj && slotListObj[slotNum] && slotListObj[slotNum]['setName']) {
+        const setName = slotListObj[slotNum]['setName'];
+        const itemName = slotListObj[slotNum]['itemName'];
+        const id = key + '_' + slotNum;
+        setSlotIcon(slotElement, id, setName.replace(/ \(.*/g, ''), itemName);
         slotElement.style.border = '1px solid #404040';
         slotElement.style.backgroundColor = '#e3e3e3';
         addIconDiv.style.display = 'none';
@@ -1450,6 +1565,9 @@ function setSlotIcon(element, id, pokemonName, itemName) {
     itemIconElement.style.marginLeft = '-43px';
     itemIconElement.style.marginBottom = '-12px';
     element.append(itemIconElement);
+    if (itemName === '(none)') {
+        itemIconElement.style.display = 'none';
+    }
 }
 
 function getPokemonImagePath(pokemonName) {
@@ -1835,14 +1953,76 @@ function backupallset() {
     copyToClipboard(json);
 }
 
-function deleteset(namePokemon, setNamePokemon) {
+function deleteset(pokemonName, setName) {
     const key = 'custom_gen_9';
     const json = localStorage.getItem(key);
     const obj = JSON.parse(json);
-    delete obj[namePokemon][setNamePokemon];
+    delete obj[pokemonName][setName];
     localStorage.setItem(key, JSON.stringify(obj));
 
     // setdex_custom.js
     // SETDEX_CUSTOM_SV = JSON.parse(localStorage.getItem(key));
     // reloadSVScript();
+
+    // スロットの登録情報を更新
+    const slotListObj1 = JSON.parse(localStorage.getItem('p1_slot_info'));
+    for (let i = 1; i <= 6; i++) {
+        if (slotListObj1[i] && slotListObj1[i]['setName'] === pokemonName + ' (' + setName + ')') {
+            delete slotListObj1[i];
+            const id = 'p1_slot_info_' + i;
+            const slotElement = document.querySelector('#slot' + i + 'Pokemon1');
+            const addIconElement = document.querySelector('#slot' + i + 'AddIcon1');
+
+            if (document.querySelector('#' + id + '_pokemon')) {
+                document.querySelector('#' + id + '_pokemon').remove();
+            }
+            if (document.querySelector('#' + id + '_item')) {
+                document.querySelector('#' + id + '_item').remove();
+            }
+            slotElement.style.border = '1px dashed #ffffff';
+            slotElement.style.backgroundColor = '#404040';
+
+            // マウスオーバー時の挙動を再設定
+            slotElement.addEventListener('mouseover', function() {
+                slotElement.style.backgroundColor = '#606060';
+                addIconElement.style.display = 'inline-block';
+            });
+            slotElement.addEventListener('mouseleave', function() {
+                slotElement.style.backgroundColor = '#404040';
+                addIconElement.style.display = 'none';
+            });
+        }
+    }
+    const slotListObj2 = JSON.parse(localStorage.getItem('p2_slot_info'));
+    for (let i = 1; i <= 6; i++) {
+        if (slotListObj2[i] && slotListObj2[i]['setName'] === pokemonName + ' (' + setName + ')') {
+            delete slotListObj2[i];
+            const id = 'p2_slot_info_' + i;
+            const slotElement = document.querySelector('#slot' + i + 'Pokemon2');
+            const addIconElement = document.querySelector('#slot' + i + 'AddIcon2');
+
+            if (document.querySelector('#' + id + '_pokemon')) {
+                document.querySelector('#' + id + '_pokemon').remove();
+            }
+            if (document.querySelector('#' + id + '_item')) {
+                document.querySelector('#' + id + '_item').remove();
+            }
+            slotElement.style.border = '1px dashed #ffffff';
+            slotElement.style.backgroundColor = '#404040';
+
+            // マウスオーバー時の挙動を再設定
+            slotElement.addEventListener('mouseover', function() {
+                slotElement.style.backgroundColor = '#606060';
+                addIconElement.style.display = 'inline-block';
+            });
+            slotElement.addEventListener('mouseleave', function() {
+                slotElement.style.backgroundColor = '#404040';
+                addIconElement.style.display = 'none';
+            });
+        }
+    }
+    localStorage.setItem('p1_slot_info', JSON.stringify(slotListObj1));
+    localStorage.setItem('p2_slot_info', JSON.stringify(slotListObj2));
 }
+
+
