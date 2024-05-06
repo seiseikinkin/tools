@@ -17,7 +17,7 @@
     };
 
     // バージョン
-    const version = "3.1.0 alpha"
+    const version = "3.2.0 alpha"
 
     // 非表示
     const headerElement = document.querySelector("body > div.header");
@@ -506,9 +506,9 @@
     historyThButtonAreaElement.style.border = 'solid 1px #000000';
 
     //historyThOffenseInfoElement.style.width = '240px';
-    historyThOffenseInfoElement.style.width = '300px';
+    historyThOffenseInfoElement.style.width = '350px';
     //historyThDefenceInfoElement.style.width = '240px';
-    historyThDefenceInfoElement.style.width = '300px';
+    historyThDefenceInfoElement.style.width = '250px';
     //historyThDamageInfoElement.style.width = '368px';
     historyThDamageInfoElement.style.width = '230px';
     //historyThDamageRateInfoElement.style.width = '82px';
@@ -541,7 +541,7 @@
     const historyObj = JSON.parse(historyJson);
     let count = 0;
     for (const index in historyObj) {
-        addHistory(historyObj[index]['mainResult'], historyObj[index]['damageValues'], index);
+        addHistory(index, historyObj[index]['offenseName'], historyObj[index]['defenceName'], historyObj[index]['moveName'], historyObj[index]['offenseValue'], historyObj[index]['hpValue'], historyObj[index]['defenceValue'], historyObj[index]['offenseText'], historyObj[index]['defenceText'], historyObj[index]['damage'], historyObj[index]['percentage'], historyObj[index]['koChance']);
         count = index;
     }
     count++;
@@ -1135,10 +1135,116 @@
 
     // 計算結果のSaveボタンが押下されたとき
     saveResultButton.addEventListener('click' , function() {
-        addHistory(document.querySelector("#mainResult").innerText, document.querySelector("#damageValues").innerText, count);
+
+        const mainResult = document.querySelector("#mainResult").innerText;
+        const damageValues = document.querySelector("#damageValues").innerText;
+
+        const offenseInfo = mainResult.replace(/ vs\..*/g, '');
+        const defenceInfo = mainResult.replace(/.*vs\. /g, '').replace(/: .*/g, '');
+
+        let offenseName;
+        let defenceName;
+        let moveName;
+        let offenseValue;
+        let hpValue;
+        let defenceValue;
+
+        let isLeftOffense = true;
+
+        if (document.querySelector("#resultMoveL1").checked) {
+            moveName = document.querySelector("body > div.wrapper > div.move-result-group > div:nth-child(1) > div:nth-child(2) > label").innerText;
+        } else if (document.querySelector("#resultMoveL2").checked) {
+            moveName = document.querySelector("body > div.wrapper > div.move-result-group > div:nth-child(1) > div:nth-child(3) > label").innerText;
+        } else if (document.querySelector("#resultMoveL3").checked) {
+            moveName = document.querySelector("body > div.wrapper > div.move-result-group > div:nth-child(1) > div:nth-child(4) > label").innerText;
+        } else if (document.querySelector("#resultMoveL4").checked) {
+            moveName = document.querySelector("body > div.wrapper > div.move-result-group > div:nth-child(1) > div:nth-child(5) > label").innerText;
+        } else if (document.querySelector("#resultMoveR1").checked) {
+            moveName = document.querySelector("body > div.wrapper > div.move-result-group > div:nth-child(2) > div:nth-child(2) > label").innerText;
+            isLeftOffense = false;
+        } else if (document.querySelector("#resultMoveR2").checked) {
+            moveName = document.querySelector("body > div.wrapper > div.move-result-group > div:nth-child(2) > div:nth-child(3) > label").innerText;
+            isLeftOffense = false;
+        } else if (document.querySelector("#resultMoveR3").checked) {
+            moveName = document.querySelector("body > div.wrapper > div.move-result-group > div:nth-child(2) > div:nth-child(4) > label").innerText;
+            isLeftOffense = false;
+        } else {
+            moveName = document.querySelector("body > div.wrapper > div.move-result-group > div:nth-child(2) > div:nth-child(5) > label").innerText;
+            isLeftOffense = false;
+        }
+
+        if (isLeftOffense) {
+            offenseName = document.getElementById('resultHeaderL').innerText.replace(/'s.*/, '');
+            defenceName = document.getElementById('resultHeaderR').innerText.replace(/'s.*/, '');
+            hpValue = 'H' + totalHpTextElementPokemon2.innerText;
+            if (0 < offenseInfo.indexOf(' Atk ')) {
+                offenseValue = 'A' + totalAtTextElementPokemon1.innerText;
+            } else if (0 < offenseInfo.indexOf(' SpA ')) {
+                offenseValue = 'C' + totalSaTextElementPokemon1.innerText;
+            } else if (0 < offenseInfo.indexOf(' Def ')) {
+                offenseValue = 'B' + totalDfTextElementPokemon1.innerText;
+            } else {
+                offenseValue = '(any)';
+            }
+            if (0 < defenceInfo.indexOf(' Def ')) {
+                defenceValue = 'B' + totalDfTextElementPokemon2.innerText;
+            } else if (0 < defenceInfo.indexOf(' SpD ')) {
+                defenceValue = 'D' + totalSdTextElementPokemon2.innerText;
+            } else {
+                defenceValue = '(any)';
+            }
+        } else {
+            offenseName = document.getElementById('resultHeaderR').innerText.replace(/'s.*/, '');
+            defenceName = document.getElementById('resultHeaderL').innerText.replace(/'s.*/, '');
+            hpValue = 'H' + totalHpTextElementPokemon1.innerText;
+            if (0 < offenseInfo.indexOf(' Atk ')) {
+                offenseValue = 'A' + totalAtTextElementPokemon2.innerText;
+            } else if (0 < offenseInfo.indexOf(' SpA ')) {
+                offenseValue = 'C' + totalSaTextElementPokemon2.innerText;
+            } else if (0 < offenseInfo.indexOf(' Def ')) {
+                offenseValue = 'B' + totalDfTextElementPokemon2.innerText;
+            } else {
+                offenseValue = '(any)';
+            }
+            if (0 < defenceInfo.indexOf(' Def ')) {
+                defenceValue = 'B' + totalDfTextElementPokemon1.innerText;
+            } else if (0 < defenceInfo.indexOf(' SpD ')) {
+                defenceValue = 'D' + totalSdTextElementPokemon1.innerText;
+            } else {
+                defenceValue = '(any)';
+            }
+        }
+
+        // テキストを抽出
+        const offenseText = offenseInfo.replace(offenseName, '').replace(moveName, '').replace(/[0-9]+(\+|\-|) Atk/g, '').replace(/[0-9]+(\+|\-|) SpA/g, '').replace(/[0-9]+(\+|\-|) Def/g, '').replace('  ', ' ').trim();
+        const defenceText = defenceInfo.replace(defenceName, '').replace(/[0-9]+(\+|\-|) HP/g, '').replace(/[0-9]+(\+|\-|) Def/g, '').replace(/[0-9]+(\+|\-|) SpD/g, '').replace(' / ', '').replace('  ', ' ').trim();
+        const damage = damageValues.replace(/\(|\)/g, '').replace(/^([^,]+,){8}/g, '$&\r\n');
+        const percentage = mainResult.replace(/.*\(/g, '').replace(/\).*/g, '');
+        const koChance = mainResult.replace(/.* -- /g, '');
+
+        const historyJson = localStorage.getItem('history');
+        if (historyJson == null) {
+            localStorage.setItem('history', JSON.stringify({}));
+        }
+        const historyObj = JSON.parse(historyJson);
         historyObj[count] = {};
-        historyObj[count]['mainResult'] = document.querySelector("#mainResult").innerText;
-        historyObj[count]['damageValues'] = document.querySelector("#damageValues").innerText;
+        historyObj[count]['mainResult'] = mainResult;
+        historyObj[count]['damageValues'] = damageValues;
+        historyObj[count]['offenseName'] = offenseName;
+        historyObj[count]['defenceName'] = defenceName;
+        historyObj[count]['moveName'] = moveName;
+        historyObj[count]['offenseValue'] = offenseValue;
+        historyObj[count]['hpValue'] = hpValue;
+        historyObj[count]['defenceValue'] = defenceValue;
+
+        historyObj[count]['offenseText'] = offenseText;
+        historyObj[count]['defenceText'] = defenceText;
+        historyObj[count]['damage'] = damage;
+        historyObj[count]['percentage'] = percentage;
+        historyObj[count]['koChance'] = koChance;
+
+        addHistory(count, offenseName, defenceName, moveName, offenseValue, hpValue, defenceValue, offenseText, defenceText, damage, percentage, koChance);
+
         localStorage.setItem('history', JSON.stringify(historyObj));
         count++;
     });
@@ -1213,14 +1319,7 @@
 
 })();
 
-function addHistory(mainResultText, damageValuesText, index) {
-
-    // テキストを抽出
-    const offenseInfo = mainResultText.replace(/ vs\..*/g, '');
-    const defenceInfo = mainResultText.replace(/.*vs\. /g, '').replace(/: .*/g, '');
-    const damageInfo = damageValuesText.replace(/\(|\)/g, '').replace(/^([^,]+,){8}/g, '$&\r\n');
-    const damageRateInfo = mainResultText.replace(/.*\(/g, '').replace(/\).*/g, '');
-    const koChanceInfo = mainResultText.replace(/.* -- /g, '');
+function addHistory(index, offenseName, defenceName, moveName, offenseValue, hpValue, defenceValue, offenseInfo, defenceInfo, damageInfo, damageRateInfo, koChanceInfo) {
 
     // tdオブジェクトを作成
     const historyTdOffenseInfoElement = document.createElement('td');
@@ -1240,9 +1339,72 @@ function addHistory(mainResultText, damageValuesText, index) {
     historyTrElement.append(historyTdKoChanceInfoElement);
     historyTrElement.append(historyTdButtonAreaElement);
 
+    // ポケモンアイコンを設定
+    const offenseInfoElement = document.createElement('div');
+    offenseInfoElement.style.display = 'flex';
+    offenseInfoElement.style.alignItems = 'center';
+    const offenseIconElement = document.createElement('div');
+    offenseIconElement.style.display = 'flex';
+    offenseIconElement.style.width = '32px';
+    offenseIconElement.style.minWidth = '32px';
+    offenseIconElement.style.height = '32px';
+    offenseIconElement.style.justifyContent = 'center';
+    offenseIconElement.style.alignItems = 'center';
+    const offenseIcon = document.createElement('img');
+    offenseIcon.src = getPokemonImagePath(offenseName);
+    offenseIcon.style.transform = 'scale(0.66)';
+    offenseIconElement.append(offenseIcon);
+    const offenseStatsElement = document.createElement('div');
+    offenseStatsElement.innerText = offenseValue;
+    offenseStatsElement.style.display = 'inline-block';
+    offenseStatsElement.style.marginLeft = '4px';
+    offenseStatsElement.style.minWidth = '30px';
+    const offenseMoveElement = document.createElement('div');
+    offenseMoveElement.innerText = moveName;
+    offenseMoveElement.style.display = 'inline-block';
+    offenseMoveElement.style.marginLeft = '4px';
+    offenseMoveElement.style.minWidth = '110px';
+    const offenseTextElement = document.createElement('div');
+    offenseTextElement.style.display = 'inline-block';
+    offenseTextElement.innerText = offenseInfo;
+    offenseTextElement.style.marginLeft = '4px';
+    offenseTextElement.style.fontStyle = "italic";
+    offenseInfoElement.append(offenseIconElement);
+    offenseInfoElement.append(offenseStatsElement);
+    offenseInfoElement.append(offenseMoveElement);
+    offenseInfoElement.append(offenseTextElement);
+    historyTdOffenseInfoElement.append(offenseInfoElement);
+
+    const defenceInfoElement = document.createElement('div');
+    defenceInfoElement.style.display = 'flex';
+    defenceInfoElement.style.alignItems = 'center';
+    const defenceIconElement = document.createElement('div');
+    defenceIconElement.style.display = 'flex';
+    defenceIconElement.style.width = '32px';
+    defenceIconElement.style.minWidth = '32px';
+    defenceIconElement.style.height = '32px';
+    defenceIconElement.style.justifyContent = 'center';
+    defenceIconElement.style.alignItems = 'center';
+    const defenceIcon = document.createElement('img');
+    defenceIcon.src = getPokemonImagePath(defenceName);
+    defenceIcon.style.transform = 'scale(0.66)';
+    defenceIconElement.append(defenceIcon);
+    const defenceStatsElement = document.createElement('div');
+    defenceStatsElement.innerText = hpValue + '-' + defenceValue;
+    defenceStatsElement.style.display = 'inline-block';
+    defenceStatsElement.style.marginLeft = '4px';
+    defenceStatsElement.style.minWidth = '64px';
+    const defenceTextElement = document.createElement('div');
+    defenceTextElement.style.display = 'inline-block';
+    defenceTextElement.innerText = defenceInfo;
+    defenceTextElement.style.marginLeft = '4px';
+    defenceTextElement.style.fontStyle = "italic";
+    defenceInfoElement.append(defenceIconElement);
+    defenceInfoElement.append(defenceStatsElement);
+    defenceInfoElement.append(defenceTextElement);
+    historyTdDefenceInfoElement.append(defenceInfoElement);
+
     // ラベルを設定
-    historyTdOffenseInfoElement.innerText = offenseInfo;
-    historyTdDefenceInfoElement.innerText = defenceInfo;
     historyTdDamageInfoElement.innerText = damageInfo;
     historyTdDamageRateInfoElement.innerText = damageRateInfo;
     historyTdKoChanceInfoElement.innerText = koChanceInfo;
@@ -1267,9 +1429,15 @@ function addHistory(mainResultText, damageValuesText, index) {
 
     // スタイルを適用
     historyTdOffenseInfoElement.style.border = '1px solid #000000';
-    historyTdOffenseInfoElement.style.padding = '4px 6px';
+    historyTdOffenseInfoElement.style.paddingLeft = '4px';
+    historyTdOffenseInfoElement.style.paddingRight = '8px';
+    historyTdOffenseInfoElement.style.paddingTop = '4px';
+    historyTdOffenseInfoElement.style.paddingBottom = '4px';
     historyTdDefenceInfoElement.style.border = '1px solid #000000';
-    historyTdDefenceInfoElement.style.padding = '4px 6px';
+    historyTdDefenceInfoElement.style.paddingLeft = '4px';
+    historyTdDefenceInfoElement.style.paddingRight = '8px';
+    historyTdDefenceInfoElement.style.paddingTop = '4px';
+    historyTdDefenceInfoElement.style.paddingBottom = '4px';
     historyTdDamageInfoElement.style.border = '1px solid #000000';
     historyTdDamageInfoElement.style.padding = '4px 6px';
     historyTdDamageRateInfoElement.style.border = '1px solid #000000';
