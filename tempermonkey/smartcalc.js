@@ -180,9 +180,11 @@
     const calcSetInputElementPokemon1 = document.querySelector("#setName1");
     const calcSetSaveButtonElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(14) > button:nth-child(2)");
     const calcSetExportButtonElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(14) > button:nth-child(3)");
+    const calcSetDeleteButtonElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(14) > button:nth-child(4)");
     const calcSetInputElementPokemon2 = document.querySelector("#setName2");
     const calcSetSaveButtonElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(14) > button:nth-child(2)");
     const calcSetExportButtonElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(14) > button:nth-child(3)");
+    const calcSetDeleteButtonElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(14) > button:nth-child(4)");
     const ivHpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(3) > input");
     const ivAtInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.at > td:nth-child(3) > input");
     const ivDfInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(3) > input");
@@ -584,7 +586,7 @@
     backupAllButtonElement.addEventListener('click' , function() {
         backupallset();
     });
-    const deleteButtonElementPokemon1 = document.createElement('button');
+    /*const deleteButtonElementPokemon1 = document.createElement('button');
     deleteButtonElementPokemon1.type = 'button';
     deleteButtonElementPokemon1.id = 'delete';
     deleteButtonElementPokemon1.innerText = 'Delete';
@@ -597,11 +599,12 @@
         deleteset(namePokemon, setNamePokemon);
 
         localStorage.setItem('p1_set_name', '');
-    });
+    });*/
+    calcSetDeleteButtonElementPokemon1.innerText = 'Delete';
     exportButtonElementPokemon1.addEventListener('click' , function() {
         alert('Copied to clipboard.');
     });
-    const deleteButtonElementPokemon2 = document.createElement('button');
+    /*const deleteButtonElementPokemon2 = document.createElement('button');
     deleteButtonElementPokemon2.type = 'button';
     deleteButtonElementPokemon2.id = 'delete';
     deleteButtonElementPokemon2.innerText = 'Delete';
@@ -614,7 +617,8 @@
         deleteset(namePokemon, setNamePokemon);
 
         localStorage.setItem('p2_set_name', '');
-    });
+    });*/
+    calcSetDeleteButtonElementPokemon2.innerText = 'Delete';
     exportButtonElementPokemon2.addEventListener('click' , function() {
         alert('Copied to clipboard.');
     });
@@ -1257,7 +1261,7 @@
     calcSetSaveButtonElementPokemon1.id = 'calcSetSaveButton1';
     calcSetSaveButtonElementPokemon1.setAttribute('onclick', '');
     calcSetSaveButtonElementPokemon1.addEventListener('click' , function() {
-        savecalc1(); // setdex_custom.js
+        runSaveCalc(1); // setdex_custom.js
         const pokemonName = document.getElementById('resultHeaderL').innerText.replace(/'s.*/, '');
         const setName = pokemonName + ' (' + document.querySelector("#setName1").value + ')';
         $("#p1 .set-selector").val(setName).trigger('change');
@@ -1290,7 +1294,7 @@
     calcSetSaveButtonElementPokemon2.id = 'calcSetSaveButton2';
     calcSetSaveButtonElementPokemon2.setAttribute('onclick', '');
     calcSetSaveButtonElementPokemon2.addEventListener('click' , function() {
-        savecalc2(); // setdex_custom.js
+        runSaveCalc(2); // setdex_custom.js
         const pokemonName = document.getElementById('resultHeaderR').innerText.replace(/'s.*/, '');
         const setName = pokemonName + ' (' + document.querySelector("#setName2").value + ')';
         $("#p2 .set-selector").val(setName).trigger('change');
