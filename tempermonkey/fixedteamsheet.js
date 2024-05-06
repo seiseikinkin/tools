@@ -53,6 +53,7 @@ function createFixedTeamSheetButton(id) {
     fixedTeamSheetButtonElement.addEventListener('click' , function() {
 
         if (document.getElementById('fts_' + id)) {
+            document.getElementById('fts_' + id).remove();
             return;
         }
 
