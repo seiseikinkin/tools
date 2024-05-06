@@ -17,7 +17,7 @@
     };
 
     // バージョン
-    const version = "3.2.0 alpha"
+    const version = "3.2.1 alpha"
 
     // 非表示
     const headerElement = document.querySelector("body > div.header");
@@ -58,8 +58,10 @@
     const deleteCustomSetsButtonElement = document.querySelector("#field-panel > div.panel-body > button:nth-child(38)");
     const description2Element = document.querySelector("#field-panel > div.panel-body > p:nth-child(39)");
     const afdElement = document.querySelector("body > div.wrapper > button");
-    const currentHpAreaElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(7)");
-    const currentHpAreaElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(7)");
+    const sideBarAreaElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5)");
+    const sideBarAreaElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5)");
+    const currentHpAreaElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(8)");
+    const currentHpAreaElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(8)");
     //hideElement(headerElement);
     hideElement(headerLogoElement);
     hideElement(headerNavElement);
@@ -97,22 +99,24 @@
     hideElement(deleteCustomSetsButtonElement);
     hideElement(description2Element);
     hideElement(afdElement);
+    hideElement(sideBarAreaElementPokemon1);
+    hideElement(sideBarAreaElementPokemon2);
     //hideElement(currentHpAreaElementPokemon1);
     //hideElement(currentHpAreaElementPokemon2);
 
     // 非活性
-    const baseHpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(2) > input");
-    const baseAtInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.at > td:nth-child(2) > input");
-    const baseDfInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.df > td:nth-child(2) > input");
-    const baseSaInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sa > td:nth-child(2) > input");
-    const baseSdInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sd > td:nth-child(2) > input");
-    const baseSpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sp > td:nth-child(2) > input");
-    const baseHpInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(2) > input");
-    const baseAtInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.at > td:nth-child(2) > input");
-    const baseDfInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.df > td:nth-child(2) > input");
-    const baseSaInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sa > td:nth-child(2) > input");
-    const baseSdInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sd > td:nth-child(2) > input");
-    const baseSpInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sp > td:nth-child(2) > input");
+    const baseHpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(2) > input");
+    const baseAtInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.at > td:nth-child(2) > input");
+    const baseDfInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(2) > input");
+    const baseSaInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sa > td:nth-child(2) > input");
+    const baseSdInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sd > td:nth-child(2) > input");
+    const baseSpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sp > td:nth-child(2) > input");
+    const baseHpInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(2) > input");
+    const baseAtInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.at > td:nth-child(2) > input");
+    const baseDfInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(2) > input");
+    const baseSaInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sa > td:nth-child(2) > input");
+    const baseSdInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sd > td:nth-child(2) > input");
+    const baseSpInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sp > td:nth-child(2) > input");
     disableElement(baseHpInputElementPokemon1);
     disableElement(baseAtInputElementPokemon1);
     disableElement(baseDfInputElementPokemon1);
@@ -129,75 +133,75 @@
     // エレメントを定数に保持（後続処理でエレメントを追加した場合にインデックスがずれるため）
     const nameSelectBoxElementPokemon1 = document.getElementById('s2id_autogen1');
     const nameSelectBoxElementPokemon2 = document.getElementById('s2id_autogen3');
-    const totalLabelElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr:nth-child(1) > th:nth-child(7)");
-    const totalLabelElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr:nth-child(1) > th:nth-child(7)");
-    const totalHpTextElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(6) > span");
-    const totalAtTextElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.at > td:nth-child(6) > span");
-    const totalDfTextElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.df > td:nth-child(6) > span");
-    const totalSaTextElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sa > td:nth-child(6) > span");
-    const totalSdTextElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sd > td:nth-child(6) > span");
-    const totalSpTextElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sp > td:nth-child(6) > span");
-    const totalHpTextElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(6) > span");
-    const totalAtTextElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.at > td:nth-child(6) > span");
-    const totalDfTextElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.df > td:nth-child(6) > span");
-    const totalSaTextElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sa > td:nth-child(6) > span");
-    const totalSdTextElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sd > td:nth-child(6) > span");
-    const totalSpTextElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sp > td:nth-child(6) > span");
-    const evHpTdElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(4)");
-    const evAtTdElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.at > td:nth-child(4)");
-    const evDfTdElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.df > td:nth-child(4)");
-    const evSaTdElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sa > td:nth-child(4)");
-    const evSdTdElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sd > td:nth-child(4)");
-    const evSpTdElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sp > td:nth-child(4)");
-    const evHpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(4) > input");
-    const evAtInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.at > td:nth-child(4) > input");
-    const evDfInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.df > td:nth-child(4) > input");
-    const evSaInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sa > td:nth-child(4) > input");
-    const evSdInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sd > td:nth-child(4) > input");
-    const evSpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sp > td:nth-child(4) > input");
-    const evHpTdElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(4)");
-    const evAtTdElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.at > td:nth-child(4)");
-    const evDfTdElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.df > td:nth-child(4)");
-    const evSaTdElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sa > td:nth-child(4)");
-    const evSdTdElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sd > td:nth-child(4)");
-    const evSpTdElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sp > td:nth-child(4)");
-    const evHpInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(4) > input");
-    const evAtInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.at > td:nth-child(4) > input");
-    const evDfInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.df > td:nth-child(4) > input");
-    const evSaInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sa > td:nth-child(4) > input");
-    const evSdInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sd > td:nth-child(4) > input");
-    const evSpInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sp > td:nth-child(4) > input");
-    const rankHpTrElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(7)")
-    const rankDfTrElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.df > td:nth-child(7)");
-    const rankSdTrElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sd > td:nth-child(7)");
-    const rankHpTrElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(7)");
-    const rankDfTrElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.df > td:nth-child(7)");
-    const rankSdTrElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sd > td:nth-child(7)");
+    const totalLabelElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr:nth-child(1) > th:nth-child(7)");
+    const totalLabelElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr:nth-child(1) > th:nth-child(7)");
+    const totalHpTextElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(6) > span");
+    const totalAtTextElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.at > td:nth-child(6) > span");
+    const totalDfTextElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(6) > span");
+    const totalSaTextElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sa > td:nth-child(6) > span");
+    const totalSdTextElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sd > td:nth-child(6) > span");
+    const totalSpTextElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sp > td:nth-child(6) > span");
+    const totalHpTextElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(6) > span");
+    const totalAtTextElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.at > td:nth-child(6) > span");
+    const totalDfTextElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(6) > span");
+    const totalSaTextElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sa > td:nth-child(6) > span");
+    const totalSdTextElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sd > td:nth-child(6) > span");
+    const totalSpTextElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sp > td:nth-child(6) > span");
+    const evHpTdElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(4)");
+    const evAtTdElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.at > td:nth-child(4)");
+    const evDfTdElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(4)");
+    const evSaTdElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sa > td:nth-child(4)");
+    const evSdTdElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sd > td:nth-child(4)");
+    const evSpTdElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sp > td:nth-child(4)");
+    const evHpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(4) > input");
+    const evAtInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.at > td:nth-child(4) > input");
+    const evDfInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(4) > input");
+    const evSaInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sa > td:nth-child(4) > input");
+    const evSdInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sd > td:nth-child(4) > input");
+    const evSpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sp > td:nth-child(4) > input");
+    const evHpTdElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(4)");
+    const evAtTdElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.at > td:nth-child(4)");
+    const evDfTdElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(4)");
+    const evSaTdElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sa > td:nth-child(4)");
+    const evSdTdElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sd > td:nth-child(4)");
+    const evSpTdElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sp > td:nth-child(4)");
+    const evHpInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(4) > input");
+    const evAtInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.at > td:nth-child(4) > input");
+    const evDfInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(4) > input");
+    const evSaInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sa > td:nth-child(4) > input");
+    const evSdInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sd > td:nth-child(4) > input");
+    const evSpInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sp > td:nth-child(4) > input");
+    const rankHpTrElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(7)")
+    const rankDfTrElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(7)");
+    const rankSdTrElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sd > td:nth-child(7)");
+    const rankHpTrElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(7)");
+    const rankDfTrElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(7)");
+    const rankSdTrElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sd > td:nth-child(7)");
     const calcSetInputElementPokemon1 = document.querySelector("#setName1");
-    const calcSetSaveButtonElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(13) > button:nth-child(2)");
-    const calcSetExportButtonElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(13) > button:nth-child(3)");
+    const calcSetSaveButtonElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(14) > button:nth-child(2)");
+    const calcSetExportButtonElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(14) > button:nth-child(3)");
     const calcSetInputElementPokemon2 = document.querySelector("#setName2");
-    const calcSetSaveButtonElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(13) > button:nth-child(2)");
-    const calcSetExportButtonElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(13) > button:nth-child(3)");
-    const ivHpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(3) > input");
-    const ivAtInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.at > td:nth-child(3) > input");
-    const ivDfInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.df > td:nth-child(3) > input");
-    const ivSaInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sa > td:nth-child(3) > input");
-    const ivSdInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sd > td:nth-child(3) > input");
-    const ivSpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.sp > td:nth-child(3) > input");
-    const ivHpInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp > td:nth-child(3) > input");
-    const ivAtInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.at > td:nth-child(3) > input");
-    const ivDfInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.df > td:nth-child(3) > input");
-    const ivSaInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sa > td:nth-child(3) > input");
-    const ivSdInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sd > td:nth-child(3) > input");
-    const ivSpInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.sp > td:nth-child(3) > input");
+    const calcSetSaveButtonElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(14) > button:nth-child(2)");
+    const calcSetExportButtonElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(14) > button:nth-child(3)");
+    const ivHpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(3) > input");
+    const ivAtInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.at > td:nth-child(3) > input");
+    const ivDfInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(3) > input");
+    const ivSaInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sa > td:nth-child(3) > input");
+    const ivSdInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sd > td:nth-child(3) > input");
+    const ivSpInputElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.sp > td:nth-child(3) > input");
+    const ivHpInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp > td:nth-child(3) > input");
+    const ivAtInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.at > td:nth-child(3) > input");
+    const ivDfInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.df > td:nth-child(3) > input");
+    const ivSaInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sa > td:nth-child(3) > input");
+    const ivSdInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sd > td:nth-child(3) > input");
+    const ivSpInputElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.sp > td:nth-child(3) > input");
     const natureSelectBoxElementPokemon1 = document.querySelector("#p1 > div.panel-body > div.info-group.info-selectors > div:nth-child(1) > select");
     const natureSelectBoxElementPokemon2 = document.querySelector("#p2 > div.panel-body > div.info-group.info-selectors > div:nth-child(1) > select");
 
     const teraTypeAreaElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(4) > div.gen-specific.g9");
-    const statusAreaElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5)");
+    const statusAreaElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6)");
     const teraTypeAreaElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(4) > div.gen-specific.g9");
-    const statusAreaElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5)");
+    const statusAreaElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6)");
 
     const itemSelectBoxElementPokemon1 = document.querySelector("#s2id_autogen25 > a > span.select2-chosen");
     const itemSelectBoxElementPokemon2 = document.querySelector("#s2id_autogen27 > a > span.select2-chosen");
@@ -208,16 +212,16 @@
 
     const teraTypeSelectBoxElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(4) > div.gen-specific.g9 > select");
     const teraTypeSelectBoxElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(4) > div.gen-specific.g9 > select");
-    const teraTypeButtonElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(7) > label.btn.btn-wide.gen-specific.g9");
-    const teraTypeButtonElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(7) > label.btn.btn-wide.gen-specific.g9");
+    const teraTypeButtonElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(8) > label.btn.btn-wide.gen-specific.g9");
+    const teraTypeButtonElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(8) > label.btn.btn-wide.gen-specific.g9");
 
     const underLimitEvElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr:nth-child(9) > td.ev-left.underLimit");
     const underLimitEvElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr:nth-child(9) > td.ev-left.underLimit");
 
     const faviconElement = document.querySelector("head > link:nth-child(1)");
 
-    const exportButtonElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(13) > button:nth-child(3)");
-    const exportButtonElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(13) > button:nth-child(3)");
+    const exportButtonElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(14) > button:nth-child(3)");
+    const exportButtonElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(14) > button:nth-child(3)");
     const importButtonElement = document.querySelector("#field-panel > div.panel-body > button:nth-child(37)");
 
     const typeLevelAreaElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(4)");
@@ -225,8 +229,8 @@
 
     //const panelElementField = document.querySelector("#field-panel > div.panel-body");
 
-    const hpTrElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp");
-    const hpTrElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr.hp");
+    const hpTrElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp");
+    const hpTrElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr.hp");
 
     const mainResultElement = document.querySelector("#mainResult");
 
