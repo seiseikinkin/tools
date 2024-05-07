@@ -48,7 +48,7 @@ function createFixedTeamSheetButton(id) {
     const fixedTeamSheetButtonElement = document.createElement('button');
     fixedTeamSheetButtonElement.classList.add('icon', 'button');
     fixedTeamSheetButtonElement.style.marginLeft= '10px';
-    fixedTeamSheetButtonElement.innerText= 'Fixed Team Sheet';
+    fixedTeamSheetButtonElement.innerText= 'View Team Sheet';
 
     fixedTeamSheetButtonElement.addEventListener('click' , function() {
 
@@ -120,11 +120,14 @@ function createFixedTeamSheetPanel(id, infoBox) {
     let textHtml = '';
     let isSkip = true;
     const formattedHtmlList = infoBox.getElementsByTagName('details')[0].innerHTML.replace(/(<[^/])/g,'\n$1').replace(/<br>/g, '').replace(/^\n/g, '').split('\n');
+    console.log(formattedHtmlList);
     for (const formattedHtml of formattedHtmlList) {
         if (formattedHtml.indexOf('<span class="picon"') === 0) {
             imageHtml += formattedHtml;
         } else if (formattedHtml.indexOf('<span class="itemicon"') === 0) {
             imageHtml += formattedHtml.replace(/(style=")/g,'$1scale: 0.8; ');
+        } else if (formattedHtml.indexOf('Ability:') === 0) {
+            textHtml += formattedHtml.trim() + '<br>';
             isSkip = false;
         } else if (!isSkip && formattedHtml.length === 0) {
             if (num < 4) {
@@ -141,7 +144,7 @@ function createFixedTeamSheetPanel(id, infoBox) {
                 const teraTypeImageUrl = 'https://seiseikinkin.github.io/tools/image/teratypeicon/' + formattedHtml.trim().replace(/.* /g, '').toLowerCase() + '.png';
                 const teraTypeImageHtml = '<div style="display: inline-block; background-image: url(' + teraTypeImageUrl + '); background-repeat: no-repeat; background-position: center center; width: 20px; height: 20px; background-size: 20px; margin-bottom: 2px;"></div>';
                 imageHtml += teraTypeImageHtml;
-            } else if (formattedHtml.indexOf('Level: ') !== 0) {
+            } else if (formattedHtml.indexOf('- ') === 0) {
                 textHtml += formattedHtml.trim() + '<br>';
             }
         }
@@ -199,6 +202,7 @@ function createPokemonCard(imageHtml, textHtml) {
     pokemonCardTextAreaElement.style.minHeight = '82px';
     pokemonCardTextAreaElement.style.maxHeight = '82px';
     pokemonCardTextAreaElement.style.fontSize = '12px';
+    pokemonCardTextAreaElement.style.color = '#000000';
     //pokemonCardTextAreaElement.style.backgroundColor = '#0000ff';
 
     pokemonCardElement.append(pokemonCardImageAreaElement);
