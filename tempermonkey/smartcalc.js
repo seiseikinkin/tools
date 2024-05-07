@@ -17,7 +17,7 @@
     };
 
     // バージョン
-    const version = "3.2.1 alpha"
+    const version = "3.2.3 alpha"
 
     // 非表示
     const headerElement = document.querySelector("body > div.header");
