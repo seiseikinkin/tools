@@ -21,7 +21,8 @@
 
         for (const room of document.getElementsByClassName('ps-room-opaque')) {
             if (executedRoomList.indexOf(room.id) < 0) {
-                document.querySelector('#' + room.id + ' > div.battle-log > div.battle-options > div').append(createFixedTeamSheetButton(room.id));
+                document.querySelector('#' + room.id + ' > div.battle-log > div.battle-options > div').append(createFixedTeamSheetButton(room.id, true));
+                document.querySelector('#' + room.id + ' > div.battle-log > div.battle-options > div').append(createFixedTeamSheetButton(room.id, false));
                 executedRoomList.push(room.id);
                 //console.log(executedRoomList);
                 //console.log(room.id);
@@ -43,18 +44,21 @@
 
 })();
 
-function createFixedTeamSheetButton(id) {
+function createFixedTeamSheetButton(id, isLeft) {
 
     const fixedTeamSheetButtonElement = document.createElement('button');
     fixedTeamSheetButtonElement.classList.add('icon', 'button');
     fixedTeamSheetButtonElement.style.marginLeft= '10px';
-    fixedTeamSheetButtonElement.innerText= 'View Team Sheet';
+    if (isLeft) {
+        fixedTeamSheetButtonElement.innerText= 'Left Team Sheet';
+    } else {
+        fixedTeamSheetButtonElement.innerText= 'Right Team Sheet';
+    }
 
     fixedTeamSheetButtonElement.addEventListener('click' , function() {
 
         if (document.getElementById('fts_' + id)) {
             document.getElementById('fts_' + id).remove();
-            return;
         }
 
         //document.querySelector('#' + id + ' > div.battle-log > div.inner.message-log > div:nth-child(8) > div > details')
@@ -65,7 +69,9 @@ function createFixedTeamSheetButton(id) {
             //console.log(leftUserName);
             //console.log(infoBox.getElementsByTagName('summary')[0].innerText.replace(/.* /g, ''));
 
-            if (leftUserName !== infoBox.getElementsByTagName('summary')[0].innerText.replace(/Open Team Sheet for /g, '')) {
+            if (isLeft && leftUserName === infoBox.getElementsByTagName('summary')[0].innerText.replace(/Open Team Sheet for /g, '')) {
+                document.querySelector('#' + id + ' > div.battle-log > div.inner.message-log').prepend(createFixedTeamSheetPanel(id, infoBox));
+            } else if (!isLeft && leftUserName !== infoBox.getElementsByTagName('summary')[0].innerText.replace(/Open Team Sheet for /g, '')) {
                 document.querySelector('#' + id + ' > div.battle-log > div.inner.message-log').prepend(createFixedTeamSheetPanel(id, infoBox));
             }
 
