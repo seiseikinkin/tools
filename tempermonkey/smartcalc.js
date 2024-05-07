@@ -291,7 +291,10 @@
     // addFieldInfo(panelElementField);
 
     // レイアウト修正
+    document.querySelector("body").style.minWidth = '1200px';
+    document.querySelector("body > div.header > div").style.maxWidth = '1130px';
     document.querySelector("body > div.wrapper").style.marginTop = '-134px';
+    document.querySelector("body > div.wrapper").style.maxWidth = '1130px';
     document.querySelector("body > div.wrapper > div.main-result-group > div.big-text").style.marginBottom = '2px';
     document.querySelector("body > div.wrapper > div.main-result-group").style.marginBottom = '4px';
 
