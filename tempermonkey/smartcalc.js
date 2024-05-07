@@ -217,8 +217,8 @@
     const teraTypeButtonElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(8) > label.btn.btn-wide.gen-specific.g9");
     const teraTypeButtonElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(8) > label.btn.btn-wide.gen-specific.g9");
 
-    const underLimitEvElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(5) > table > tbody > tr:nth-child(9) > td.ev-left.underLimit");
-    const underLimitEvElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(5) > table > tbody > tr:nth-child(9) > td.ev-left.underLimit");
+    const underLimitEvElementPokemon1 = document.querySelector("#p1 > div.panel-body > div:nth-child(6) > table > tbody > tr:nth-child(9) > td.ev-left.underLimit");
+    const underLimitEvElementPokemon2 = document.querySelector("#p2 > div.panel-body > div:nth-child(6) > table > tbody > tr:nth-child(9) > td.ev-left.underLimit");
 
     const faviconElement = document.querySelector("head > link:nth-child(1)");
 
@@ -1978,20 +1978,20 @@ function addEvButton(preElement, evInputElement, ivInputElement, underLimitEvEle
         } else if (underLimitEv < 0) {
             if (iv % 2 == 1) {
                 const surplus = (ev + underLimitEv + 4) % 8;
-                if (ev + underLimitEv - surplus < 0) {
-                    evElement.value = '0';
-                } else {
+                if (0 < ev + underLimitEv) {
                     evElement.value = ev + underLimitEv - surplus;
+                } else {
+                    evElement.value = '0';
                 }
             } else {
-                const surplus = underLimitEv % 8
-                if (ev + underLimitEv - surplus < 0) {
-                    evElement.value = '0';
-                } else {
+                const surplus = (ev + underLimitEv) % 8;
+                if (0 < ev + underLimitEv) {
                     evElement.value = ev + underLimitEv - surplus;
+                } else {
+                    evElement.value = '0';
                 }
             }
-        } else {
+        } else if (4 <= underLimitEv) {
             if (iv % 2 == 1) {
                 const surplus = (ev + underLimitEv + 4) % 8;
                 if (252 <= ev + underLimitEv - surplus) {
