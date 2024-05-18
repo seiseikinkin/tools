@@ -17,7 +17,7 @@
     };
 
     // バージョン
-    const version = "3.2.3 alpha"
+    const version = "3.2.4 alpha"
 
     // 非表示
     const headerElement = document.querySelector("body > div.header");
@@ -26,9 +26,9 @@
     const titleElement = document.querySelector("body > div.wrapper > div:nth-child(1)");
     const titleUnderLineElement = document.querySelector("body > div.wrapper > hr");
     const credit3Element = document.querySelector("body > div.wrapper > p:nth-child(3)");
-    const credit4Element = document.querySelector("body > div.wrapper > p:nth-child(4)");
-    const credit5Element = document.querySelector("body > div.wrapper > p:nth-child(5)");
-    const credit6Element = document.querySelector("body > div.wrapper > p:nth-child(6)");
+    const credit4Element = document.querySelector("body > div.wrapper > p:nth-child(5)");
+    const credit5Element = document.querySelector("body > div.wrapper > p:nth-child(6)");
+    const credit6Element = document.querySelector("body > div.wrapper > p:nth-child(7)");
     const footerElement = document.querySelector("body > div.wrapper > div.footer");
     const footerBlankElement = document.querySelector("body > div:nth-child(3)");
     const panelHeaderElementPokemon1 = document.querySelector("#p1 > div.panel-heading");
@@ -254,7 +254,7 @@
     headerTitleElement.style.fontWeight = 'bold';
     headerTitleElement.style.paddingLeft = '8px';
     const headerTitleVersionElement = document.createElement('span');
-    headerTitleVersionElement.innerText = ' - Expansion v' + version;
+    headerTitleVersionElement.innerText = ' - Extension v' + version;
     headerTitleVersionElement.style.fontSize = '10px';
     headerWrapperElement.append(headerTitleElement);
     headerWrapperElement.append(headerTitleVersionElement);
