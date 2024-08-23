@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Fixed Team Sheet for Mobile",
+  "short_name": "Fixed OTS 4M",
+  "version": "1.0.0",
+  "description": "Add OTS Fixed button to Pokémon Showdown.",
+  "icons": {
+    "16": "images/starpokemon16.png",
+    "48": "images/starpokemon48.png",
+    "128": "images/starpokemon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://play.pokemonshowdown.com/*"],
+      "js": ["./content.js"]
+    }
+  ]
+}
