@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Copy All Replays Link",
+  "short_name": "Copy All Replays Link",
+  "version": "1.0.0",
+  "description": "Add button for copy all replays link to clipboard.",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://replay.pokemonshowdown.com/*"],
+      "js": ["./content.js"]
+    }
+  ]
+}
