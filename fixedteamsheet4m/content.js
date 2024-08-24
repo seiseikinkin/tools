@@ -1,11 +1,11 @@
-(function() {
+(function () {
 
     const title = document.querySelector('head > title');
 
     // 処理が重複しないようにルームをリストで管理する
     const executedRoomList = [];
 
-    var mo = new MutationObserver(function() {
+    var mo = new MutationObserver(function () {
 
         //  console.log('FixedTeamSheet - START');
 
@@ -47,27 +47,27 @@ function createFixedTeamSheetButton(id, isLeft) {
     fixedTeamSheetButtonElement.classList.add('icon', 'button');
     // fixedTeamSheetButtonElement.style.float = 'right';
     fixedTeamSheetButtonElement.style.marginLeft = '10px';
-    fixedTeamSheetButtonElement.innerText= 'View OTS';
+    fixedTeamSheetButtonElement.innerText = 'View OTS';
 
-    fixedTeamSheetButtonElement.addEventListener('click' , function() {
+    fixedTeamSheetButtonElement.addEventListener('click', function () {
 
         if (document.getElementById('fts_' + id)) {
             document.getElementById('fts_' + id).remove();
         } else {
 
-        // document.querySelector('#' + id + ' > div.battle-log > div.inner.message-log > div:nth-child(8) > div > details')
+            // document.querySelector('#' + id + ' > div.battle-log > div.inner.message-log > div:nth-child(8) > div > details')
 
-        for (const infoBox of document.querySelector('#' + id + ' > div.battle-log > div.inner.message-log').getElementsByClassName('infobox')) {
+            for (const infoBox of document.querySelector('#' + id + ' > div.battle-log > div.inner.message-log').getElementsByClassName('infobox')) {
 
-            const leftUserName = document.querySelector('#' + id + ' > div.battle > div > div.leftbar > div > strong').innerText;
-            // console.log(leftUserName);
-            // console.log(infoBox.getElementsByTagName('summary')[0].innerText.replace(/.* /g, ''));
+                const leftUserName = document.querySelector('#' + id + ' > div.battle > div > div.leftbar > div > strong').innerText;
+                // console.log(leftUserName);
+                // console.log(infoBox.getElementsByTagName('summary')[0].innerText.replace(/.* /g, ''));
 
-            if (leftUserName !== infoBox.getElementsByTagName('summary')[0].innerText.replace(/Open Team Sheet for /g, '')) {
-                document.querySelector('#' + id + ' > div.battle-log > div.inner.message-log').prepend(createFixedTeamSheetPanel(id, infoBox));
+                if (leftUserName !== infoBox.getElementsByTagName('summary')[0].innerText.replace(/Open Team Sheet for /g, '')) {
+                    document.querySelector('#' + id + ' > div.battle-log > div.inner.message-log').prepend(createFixedTeamSheetPanel(id, infoBox));
+                }
+
             }
-
-        }
         }
         // console.log(document.getElementsByClassName('usernametext').innerText);
     });
@@ -91,7 +91,6 @@ function createFixedTeamSheetPanel(id, infoBox) {
     fixedTeamSheetPanelElement.style.backgroundColor = '#ffffff';
     fixedTeamSheetPanelElement.style.position = 'fixed';
     fixedTeamSheetPanelElement.style.zIndex = '2';
-    fixedTeamSheetPanelElement.style.marginTop = '10px';
     // fixedTeamSheetPanelElement.style.marginLeft = '8px';
 
     const fixedTeamSheetPanelTopElement = document.createElement('div');
@@ -120,13 +119,13 @@ function createFixedTeamSheetPanel(id, infoBox) {
     let imageHtml = '';
     let textHtml = '';
     let isSkip = true;
-    const formattedHtmlList = infoBox.getElementsByTagName('details')[0].innerHTML.replace(/(<[^/])/g,'\n$1').replace(/<br>/g, '').replace(/^\n/g, '').split('\n');
+    const formattedHtmlList = infoBox.getElementsByTagName('details')[0].innerHTML.replace(/(<[^/])/g, '\n$1').replace(/<br>/g, '').replace(/^\n/g, '').split('\n');
     console.log(formattedHtmlList);
     for (const formattedHtml of formattedHtmlList) {
         if (formattedHtml.indexOf('<span class="picon"') === 0) {
             imageHtml += formattedHtml;
         } else if (formattedHtml.indexOf('<span class="itemicon"') === 0) {
-            imageHtml += formattedHtml.replace(/(style=")/g,'$1scale: 0.8; ');
+            imageHtml += formattedHtml.replace(/(style=")/g, '$1scale: 0.8; ');
         } else if (formattedHtml.indexOf('Ability:') === 0) {
             textHtml += formattedHtml.replace(/\(.*\)/g, '').trim() + '<br>';
             isSkip = false;
