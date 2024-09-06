@@ -289,7 +289,7 @@ function createInfoElement(stats, nature, item) {
     infoElement.append(durabilitySeparateElement);
 
     const durabilityHdLabelElement = document.createElement('span');
-    durabilityHdLabelElement.innerHTML = "SpA ";
+    durabilityHdLabelElement.innerHTML = "SpD ";
     durabilityHdLabelElement.style.fontSize = "11px";
     infoElement.append(durabilityHdLabelElement);
 

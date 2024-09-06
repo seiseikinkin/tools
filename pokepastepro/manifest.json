@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Pokepaste Pro",
   "short_name": "Pokepaste Pro",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Add helpful information to Pokepaste.",
   "icons": {
     "16": "images/pokepastepro16.png",
