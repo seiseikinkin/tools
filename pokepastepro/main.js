@@ -8,7 +8,7 @@
         const pasteElement = getPasteElement(index);
         pasteElement.style.fontFamily = '"SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", "Courier", "monospace"';
         pasteElement.style.lineHeight = "1.4em";
-        pasteElement.style.width = "400px";
+        pasteElement.style.width = "370px";
 
         const paste = pasteElement.textContent.replaceAll(/\n/g, "");
 
@@ -43,6 +43,8 @@
         // getImageElement(index).before(getTeraTypeIcon(teraType));
         const infoElement = createInfoElement(stats, nature, item);
         pasteElement.append(infoElement);
+
+        //getImageElement(index).children[0].src = "https://chiy.uk/256/" + name.toLowerCase();
 
         index++;
     }
@@ -189,16 +191,18 @@ function createInfoElement(stats, nature, item) {
     const infoElement = document.createElement('div');
 
     const statsLabelElement = document.createElement('span');
-    statsLabelElement.innerHTML = "Lv50 Stats: ";
+    statsLabelElement.innerHTML = "Stats: ";
     statsLabelElement.style.color = "#a0a0a0";
     infoElement.append(statsLabelElement);
 
     const statsHpElement = document.createElement('span');
     statsHpElement.innerHTML = stats[0];
+    statsHpElement.style.color = "#ffffff";
     infoElement.append(statsHpElement);
 
     const statsSeparate1Element = document.createElement('span');
     statsSeparate1Element.innerHTML = " - ";
+    statsSeparate1Element.style.color = "#ffffff";
     infoElement.append(statsSeparate1Element);
 
     const statsAtElement = document.createElement('span');
@@ -207,11 +211,14 @@ function createInfoElement(stats, nature, item) {
         statsAtElement.style.color = red;
     } else if (nature[1] === 0.9) {
         statsAtElement.style.color = blue;
+    } else {
+        statsAtElement.style.color = "#ffffff";
     }
     infoElement.append(statsAtElement);
 
     const statsSeparate2Element = document.createElement('span');
     statsSeparate2Element.innerHTML = " - ";
+    statsSeparate2Element.style.color = "#ffffff";
     infoElement.append(statsSeparate2Element);
 
     const statsDfElement = document.createElement('span');
@@ -220,11 +227,14 @@ function createInfoElement(stats, nature, item) {
         statsDfElement.style.color = red;
     } else if (nature[2] === 0.9) {
         statsDfElement.style.color = blue;
+    } else {
+        statsDfElement.style.color = "#ffffff";
     }
     infoElement.append(statsDfElement);
 
     const statsSeparate3Element = document.createElement('span');
     statsSeparate3Element.innerHTML = " - ";
+    statsSeparate3Element.style.color = "#ffffff";
     infoElement.append(statsSeparate3Element);
 
     const statsSaElement = document.createElement('span');
@@ -233,11 +243,14 @@ function createInfoElement(stats, nature, item) {
         statsSaElement.style.color = red;
     } else if (nature[3] === 0.9) {
         statsSaElement.style.color = blue;
+    } else {
+        statsSaElement.style.color = "#ffffff";
     }
     infoElement.append(statsSaElement);
 
     const statsSeparate4Element = document.createElement('span');
     statsSeparate4Element.innerHTML = " - ";
+    statsSeparate4Element.style.color = "#ffffff";
     infoElement.append(statsSeparate4Element);
 
     const statsSdElement = document.createElement('span');
@@ -246,11 +259,14 @@ function createInfoElement(stats, nature, item) {
         statsSdElement.style.color = red;
     } else if (nature[4] === 0.9) {
         statsSdElement.style.color = blue;
+    } else {
+        statsSdElement.style.color = "#ffffff";
     }
     infoElement.append(statsSdElement);
 
     const statsSeparate5Element = document.createElement('span');
     statsSeparate5Element.innerHTML = " - ";
+    statsSeparate5Element.style.color = "#ffffff";
     infoElement.append(statsSeparate5Element);
 
     const statsSpElement = document.createElement('span');
@@ -259,6 +275,8 @@ function createInfoElement(stats, nature, item) {
         statsSpElement.style.color = red;
     } else if (nature[5] === 0.9) {
         statsSpElement.style.color = blue;
+    } else {
+        statsSpElement.style.color = "#ffffff";
     }
     infoElement.append(statsSpElement);
 
@@ -274,6 +292,7 @@ function createInfoElement(stats, nature, item) {
     const durabilityHbLabelElement = document.createElement('span');
     durabilityHbLabelElement.innerHTML = "Def ";
     durabilityHbLabelElement.style.fontSize = "11px";
+    durabilityHbLabelElement.style.color = "#ffffff";
     infoElement.append(durabilityHbLabelElement);
 
     const durabilityHbElement = document.createElement('span');
@@ -282,15 +301,18 @@ function createInfoElement(stats, nature, item) {
     } else {
         durabilityHbElement.innerHTML = stats[0] * stats[2];
     }
+    durabilityHbElement.style.color = "#ffffff";
     infoElement.append(durabilityHbElement);
 
     const durabilitySeparateElement = document.createElement('span');
     durabilitySeparateElement.innerHTML = " / ";
+    durabilitySeparateElement.style.color = "#ffffff";
     infoElement.append(durabilitySeparateElement);
 
     const durabilityHdLabelElement = document.createElement('span');
     durabilityHdLabelElement.innerHTML = "SpD ";
     durabilityHdLabelElement.style.fontSize = "11px";
+    durabilityHdLabelElement.style.color = "#ffffff";
     infoElement.append(durabilityHdLabelElement);
 
     const durabilityHdElement = document.createElement('span');
@@ -299,6 +321,7 @@ function createInfoElement(stats, nature, item) {
     } else {
         durabilityHdElement.innerHTML = stats[0] * stats[4];
     }
+    durabilityHdElement.style.color = "#ffffff";
     infoElement.append(durabilityHdElement);
 
     const newline2Element = document.createElement('span');
@@ -306,43 +329,51 @@ function createInfoElement(stats, nature, item) {
     infoElement.append(newline2Element);
 
     const speedRefLabelElement = document.createElement('span');
-    speedRefLabelElement.innerHTML = "Speed Ref.: ";
+    speedRefLabelElement.innerHTML = "Spe Ref.: ";
     speedRefLabelElement.style.color = "#a0a0a0";
     infoElement.append(speedRefLabelElement);
 
     const speedRef067LabelElement = document.createElement('span');
     speedRef067LabelElement.innerHTML = "0.67x ";
     speedRef067LabelElement.style.fontSize = "11px";
+    speedRef067LabelElement.style.color = "#ffffff";
     infoElement.append(speedRef067LabelElement);
 
     const speedRef067Element = document.createElement('span');
     speedRef067Element.innerHTML = parseInt(stats[5] / 1.5);
+    speedRef067Element.style.color = "#ffffff";
     infoElement.append(speedRef067Element);
 
     const speedRefSeparate1Element = document.createElement('span');
     speedRefSeparate1Element.innerHTML = " / ";
+    speedRefSeparate1Element.style.color = "#ffffff";
     infoElement.append(speedRefSeparate1Element);
 
     const speedRef15LabelElement = document.createElement('span');
     speedRef15LabelElement.innerHTML = "1.5x ";
     speedRef15LabelElement.style.fontSize = "11px";
+    speedRef15LabelElement.style.color = "#ffffff";
     infoElement.append(speedRef15LabelElement);
 
     const speedRef15Element = document.createElement('span');
     speedRef15Element.innerHTML = parseInt(stats[5] * 1.5);
+    speedRef15Element.style.color = "#ffffff";
     infoElement.append(speedRef15Element);
 
     const speedRefSeparate2Element = document.createElement('span');
     speedRefSeparate2Element.innerHTML = " / ";
+    speedRefSeparate2Element.style.color = "#ffffff";
     infoElement.append(speedRefSeparate2Element);
 
     const speedRef2LabelElement = document.createElement('span');
     speedRef2LabelElement.innerHTML = "2x ";
     speedRef2LabelElement.style.fontSize = "11px";
+    speedRef2LabelElement.style.color = "#ffffff";
     infoElement.append(speedRef2LabelElement);
 
     const speedRef2Element = document.createElement('span');
     speedRef2Element.innerHTML = stats[5] * 2;
+    speedRef2Element.style.color = "#ffffff";
     infoElement.append(speedRef2Element);
 
     infoElement.style.backgroundColor = "#202020";
