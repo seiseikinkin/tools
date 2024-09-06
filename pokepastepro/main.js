@@ -8,7 +8,7 @@
         const pasteElement = getPasteElement(index);
         pasteElement.style.fontFamily = '"SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", "Courier", "monospace"';
         pasteElement.style.lineHeight = "1.4em";
-        pasteElement.style.width = "370px";
+        pasteElement.style.width = "400px";
 
         const paste = pasteElement.textContent.replaceAll(/\n/g, "");
 
