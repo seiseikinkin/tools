@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="us">
+    <head>
+        <meta charset="utf-8" />
+        <title>multicalc</title>
+    </head>
+    <body>
+        <div id="damage_area" style="margin: 16px">
+            <div>
+                Damage_1: <input type="text" id="damage_1" style="width: 600px" />
+                <input type="button" id="button_clear_1" value="Clear" onclick="clear(1)" />
+            </div>
+            <div>
+                Damage_2: <input type="text" id="damage_2" style="width: 600px; margin-top: 8px" />
+                <input type="button" id="button_clear_2" value="Clear" onclick="clear(2)" />
+                <input type="button" id="button_copy_2" value="Copy from above" onclick="copy(1, 2)" />
+            </div>
+            <div>
+                Damage_3: <input type="text" id="damage_3" style="width: 600px; margin-top: 8px" />
+                <input type="button" id="button_clear_3" value="Clear" onclick="clear(3)" />
+                <input type="button" id="button_copy_3" value="Copy from above" onclick="copy(2, 3)" />
+            </div>
+            <div>
+                Damage_4: <input type="text" id="damage_4" style="width: 600px; margin-top: 8px" />
+                <input type="button" id="button_clear_4" value="Clear" onclick="clear(4)" />
+                <input type="button" id="button_copy_4" value="Copy from above" onclick="copy(3, 4)" />
+            </div>
+            <div>
+                Damage_5: <input type="text" id="damage_5" style="width: 600px; margin-top: 8px" />
+                <input type="button" id="button_clear_5" value="Clear" onclick="clear(5)" />
+                <input type="button" id="button_copy_5" value="Copy from above" onclick="copy(4, 5)" />
+            </div>
+            <div>
+                Damage_6: <input type="text" id="damage_6" style="width: 600px; margin-top: 8px" />
+                <input type="button" id="button_clear_6" value="Clear" onclick="clear(6)" />
+                <input type="button" id="button_copy_6" value="Copy from above" onclick="copy(5, 6)" />
+            </div>
+        </div>
+
+        <div id="hp_area" style="margin: 16px">
+            <span>HP: <input type="number" id="hp" value="150" min="0" style="width: 50px; text-align: right" /></span> <input type="button" id="calc" value="Calc" onclick="calc()" />
+        </div>
+
+        <div id="calc_area" style="margin: 16px"><span>Chance to 1HKO: </span><span id="result">...</span></div>
+
+        <script>
+            function copy(from, to) {
+                document.getElementById('damage_' + to).value = document.getElementById('damage_' + from).value;
+            }
+
+            function calc() {
+                let damages = [];
+                for (let i = 1; i <= 6; i++) {
+                    const damage = getDamage(i);
+                    if (damage) {
+                        damages.push(damage);
+                    }
+                }
+
+                if (damages.length === 0) {
+                    return;
+                }
+
+                const hp = Number(document.getElementById('hp').value);
+
+                const percentage = countCombinationsRowWise(damages, hp);
+
+                document.getElementById('result').innerText = percentage + '%';
+            }
+
+            function getDamage(num) {
+                const id = 'damage_' + num;
+                const damage = document
+                    .getElementById(id)
+                    .value.replace(/[^,1234567890]/g, '')
+                    .split(',');
+
+                if (damage.length != 16) {
+                    return 0;
+                }
+
+                for (const val of damage) {
+                    if (val.length === 0) {
+                        return 0;
+                    }
+                }
+
+                return damage;
+            }
+
+            function countCombinationsRowWise(array, value) {
+                const rowCount = array.length; // 1〜6
+                const colCount = array[0].length; // 常に16
+
+                // バリデーション
+                if (!Array.isArray(array) || rowCount < 1 || rowCount > 6) {
+                    throw new Error('1〜6行の2次元配列を渡してください');
+                }
+                if (array.some((row) => !Array.isArray(row) || row.length !== 16)) {
+                    throw new Error('各行は16個の要素を持つ必要があります');
+                }
+
+                let count = 0;
+
+                function recurse(depth, sum) {
+                    if (depth === rowCount) {
+                        if (sum >= value) count++;
+                        return;
+                    }
+
+                    for (let i = 0; i < colCount; i++) {
+                        const num = Number(array[depth][i]); // 文字列もOK
+                        recurse(depth + 1, sum + num);
+                    }
+                }
+
+                recurse(0, 0);
+
+                const total = Math.pow(colCount, rowCount);
+                const ratio = count / total;
+                const percentage = ratio * 100;
+
+                return percentage;
+
+                return {
+                    count,
+                    total,
+                    ratio, // 例: 0.0123
+                    percentage, // 例: 1.23
+                };
+            }
+        </script>
+    </body>
+</html>
