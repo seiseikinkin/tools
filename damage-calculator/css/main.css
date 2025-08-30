@@ -1,0 +1,65 @@
+input,
+select,
+button {
+    font-family: Open Sans;
+}
+
+input[type='text'],
+.base,
+.level,
+.current-hp,
+.percent-hp {
+    padding-left: 4px;
+}
+
+.evs {
+    margin-right: 4px;
+}
+.boost {
+    margin-left: 6px;
+    margin-right: 6px;
+}
+#customMon {
+    height: 80px;
+    width: 320px;
+}
+.select2-results {
+    height: 480px;
+    max-height: unset;
+}
+#spreadName {
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+.header,
+.wrapper > p,
+.footer,
+.panel-body > p,
+.panel-heading {
+    display: none;
+}
+.wrapper {
+    margin-top: 16px;
+}
+#damageValues {
+    cursor: pointer;
+    display: block;
+}
+.title-text {
+    height: 26px;
+}
+
+.big-text {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+#mainResult {
+    cursor: pointer;
+    display: none;
+}
+
+.pokemon-selector {
+    display: flex;
+    align-items: center;
+}

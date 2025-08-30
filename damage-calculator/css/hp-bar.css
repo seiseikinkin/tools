@@ -1,0 +1,47 @@
+.hp-wrap {
+    width: 132px;
+    font: 14px/1.2 system-ui, sans-serif;
+}
+.hp-dmg-bar {
+    position: relative;
+    width: 100%;
+    height: 12px;
+    background: #333;
+    border: 2px solid #2b2b2b;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.hp-seg {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    left: 0;
+    width: 0;
+    transition: left 0.25s ease, width 0.25s ease, background-color 0.25s ease;
+}
+.hp-green {
+    background: hsl(120, 85%, 45%);
+}
+.hp-yellow {
+    background: hsl(60, 85%, 45%);
+}
+.hp-red {
+    background: hsl(0, 85%, 50%);
+}
+.hp-dark-green {
+    background: hsl(120, 50%, 30%);
+}
+.hp-dark-yellow {
+    background: hsl(60, 50%, 30%);
+}
+.hp-dark-red {
+    background: hsl(0, 50%, 30%);
+}
+.hp-text {
+    margin-top: 6px;
+    text-align: right;
+}
+.hp-dmg-bar * {
+    transition: none !important;
+    animation: none !important;
+}
