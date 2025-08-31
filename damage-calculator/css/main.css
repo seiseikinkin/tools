@@ -1,3 +1,15 @@
+/* 文字列の選択禁止 */
+body {
+    user-select: none;
+}
+
+/* テキストボックスは選択可能 */
+input,
+textarea {
+    user-select: text;
+}
+
+/* フォント */
 input,
 select,
 button {
@@ -12,16 +24,13 @@ input[type='text'],
     padding-left: 4px;
 }
 
-.evs {
-    margin-right: 4px;
-}
 .boost {
     margin-left: 6px;
-    margin-right: 6px;
+    /* margin-right: 6px; */
 }
+
 #customMon {
-    height: 80px;
-    width: 320px;
+    /* height: 80px; */
 }
 .select2-results {
     height: 480px;
@@ -60,6 +69,146 @@ input[type='text'],
 }
 
 .pokemon-selector {
-    display: flex;
+    /* display: inline-flex;
+    align-items: center; */
+}
+
+.panel {
+    box-shadow: none;
+}
+
+input[type='number'] {
+    text-align: right;
+    width: 28px !important;
+    padding-right: 4px;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.total {
+    display: block;
+    width: 28px;
+    text-align: right;
+}
+.ev-total {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.ev-left {
+    text-align: right;
+}
+
+.field-info {
+    width: 320px;
+}
+
+.poke-info {
+    width: 370px;
+}
+
+.btn-tera,
+.btn-max,
+.btn-transform {
+    margin: 0px 0px 0px 0px;
+    height: 12px;
+    border-radius: 4px;
+    line-height: 13px;
+    width: 58px !important;
+}
+
+.set-selector {
+    /* width: 200px; */
+}
+
+.btn-xxsmall {
+    /* height: 18px;
+    vertical-align: middle;
+    font-size: 9px; */
+}
+
+.only-csutom {
+    display: none;
+    margin-top: 2px"
+    /* display: none !important; */
+}
+
+.caption {
+    font-size: 0.8em;
+    /* font-size: 10px; */
+    margin-top: 4px;
+}
+
+.btn-boost {
+    height: 20px;
+    width: 18px;
+    vertical-align: middle;
+    font-size: 9px;
+}
+
+.stats-info label {
+    width: 44px;
+}
+
+.btn-item {
+    display: inline-flex !important;
     align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    margin: 0;
+    height: 30px !important;
+    width: 35px !important;
+}
+
+.ev-range {
+    width: 100px;
+}
+
+.btn-level {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    width: 35px !important;
+}
+
+.btn-rank {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    width: 18px !important;
+    height: 18px !important;
+    font-size: 10px;
+    vertical-align: text-bottom;
+}
+
+.info-group {
+    margin: 8px 0px 10px 0px;
+}
+
+.btn-nature {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    width: 26px !important;
+    height: 20px !important;
+}
+
+.mods {
+    width: 40px;
+    text-align: right
+}
+
+.setCalc {
+    width: 96% !important;
+}
+
+.btn-aurora-veil {
+    /* width: 100px; */
 }

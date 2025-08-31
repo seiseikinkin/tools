@@ -1,0 +1,92 @@
+.panel {
+    /* height: 660px; */
+    /* height: 720px; */
+    /* height: 750px; */
+}
+
+.panel-wrapper {
+    display: inline-flex;
+    vertical-align: top;
+}
+
+.field-info {
+    margin: 5px 1px 5px 1px;
+}
+
+.sidebar-info {
+    width: 130px;
+    margin-left: -5px;
+}
+
+#p1Sidebar {
+    width: 88px;
+}
+
+#p2Sidebar {
+    width: 172px;
+}
+
+.sidebar-info > div {
+    padding: 20px 0px 20px 0px;
+}
+
+.sidebarSlot {
+    display: inline-block;
+    /* width: 60px; */
+    width: 80px;
+}
+
+.sidebarSlot > .sc > .editsc,
+.sidebarSlot > .sc > .trashsc,
+#deleteL,
+#deleteR {
+    display: contents;
+}
+
+.sidebarAdd {
+    /* display: inline-block;
+    vertical-align: top; */
+}
+
+.addsc,
+#exportL,
+#exportR {
+    /* min-height: 44px; */
+    width: 60px !important;
+}
+
+.sidebarExportDelete {
+    /* display: inline-block; */
+    width: 100px;
+}
+
+.editsc,
+.trashsc,
+#deleteL {
+    /* margin-top: 2px; */
+    /* width: 28px !important; */
+    /* height: 20px !important; */
+}
+
+.sc {
+    display: inline-block;
+    width: 12px;
+}
+
+#p1Sidebar {
+    background-color: rgb(250, 210, 210);
+}
+
+#p2Sidebar {
+    background-color: rgb(232, 214, 245);
+}
+
+.icons {
+    display: flex;
+    width: 75px;
+    margin: -2px 0px 4px 0px;
+}
+
+.set-grounp {
+    margin-bottom: 0px;
+}

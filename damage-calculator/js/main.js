@@ -1,3 +1,7 @@
+document.addEventListener('contextmenu', function (e) {
+    e.preventDefault(); // 右クリックメニューを無効化
+});
+
 (function () {
     const observer = new MutationObserver(() => {
         updateSprite();
@@ -55,6 +59,32 @@ function updateSprite() {
     const pokemonNameR = document.getElementById('resultHeaderR').innerText.replaceAll(/'s\s.*/g, '');
     const pokemonImageR = pokemonNameR.replaceAll(/\s/g, '-').toLowerCase();
     document.getElementById('pokemonSpriteR').src = 'https://seiseikinkin.github.io/tools/image/minisprites/' + pokemonImageR + '.png';
+
+    const teraTypeL = document.getElementById('teraTypeL').value.toLowerCase();
+    document.getElementById('teraSpriteL').src = 'https://seiseikinkin.github.io/tools/image/teratype-icon/' + teraTypeL + '.png';
+
+    const teraTypeR = document.getElementById('teraTypeR').value.toLowerCase();
+    document.getElementById('teraSpriteR').src = 'https://seiseikinkin.github.io/tools/image/teratype-icon/' + teraTypeR + '.png';
+
+    for (side of ['L', 'R']) {
+        const totalHp = Number(document.getElementById('totalHp' + side).innerText);
+        const totalDf = Number(document.getElementById('totalDf' + side).innerText);
+        const totalSd = Number(document.getElementById('totalSd' + side).innerText);
+
+        const itemName = document.getElementsByClassName('item' + side)[1].value;
+        const isBoostDf = itemName === 'Eviolite' || itemName === 'Grassy Seed' || itemName === 'Electric Seed';
+        const boostDf = isBoostDf ? 1.5 : 1;
+        const isBoostSd = itemName === 'Eviolite' || itemName === 'Psychic Seed' || itemName === 'Misty Seed' || itemName === 'Assault Vest';
+        const boostSd = isBoostSd ? 1.5 : 1;
+
+        const modsDfElement = document.getElementById('modsDf' + side);
+        modsDfElement.innerText = Math.floor(totalHp * totalDf * boostDf);
+        modsDfElement.style.color = isBoostDf ? '#CC0000' : 'black';
+
+        const modsSdElement = document.getElementById('modsSd' + side);
+        modsSdElement.innerText = Math.floor(totalHp * totalSd * boostSd);
+        modsSdElement.style.color = isBoostSd ? '#CC0000' : 'black';
+    }
 
     // mainResult
     const mainResult = document.getElementById('mainResult').innerText;

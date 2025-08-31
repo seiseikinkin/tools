@@ -10,3 +10,25 @@
     height: 20px;
     width: 20px;
 }
+
+#itemSpriteL,
+#itemSpriteR {
+    margin-top: 8px;
+    margin-bottom: 2px;
+}
+
+#teraSpriteL,
+#teraSpriteR {
+    margin-top: 8px;
+    margin-bottom: 2px;
+    margin-left: 8px;
+}
+
+.tera-sprite {
+    height: 20px;
+    width: 20px;
+}
+
+.pokemon-selector > .select2-container {
+    margin-top: 4px;
+}
