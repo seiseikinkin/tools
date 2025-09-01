@@ -251,3 +251,7 @@ input[type="number"] {
     border-radius: 2px;
     border: solid 1px gray;
 }
+
+#header {
+    display: flex;
+}

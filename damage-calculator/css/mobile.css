@@ -15,11 +15,15 @@ body {
     }
 
     .wrapper {
-        padding: 0px 5px;
+        padding: 5px;
     }
 
     .hide-mobile {
         display: none !important;
+    }
+
+    #header {
+        padding: 5px 2px 0px 2px;
     }
 
     #resultGroup {
