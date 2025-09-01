@@ -238,9 +238,16 @@ button:hover {
 
 select {
     border-radius: 2px;
+    border: solid 1px gray;
 }
 
 .crit-btn {
     border-radius: 2px;
     height: 11px;
+}
+
+input[type="text"],
+input[type="number"] {
+    border-radius: 2px;
+    border: solid 1px gray;
 }
