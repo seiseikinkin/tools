@@ -2,3 +2,72 @@ html,
 body {
     -webkit-text-size-adjust: 100%; /* Safariが文字を自動拡大しないようにする */
 }
+
+/* 幅が768px以下（スマホ・タブレット想定）のときだけ */
+@media screen and (max-width: 768px) {
+    html,
+    body,
+    .wrapper {
+        width: 470px;
+        margin: 0 auto;
+    }
+
+    .hide-mobile {
+        display: none;
+    }
+
+    #resultGroup {
+        display: block;
+    }
+
+    .move-result-subgroup {
+        display: block;
+        margin-top: 8px;
+        min-width: 456px;
+        width: 456px;
+    }
+
+    .main-result-group {
+        display: block;
+        margin-top: 8px;
+        width: 440px;
+    }
+
+    .field-info {
+        margin-left: 5px;
+        margin-right: 5px;
+        width: 458px;
+    }
+
+    #capture {
+        margin-top: 308px !important;
+        width: 456px !important;
+    }
+
+    #dmgTextWrapper {
+        padding: 10px 6px 0px 6px;
+    }
+
+    #p2Sidebar {
+        width: 88px;
+    }
+
+    #info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .panel-poke-info {
+        display: flex;
+        order: 0;
+    }
+
+    .panel-field-info {
+        display: flex;
+        order: 1;
+    }
+
+    #customMon {
+        width: 420px;
+    }
+}
