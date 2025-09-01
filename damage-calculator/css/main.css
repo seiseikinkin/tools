@@ -230,6 +230,7 @@ button {
     border-radius: 2px;
     border: solid 1px gray;
     background-color: #efefef;
+    color: black;
 }
 
 button:hover {
@@ -239,6 +240,7 @@ button:hover {
 select {
     border-radius: 2px;
     border: solid 1px gray;
+    color: black;
 }
 
 .crit-btn {
