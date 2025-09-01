@@ -12,7 +12,10 @@ body {
         min-width: 470px;
         max-width: 470px;
         margin: 0 auto;
-        padding: 0;
+    }
+
+    .wrapper {
+        padding: 0px 5px;
     }
 
     .hide-mobile {
@@ -45,11 +48,6 @@ body {
         margin-left: 5px;
         margin-right: 5px;
         width: 458px;
-    }
-
-    #capture {
-        margin-top: 308px !important;
-        width: 456px !important;
     }
 
     #dmgTextWrapper {
