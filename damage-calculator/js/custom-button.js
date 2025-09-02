@@ -81,3 +81,12 @@ function changeEv(idName, ev) {
     }
     evElement.dispatchEvent(new Event('keyup'));
 }
+
+for (const evs2Element of document.getElementsByClassName('evs2')) {
+    evs2Element.addEventListener('change', (e) => {
+        const id = evs2Element.id.replace('2', '');
+        const evsElement = document.getElementById(id);
+        evsElement.value = evs2Element.value;
+        evsElement.dispatchEvent(new Event('change'));
+    });
+}

@@ -88,6 +88,12 @@ input[type='number'] {
     padding-right: 4px;
 }
 
+input[type='tel'] {
+    text-align: right;
+    width: 28px !important;
+    padding-right: 4px;
+}
+
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;

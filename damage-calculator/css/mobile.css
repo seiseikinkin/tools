@@ -1,7 +1,7 @@
 html,
 body {
     -webkit-text-size-adjust: 100%; /* Safariが文字を自動拡大しないようにする */
-    touch-action: manipulation;
+    /* touch-action: manipulation; */
 }
 
 .mobile-inline,
@@ -91,7 +91,7 @@ body {
     .mobile-inline {
         display: inline-block;
         margin-left: auto;
-        margin-right: 4px;
+        margin-right: 20px;
     }
 
     .mobile-block {
