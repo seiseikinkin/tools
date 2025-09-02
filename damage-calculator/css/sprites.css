@@ -12,13 +12,17 @@
 }
 
 #itemSpriteL,
-#itemSpriteR {
+#itemSpriteR,
+#itemSpriteL2,
+#itemSpriteR2 {
     margin-top: 8px;
     margin-bottom: 2px;
 }
 
 #teraSpriteL,
-#teraSpriteR {
+#teraSpriteR,
+#teraSpriteL2,
+#teraSpriteR2 {
     margin-top: 8px;
     margin-bottom: 2px;
     margin-left: 8px;

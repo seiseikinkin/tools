@@ -47,26 +47,82 @@ function updateSprite() {
     const itemNameL = document.getElementById('s2id_autogen25').children[0].children[0].innerText.replaceAll(/\s/g, '').toLowerCase();
     //document.getElementById('itemSpriteL').src = 'https://www.serebii.net/itemdex/sprites/' + itemNameL + '.png';
     document.getElementById('itemSpriteL').src = 'https://seiseikinkin.github.io/tools/image/itemsprites/' + itemNameL + '.png';
+    document.getElementById('itemSpriteL2').src = 'https://seiseikinkin.github.io/tools/image/itemsprites/' + itemNameL + '.png';
 
     const itemNameR = document.getElementById('s2id_autogen27').children[0].children[0].innerText.replaceAll(/\s/g, '').toLowerCase();
     //document.getElementById('itemSpriteR').src = 'https://www.serebii.net/itemdex/sprites/' + itemNameR + '.png';
     document.getElementById('itemSpriteR').src = 'https://seiseikinkin.github.io/tools/image/itemsprites/' + itemNameR + '.png';
+    document.getElementById('itemSpriteR2').src = 'https://seiseikinkin.github.io/tools/image/itemsprites/' + itemNameR + '.png';
 
     const pokemonNameL = document.getElementById('resultHeaderL').innerText.replaceAll(/'s\s.*/g, '');
     const pokemonImageL = pokemonNameL.replaceAll(/\s/g, '-').toLowerCase();
     document.getElementById('pokemonSpriteL').src = 'https://seiseikinkin.github.io/tools/image/minisprites/' + pokemonImageL + '.png';
+    document.getElementById('pokemonSpriteL2').src = 'https://seiseikinkin.github.io/tools/image/minisprites/' + pokemonImageL + '.png';
 
     const pokemonNameR = document.getElementById('resultHeaderR').innerText.replaceAll(/'s\s.*/g, '');
     const pokemonImageR = pokemonNameR.replaceAll(/\s/g, '-').toLowerCase();
     document.getElementById('pokemonSpriteR').src = 'https://seiseikinkin.github.io/tools/image/minisprites/' + pokemonImageR + '.png';
+    document.getElementById('pokemonSpriteR2').src = 'https://seiseikinkin.github.io/tools/image/minisprites/' + pokemonImageR + '.png';
 
     const teraTypeL = document.getElementById('teraTypeL').value;
     // document.getElementById('teraSpriteL').src = 'https://seiseikinkin.github.io/tools/image/teratype-icon/' + teraTypeL.toLowerCase() + '.png';
+    document.getElementById('teraSpriteL2').src = 'https://seiseikinkin.github.io/tools/image/teratype-icon/' + teraTypeL.toLowerCase() + '.png';
     document.getElementById('tera' + teraTypeL + 'L').checked = true;
 
     const teraTypeR = document.getElementById('teraTypeR').value;
     // document.getElementById('teraSpriteR').src = 'https://seiseikinkin.github.io/tools/image/teratype-icon/' + teraTypeR.toLowerCase() + '.png';
+    document.getElementById('teraSpriteR2').src = 'https://seiseikinkin.github.io/tools/image/teratype-icon/' + teraTypeR.toLowerCase() + '.png';
     document.getElementById('tera' + teraTypeR + 'R').checked = true;
+
+    document.getElementById('evHpL2').value = document.getElementById('evHpL').value;
+    document.getElementById('totalHpL2').innerText = document.getElementById('totalHpL').innerText;
+
+    document.getElementById('evAtL2').value = document.getElementById('evAtL').value;
+    document.getElementById('totalAtL2').innerText = document.getElementById('totalAtL').innerText;
+
+    document.getElementById('evDfL2').value = document.getElementById('evDfL').value;
+    document.getElementById('totalDfL2').innerText = document.getElementById('totalDfL').innerText;
+
+    document.getElementById('evSaL2').value = document.getElementById('evSaL').value;
+    document.getElementById('totalSaL2').innerText = document.getElementById('totalSaL').innerText;
+
+    document.getElementById('evSdL2').value = document.getElementById('evSdL').value;
+    document.getElementById('totalSdL2').innerText = document.getElementById('totalSdL').innerText;
+
+    document.getElementById('evSpL2').value = document.getElementById('evSpL').value;
+    document.getElementById('totalSpL2').innerText = document.getElementById('totalSpL').innerText;
+
+    document.getElementById('evTotalL2').innerText = document.getElementById('evTotalL').innerText;
+    if (510 < Number(document.getElementById('evTotalL').innerText)) {
+        document.getElementById('evTotalL2').style.color = '#CC0000';
+    } else {
+        document.getElementById('evTotalL2').style.color = '#000000';
+    }
+
+    document.getElementById('evHpR2').value = document.getElementById('evHpR').value;
+    document.getElementById('totalHpR2').innerText = document.getElementById('totalHpR').innerText;
+
+    document.getElementById('evAtR2').value = document.getElementById('evAtR').value;
+    document.getElementById('totalAtR2').innerText = document.getElementById('totalAtR').innerText;
+
+    document.getElementById('evDfR2').value = document.getElementById('evDfR').value;
+    document.getElementById('totalDfR2').innerText = document.getElementById('totalDfR').innerText;
+
+    document.getElementById('evSaR2').value = document.getElementById('evSaR').value;
+    document.getElementById('totalSaR2').innerText = document.getElementById('totalSaR').innerText;
+
+    document.getElementById('evSdR2').value = document.getElementById('evSdR').value;
+    document.getElementById('totalSdR2').innerText = document.getElementById('totalSdR').innerText;
+
+    document.getElementById('evSpR2').value = document.getElementById('evSpR').value;
+    document.getElementById('totalSpR2').innerText = document.getElementById('totalSpR').innerText;
+
+    document.getElementById('evTotalR2').innerText = document.getElementById('evTotalR').innerText;
+    if (510 < Number(document.getElementById('evTotalR').innerText)) {
+        document.getElementById('evTotalR2').style.color = '#CC0000';
+    } else {
+        document.getElementById('evTotalR2').style.color = '#000000';
+    }
 
     for (side of ['L', 'R']) {
         const totalHp = Number(document.getElementById('totalHp' + side).innerText);

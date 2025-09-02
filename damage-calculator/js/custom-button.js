@@ -70,3 +70,14 @@ function changeTeraR() {
     teraElement.value = selected.value;
     teraElement.dispatchEvent(new Event('change'));
 }
+
+function changeEv(idName, ev) {
+    const evElement = document.getElementById(idName);
+    const val = Number(evElement.value);
+    if (0 < ev) {
+        evElement.value = 244 < val ? 252 : Math.ceil((val + 8) / 8.0) * 8 - 4;
+    } else {
+        evElement.value = val < 12 ? 0 : Math.ceil((val - 8) / 8.0) * 8 - 4;
+    }
+    evElement.dispatchEvent(new Event('keyup'));
+}

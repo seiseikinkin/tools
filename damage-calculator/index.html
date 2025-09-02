@@ -81,43 +81,221 @@
             <div id="resultGroup">
                 <div class="move-result-group" title="Select a move to show detailed results.">
                     <div class="move-result-subgroup">
-                        <div class="result-move-header"><span id="resultHeaderL">Pokémon 1's Moves (select one to show detailed results)</span></div>
-                        <div>
-                            <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveL1" checked="checked" /><label class="btn btn-xxxwide btn-top" for="resultMoveL1"
-                                >Hi Jump Kick</label
-                            >
-                            <span id="resultDamageL1">??? - ???%</span>
+                        <div style="display: inline-block; vertical-align: top; margin: 2px 4px 4px 4px">
+                            <div class="icons mobile-flex" style="margin: 2px 0px 8px -6px">
+                                <img id="pokemonSpriteL2" src="https://seiseikinkin.github.io/tools/image/minisprites/abomasnow.png" />
+                                <img id="itemSpriteL2" class="item-sprite" src="https://seiseikinkin.github.io/tools/image/itemsprites/focussash.png" />
+                                <img id="teraSpriteL2" class="tera-sprite" src="https://seiseikinkin.github.io/tools/image/teratype-icon/water.png" />
+                            </div>
+                            <div class="result-move-header hide-mobile"><span id="resultHeaderL">Pokémon 1's Moves (select one to show detailed results)</span></div>
+                            <div>
+                                <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveL1" checked="checked" /><label class="btn btn-xxxwide btn-top" for="resultMoveL1"
+                                    >Hi Jump Kick</label
+                                >
+                                <span id="resultDamageL1">??? - ???%</span>
+                            </div>
+                            <div>
+                                <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveL2" /><label class="btn btn-xxxwide btn-mid" for="resultMoveL2">Falcon Punch</label>
+                                <span id="resultDamageL2">??? - ???%</span>
+                            </div>
+                            <div>
+                                <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveL3" /><label class="btn btn-xxxwide btn-mid" for="resultMoveL3"
+                                    >Suspicious Odor</label
+                                >
+                                <span id="resultDamageL3">??? - ???%</span>
+                            </div>
+                            <div>
+                                <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveL4" /><label class="btn btn-xxxwide btn-bottom" for="resultMoveL4">Tombstoner</label>
+                                <span id="resultDamageL4">??? - ???%</span>
+                            </div>
                         </div>
-                        <div>
-                            <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveL2" /><label class="btn btn-xxxwide btn-mid" for="resultMoveL2">Falcon Punch</label>
-                            <span id="resultDamageL2">??? - ???%</span>
-                        </div>
-                        <div>
-                            <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveL3" /><label class="btn btn-xxxwide btn-mid" for="resultMoveL3">Suspicious Odor</label>
-                            <span id="resultDamageL3">??? - ???%</span>
-                        </div>
-                        <div>
-                            <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveL4" /><label class="btn btn-xxxwide btn-bottom" for="resultMoveL4">Tombstoner</label>
-                            <span id="resultDamageL4">??? - ???%</span>
+                        <div class="mobile-inline" style="vertical-align: top; min-width: 172px">
+                            <div class="stats-info">
+                                <table>
+                                    <tr>
+                                        <th style="width: 28px"></th>
+                                        <th></th>
+                                        <th style="width: 8px"></th>
+                                        <th class="gen-specific g3 g4 g5 g6 g7 g8 g9">EVs</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td><label>HP</label></td>
+                                        <td><span id="totalHpL2" class="total">197</span></td>
+                                        <td></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evHpL2" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="252" /></td>
+                                        <td>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evHpL', -1)">－</button>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evHpL', 1)">＋</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Atk</label></td>
+                                        <td><span id="totalAtL2" class="total">87</span></td>
+                                        <td></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evAtL2" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evAtL', -1)">－</button>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evAtL', 1)">＋</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Def</label></td>
+                                        <td><span id="totalDfL2" class="total">95</span></td>
+                                        <td></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evDfL2" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evDfL', -1)">－</button>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evDfL', 1)">＋</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>SpA</label></td>
+                                        <td><span id="totalSaL2" class="total">154</span></td>
+                                        <td></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evSaL2" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="220" /></td>
+                                        <td>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evSaL', -1)">－</button>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evSaL', 1)">＋</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>SpD</label></td>
+                                        <td><span id="totalSdL2" class="total">105</span></td>
+                                        <td></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evSdL2" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evSdL', -1)">－</button>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evSdL', 1)">＋</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Spe</label></td>
+                                        <td><span id="totalSpL2" class="total">85</span></td>
+                                        <td></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evSpL2" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="36" /></td>
+                                        <td>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evSpL', -1)">－</button>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evSpL', 1)">＋</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td id="evTotalL2" style="font-size: 0.8em; text-align: center">&nbsp;</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div class="move-result-subgroup">
-                        <div class="result-move-header"><span id="resultHeaderR">Pokémon 2's Moves (select one to show detailed results)</span></div>
-                        <div>
-                            <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveR1" /><label class="btn btn-xxxwide btn-top" for="resultMoveR1">Hi Jump Kick</label>
-                            <span id="resultDamageR1">??? - ???%</span>
+                        <div style="display: inline-block; vertical-align: top; margin: 2px 4px 4px 4px">
+                            <div class="icons mobile-flex" style="margin: 2px 0px 8px -6px">
+                                <img id="pokemonSpriteR2" src="https://seiseikinkin.github.io/tools/image/minisprites/abomasnow.png" />
+                                <img id="itemSpriteR2" class="item-sprite" src="https://seiseikinkin.github.io/tools/image/itemsprites/focussash.png" />
+                                <img id="teraSpriteR2" class="tera-sprite" src="https://seiseikinkin.github.io/tools/image/teratype-icon/water.png" />
+                            </div>
+                            <div class="result-move-header hide-mobile"><span id="resultHeaderR">Pokémon 2's Moves (select one to show detailed results)</span></div>
+                            <div>
+                                <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveR1" /><label class="btn btn-xxxwide btn-top" for="resultMoveR1">Hi Jump Kick</label>
+                                <span id="resultDamageR1">??? - ???%</span>
+                            </div>
+                            <div>
+                                <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveR2" /><label class="btn btn-xxxwide btn-mid" for="resultMoveR2">Falcon Punch</label>
+                                <span id="resultDamageR2">??? - ???%</span>
+                            </div>
+                            <div>
+                                <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveR3" /><label class="btn btn-xxxwide btn-mid" for="resultMoveR3"
+                                    >Suspicious Odor</label
+                                >
+                                <span id="resultDamageR3">??? - ???%</span>
+                            </div>
+                            <div>
+                                <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveR4" /><label class="btn btn-xxxwide btn-bottom" for="resultMoveR4">Tombstoner</label>
+                                <span id="resultDamageR4">??? - ???%</span>
+                            </div>
                         </div>
-                        <div>
-                            <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveR2" /><label class="btn btn-xxxwide btn-mid" for="resultMoveR2">Falcon Punch</label>
-                            <span id="resultDamageR2">??? - ???%</span>
-                        </div>
-                        <div>
-                            <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveR3" /><label class="btn btn-xxxwide btn-mid" for="resultMoveR3">Suspicious Odor</label>
-                            <span id="resultDamageR3">??? - ???%</span>
-                        </div>
-                        <div>
-                            <input class="result-move btn-input" type="radio" name="resultMove" id="resultMoveR4" /><label class="btn btn-xxxwide btn-bottom" for="resultMoveR4">Tombstoner</label>
-                            <span id="resultDamageR4">??? - ???%</span>
+                        <div class="mobile-inline" style="vertical-align: top; min-width: 172px">
+                            <div class="stats-info">
+                                <table>
+                                    <tr>
+                                        <th style="width: 28px"></th>
+                                        <th></th>
+                                        <th style="width: 8px"></th>
+                                        <th class="gen-specific g3 g4 g5 g6 g7 g8 g9">EVs</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td><label>HP</label></td>
+                                        <td><span id="totalHpR2" class="total">197</span></td>
+                                        <td></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evHpR2" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="252" /></td>
+                                        <td>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evHpR', -1)">－</button>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evHpR', 1)">＋</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Atk</label></td>
+                                        <td><span id="totalAtR2" class="total">87</span></td>
+                                        <td></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evAtR2" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evAtR', -1)">－</button>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evAtR', 1)">＋</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Def</label></td>
+                                        <td><span id="totalDfR2" class="total">95</span></td>
+                                        <td></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evDfR2" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evDfR', -1)">－</button>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evDfR', 1)">＋</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>SpA</label></td>
+                                        <td><span id="totalSaR2" class="total">154</span></td>
+                                        <td></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evSaR2" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="220" /></td>
+                                        <td>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evSaR', -1)">－</button>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evSaR', 1)">＋</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>SpD</label></td>
+                                        <td><span id="totalSdR2" class="total">105</span></td>
+                                        <td></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evSdR2" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evSdR', -1)">－</button>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evSdR', 1)">＋</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Spe</label></td>
+                                        <td><span id="totalSpR2" class="total">85</span></td>
+                                        <td></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evSpR2" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="36" /></td>
+                                        <td>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evSpR', -1)">－</button>
+                                            <button type="button" class="btn-ev" onclick="changeEv('evSpR', 1)">＋</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td id="evTotalR2" style="font-size: 0.8em; text-align: center">&nbsp;</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -358,7 +536,7 @@
                                         <td><label>HP</label></td>
                                         <td><input class="base calc-trigger" value="100" type="number" disabled /></td>
                                         <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="ivs calc-trigger" type="number" min="0" max="31" value="31" /></td>
-                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evHpL" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
                                         <td class="gen-specific g1 g2 hide"><input class="dvs calc-trigger" value="15" disabled="disabled" /></td>
                                         <td><span id="totalHpL" class="total">341</span></td>
                                         <td></td>
@@ -367,7 +545,7 @@
                                         <td><label>Atk</label></td>
                                         <td><input class="base calc-trigger" value="100" type="number" disabled /></td>
                                         <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="ivs calc-trigger" type="number" min="0" max="31" value="31" /></td>
-                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evAtL" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
                                         <td class="gen-specific g1 g2 hide"><input class="dvs calc-trigger" value="15" /></td>
                                         <td><span id="totalAtL" class="total">236</span></td>
                                         <td>
@@ -394,7 +572,7 @@
                                         <td><label>Def</label></td>
                                         <td><input class="base calc-trigger" value="100" type="number" disabled /></td>
                                         <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="ivs calc-trigger" type="number" min="0" max="31" value="31" /></td>
-                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evDfL" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
                                         <td class="gen-specific g1 g2 hide"><input class="dvs calc-trigger" value="15" /></td>
                                         <td><span id="totalDfL" class="total">236</span></td>
                                         <td>
@@ -422,7 +600,7 @@
                                         <td><label>SpA</label></td>
                                         <td><input class="base calc-trigger" value="100" type="number" disabled /></td>
                                         <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="ivs calc-trigger" type="number" min="0" max="31" value="31" /></td>
-                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evSaL" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
                                         <td class="gen-specific g1 g2 hide"><input class="dvs calc-trigger" value="15" /></td>
                                         <td><span id="totalSaL" class="total">236</span></td>
                                         <td>
@@ -449,7 +627,7 @@
                                         <td><label>SpD</label></td>
                                         <td><input class="base calc-trigger" value="100" type="number" disabled /></td>
                                         <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="ivs calc-trigger" type="number" min="0" max="31" value="31" /></td>
-                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evSdL" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
                                         <td class="gen-specific g1 g2 hide"><input class="dvs calc-trigger" value="15" disabled="disabled" /></td>
                                         <td><span id="totalSdL" class="total">236</span></td>
                                         <td>
@@ -502,7 +680,7 @@
                                         <td><label>Spe</label></td>
                                         <td><input class="base calc-trigger" value="100" type="number" disabled /></td>
                                         <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="ivs calc-trigger" type="number" min="0" max="31" value="31" /></td>
-                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evSpL" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
                                         <td class="gen-specific g1 g2 hide"><input class="dvs calc-trigger" value="15" /></td>
                                         <td><span id="totalSpL" class="total">236</span></td>
                                         <td>
@@ -530,8 +708,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td class="ev-total">&nbsp;</td>
-                                        <td class="ev-left">&nbsp;</td>
+                                        <td id="evTotalL" class="ev-total">&nbsp;</td>
+                                        <td id="evLeftL" class="ev-left">&nbsp;</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -1759,7 +1937,9 @@
                                         <td><label>HP</label></td>
                                         <td><input class="base calc-trigger" value="100" type="number" disabled /></td>
                                         <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="ivs calc-trigger" type="number" min="0" max="31" value="31" /></td>
-                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" id="hpInputR" /></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                                            <input id="evHpR" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" id="hpInputR" />
+                                        </td>
                                         <td class="gen-specific g1 g2 hide"><input class="dvs calc-trigger" value="15" disabled="disabled" /></td>
                                         <td><span id="totalHpR" class="total">341</span></td>
                                         <td></td>
@@ -1768,7 +1948,7 @@
                                         <td><label>Atk</label></td>
                                         <td><input class="base calc-trigger" value="100" type="number" disabled /></td>
                                         <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="ivs calc-trigger" type="number" min="0" max="31" value="31" /></td>
-                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evAtR" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
                                         <td class="gen-specific g1 g2 hide"><input class="dvs calc-trigger" value="15" /></td>
                                         <td><span id="totalAtR" class="total">236</span></td>
                                         <td>
@@ -1795,7 +1975,7 @@
                                         <td><label>Def</label></td>
                                         <td><input class="base calc-trigger" value="100" type="number" disabled /></td>
                                         <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="ivs calc-trigger" type="number" min="0" max="31" value="31" /></td>
-                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evDfR" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
                                         <td class="gen-specific g1 g2 hide"><input class="dvs calc-trigger" value="15" /></td>
                                         <td><span id="totalDfR" class="total">236</span></td>
                                         <td>
@@ -1823,7 +2003,7 @@
                                         <td><label>SpA</label></td>
                                         <td><input class="base calc-trigger" value="100" type="number" disabled /></td>
                                         <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="ivs calc-trigger" type="number" min="0" max="31" value="31" /></td>
-                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evSaR" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
                                         <td class="gen-specific g1 g2 hide"><input class="dvs calc-trigger" value="15" /></td>
                                         <td><span id="totalSaR" class="total">236</span></td>
                                         <td>
@@ -1850,7 +2030,7 @@
                                         <td><label>SpD</label></td>
                                         <td><input class="base calc-trigger" value="100" type="number" disabled /></td>
                                         <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="ivs calc-trigger" type="number" min="0" max="31" value="31" /></td>
-                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evSdR" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
                                         <td class="gen-specific g1 g2 hide"><input class="dvs calc-trigger" value="15" disabled="disabled" /></td>
                                         <td><span id="totalSdR" class="total">236</span></td>
                                         <td>
@@ -1903,7 +2083,7 @@
                                         <td><label>Spe</label></td>
                                         <td><input class="base calc-trigger" value="100" type="number" disabled /></td>
                                         <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="ivs calc-trigger" type="number" min="0" max="31" value="31" /></td>
-                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
+                                        <td class="gen-specific g3 g4 g5 g6 g7 g8 g9"><input id="evSpR" class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" /></td>
                                         <td class="gen-specific g1 g2 hide"><input class="dvs calc-trigger" value="15" /></td>
                                         <td><span id="totalSpR" class="total">236</span></td>
                                         <td>
@@ -1931,8 +2111,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td class="ev-total">&nbsp;</td>
-                                        <td class="ev-left">&nbsp;</td>
+                                        <td id="evTotalR" class="ev-total">&nbsp;</td>
+                                        <td id="evLeftR" class="ev-left">&nbsp;</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>

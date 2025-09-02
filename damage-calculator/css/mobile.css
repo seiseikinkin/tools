@@ -3,6 +3,12 @@ body {
     -webkit-text-size-adjust: 100%; /* Safariが文字を自動拡大しないようにする */
 }
 
+.mobile-inline,
+.mobile-block,
+.mobile-flex {
+    display: none;
+}
+
 /* 幅が768px以下（スマホ・タブレット想定）のときだけ */
 @media screen and (max-width: 768px) {
     html,
@@ -36,7 +42,7 @@ body {
     }
 
     .move-result-subgroup {
-        display: block;
+        display: flex;
         margin-top: 8px;
         min-width: 456px;
         width: 456px;
@@ -79,5 +85,19 @@ body {
 
     #customMon {
         width: 420px;
+    }
+
+    .mobile-inline {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: 4px;
+    }
+
+    .mobile-block {
+        display: block;
+    }
+
+    .mobile-flex {
+        display: flex;
     }
 }
