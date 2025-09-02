@@ -1,6 +1,7 @@
 html,
 body {
     -webkit-text-size-adjust: 100%; /* Safariが文字を自動拡大しないようにする */
+    touch-action: manipulation;
 }
 
 .mobile-inline,
