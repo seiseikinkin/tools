@@ -69,7 +69,7 @@
                     <input class="gen btn-input" type="radio" name="gen" value="8" id="gen8" disabled /><label class="btn btn-small btn-mid" for="gen8">SWSH</label>
                     <input class="gen btn-input" type="radio" name="gen" value="9" id="gen9" checked="checked" disabled /><label class="btn btn-small btn-right" for="gen9">S/V</label>
                 </span>
-                <span id="version">Last update: 2025.09.02</span>
+                <span id="version">Last update: 2025-09-03</span>
             </div>
 
             <hr class="hide-mobile" />
@@ -193,7 +193,7 @@
                             <div class="icons">
                                 <img id="pokemonSpriteL" src="https://seiseikinkin.github.io/tools/image/minisprites/abomasnow.png" />
                                 <img id="itemSpriteL" class="item-sprite" src="https://seiseikinkin.github.io/tools/image/itemsprites/focussash.png" />
-                                <img id="teraSpriteL" class="tera-sprite" src="https://seiseikinkin.github.io/tools/image/teratype-icon/water.png" />
+                                <!-- <img id="teraSpriteL" class="tera-sprite" src="https://seiseikinkin.github.io/tools/image/teratype-icon/water.png" /> -->
                             </div>
 
                             <input type="text" class="set-selector calc-trigger" />&nbsp;&nbsp;
@@ -243,6 +243,47 @@
                                     <label class="btn btn-wide gen-specific g8 btn-tera" for="maxL" title="Dynamax this Pokémon?">Dynamax</label>
                                     <input class="tera move-tera calc-trigger btn-input" type="checkbox" id="teraL" />
                                     <label class="btn btn-wide gen-specific g9 btn-max" for="teraL" title="Terastalize this Pokémon?">Terastal</label>
+                                </div>
+
+                                <div class="gen-specific g9" style="margin-top: 6px">
+                                    <input type="radio" id="teraNormalL" name="teraRadioL" class="tera-radio" value="Normal" onclick="changeTeraL()" />
+                                    <label for="teraNormalL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/normal.png" alt="Normal" /></label>
+                                    <input type="radio" id="teraFireL" name="teraRadioL" class="tera-radio" value="Fire" onclick="changeTeraL()" />
+                                    <label for="teraFireL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/fire.png" alt="Fire" /></label>
+                                    <input type="radio" id="teraWaterL" name="teraRadioL" class="tera-radio" value="Water" onclick="changeTeraL()" />
+                                    <label for="teraWaterL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/water.png" alt="Water" /></label>
+                                    <input type="radio" id="teraGrassL" name="teraRadioL" class="tera-radio" value="Grass" onclick="changeTeraL()" />
+                                    <label for="teraGrassL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/grass.png" alt="Grass" /></label>
+                                    <input type="radio" id="teraElectricL" name="teraRadioL" class="tera-radio" value="Electric" onclick="changeTeraL()" />
+                                    <label for="teraElectricL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/electric.png" alt="Electric" /></label>
+                                    <input type="radio" id="teraIceL" name="teraRadioL" class="tera-radio" value="Ice" onclick="changeTeraL()" />
+                                    <label for="teraIceL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/ice.png" alt="Ice" /></label>
+                                    <input type="radio" id="teraFightingL" name="teraRadioL" class="tera-radio" value="Fighting" onclick="changeTeraL()" />
+                                    <label for="teraFightingL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/fighting.png" alt="Ice" /></label>
+                                    <input type="radio" id="teraPoisonL" name="teraRadioL" class="tera-radio" value="Poison" onclick="changeTeraL()" />
+                                    <label for="teraPoisonL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/poison.png" alt="Poison" /></label>
+                                    <input type="radio" id="teraGroundL" name="teraRadioL" class="tera-radio" value="Ground" onclick="changeTeraL()" />
+                                    <label for="teraGroundL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/ground.png" alt="Ground" /></label>
+                                    <input type="radio" id="teraFlyingL" name="teraRadioL" class="tera-radio" value="Flying" onclick="changeTeraL()" />
+                                    <label for="teraFlyingL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/flying.png" alt="Flying" /></label>
+                                    <input type="radio" id="teraPsychicL" name="teraRadioL" class="tera-radio" value="Psychic" onclick="changeTeraL()" />
+                                    <label for="teraPsychicL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/psychic.png" alt="Psychic" /></label>
+                                    <input type="radio" id="teraBugL" name="teraRadioL" class="tera-radio" value="Bug" onclick="changeTeraL()" />
+                                    <label for="teraBugL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/bug.png" alt="Bug" /></label>
+                                    <input type="radio" id="teraRockL" name="teraRadioL" class="tera-radio" value="Rock" onclick="changeTeraL()" />
+                                    <label for="teraRockL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/rock.png" alt="Rock" /></label>
+                                    <input type="radio" id="teraGhostL" name="teraRadioL" class="tera-radio" value="Ghost" onclick="changeTeraL()" />
+                                    <label for="teraGhostL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/ghost.png" alt="Ghost" /></label>
+                                    <input type="radio" id="teraDragonL" name="teraRadioL" class="tera-radio" value="Dragon" onclick="changeTeraL()" />
+                                    <label for="teraDragonL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/dragon.png" alt="Dragon" /></label>
+                                    <input type="radio" id="teraDarkL" name="teraRadioL" class="tera-radio" value="Dark" onclick="changeTeraL()" />
+                                    <label for="teraDarkL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/dark.png" alt="Dark" /></label>
+                                    <input type="radio" id="teraSteelL" name="teraRadioL" class="tera-radio" value="Steel" onclick="changeTeraL()" />
+                                    <label for="teraSteelL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/steel.png" alt="Steel" /></label>
+                                    <input type="radio" id="teraFairyL" name="teraRadioL" class="tera-radio" value="Fairy" onclick="changeTeraL()" />
+                                    <label for="teraFairyL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/fairy.png" alt="Fairy" /></label>
+                                    <input type="radio" id="teraStellarL" name="teraRadioL" class="tera-radio" value="Stellar" onclick="changeTeraL()" />
+                                    <label for="teraStellarL" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/stellar.png" alt="Stellar" /></label>
                                 </div>
 
                                 <hr />
@@ -1554,7 +1595,7 @@
                             <div class="icons">
                                 <img id="pokemonSpriteR" src="https://seiseikinkin.github.io/tools/image/minisprites/abomasnow.png" />
                                 <img id="itemSpriteR" class="item-sprite" src="https://seiseikinkin.github.io/tools/image/itemsprites/focussash.png" />
-                                <img id="teraSpriteR" class="tera-sprite" src="https://seiseikinkin.github.io/tools/image/teratype-icon/water.png" />
+                                <!-- <img id="teraSpriteR" class="tera-sprite" src="https://seiseikinkin.github.io/tools/image/teratype-icon/water.png" /> -->
                             </div>
 
                             <input type="text" class="set-selector calc-trigger" />&nbsp;&nbsp;
@@ -1603,6 +1644,47 @@
                                     <label class="btn btn-wide gen-specific g8 btn-tera" for="maxR" title="Dynamax this Pokémon?">Dynamax</label>
                                     <input class="tera move-tera calc-trigger btn-input" type="checkbox" id="teraR" />
                                     <label class="btn btn-wide gen-specific g9 btn-max" for="teraR" title="Terastalize this Pokémon?">Terastal</label>
+                                </div>
+
+                                <div class="gen-specific g9" style="margin-top: 6px">
+                                    <input type="radio" id="teraNormalR" name="teraRadioR" class="tera-radio" value="Normal" onclick="changeTeraR()" />
+                                    <label for="teraNormalR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/normal.png" alt="Normal" /></label>
+                                    <input type="radio" id="teraFireR" name="teraRadioR" class="tera-radio" value="Fire" onclick="changeTeraR()" />
+                                    <label for="teraFireR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/fire.png" alt="Fire" /></label>
+                                    <input type="radio" id="teraWaterR" name="teraRadioR" class="tera-radio" value="Water" onclick="changeTeraR()" />
+                                    <label for="teraWaterR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/water.png" alt="Water" /></label>
+                                    <input type="radio" id="teraGrassR" name="teraRadioR" class="tera-radio" value="Grass" onclick="changeTeraR()" />
+                                    <label for="teraGrassR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/grass.png" alt="Grass" /></label>
+                                    <input type="radio" id="teraElectricR" name="teraRadioR" class="tera-radio" value="Electric" onclick="changeTeraR()" />
+                                    <label for="teraElectricR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/electric.png" alt="Electric" /></label>
+                                    <input type="radio" id="teraIceR" name="teraRadioR" class="tera-radio" value="Ice" onclick="changeTeraR()" />
+                                    <label for="teraIceR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/ice.png" alt="Ice" /></label>
+                                    <input type="radio" id="teraFightingR" name="teraRadioR" class="tera-radio" value="Fighting" onclick="changeTeraR()" />
+                                    <label for="teraFightingR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/fighting.png" alt="Ice" /></label>
+                                    <input type="radio" id="teraPoisonR" name="teraRadioR" class="tera-radio" value="Poison" onclick="changeTeraR()" />
+                                    <label for="teraPoisonR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/poison.png" alt="Poison" /></label>
+                                    <input type="radio" id="teraGroundR" name="teraRadioR" class="tera-radio" value="Ground" onclick="changeTeraR()" />
+                                    <label for="teraGroundR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/ground.png" alt="Ground" /></label>
+                                    <input type="radio" id="teraFlyingR" name="teraRadioR" class="tera-radio" value="Flying" onclick="changeTeraR()" />
+                                    <label for="teraFlyingR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/flying.png" alt="Flying" /></label>
+                                    <input type="radio" id="teraPsychicR" name="teraRadioR" class="tera-radio" value="Psychic" onclick="changeTeraR()" />
+                                    <label for="teraPsychicR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/psychic.png" alt="Psychic" /></label>
+                                    <input type="radio" id="teraBugR" name="teraRadioR" class="tera-radio" value="Bug" onclick="changeTeraR()" />
+                                    <label for="teraBugR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/bug.png" alt="Bug" /></label>
+                                    <input type="radio" id="teraRockR" name="teraRadioR" class="tera-radio" value="Rock" onclick="changeTeraR()" />
+                                    <label for="teraRockR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/rock.png" alt="Rock" /></label>
+                                    <input type="radio" id="teraGhostR" name="teraRadioR" class="tera-radio" value="Ghost" onclick="changeTeraR()" />
+                                    <label for="teraGhostR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/ghost.png" alt="Ghost" /></label>
+                                    <input type="radio" id="teraDragonR" name="teraRadioR" class="tera-radio" value="Dragon" onclick="changeTeraR()" />
+                                    <label for="teraDragonR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/dragon.png" alt="Dragon" /></label>
+                                    <input type="radio" id="teraDarkR" name="teraRadioR" class="tera-radio" value="Dark" onclick="changeTeraR()" />
+                                    <label for="teraDarkR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/dark.png" alt="Dark" /></label>
+                                    <input type="radio" id="teraSteelR" name="teraRadioR" class="tera-radio" value="Steel" onclick="changeTeraR()" />
+                                    <label for="teraSteelR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/steel.png" alt="Steel" /></label>
+                                    <input type="radio" id="teraFairyR" name="teraRadioR" class="tera-radio" value="Fairy" onclick="changeTeraR()" />
+                                    <label for="teraFairyR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/fairy.png" alt="Fairy" /></label>
+                                    <input type="radio" id="teraStellarR" name="teraRadioR" class="tera-radio" value="Stellar" onclick="changeTeraR()" />
+                                    <label for="teraStellarR" class="tera-label"><img src="https://seiseikinkin.github.io/tools/image/type-icon/stellar.png" alt="Stellar" /></label>
                                 </div>
 
                                 <hr />

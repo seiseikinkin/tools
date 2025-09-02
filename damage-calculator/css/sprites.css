@@ -32,3 +32,10 @@
 .pokemon-selector > .select2-container {
     margin-top: 4px;
 }
+
+.tera-icon {
+    height: 22px;
+    width: 22px;
+    margin: 2px 2px 0px 0px;
+    filter: grayscale(90%);
+}

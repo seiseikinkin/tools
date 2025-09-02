@@ -56,3 +56,17 @@ function changeNature(idName, nature) {
     }
     natureElement.dispatchEvent(new Event('change'));
 }
+
+function changeTeraL() {
+    const teraElement = document.getElementById('teraTypeL');
+    const selected = document.querySelector('input[name="teraRadioL"]:checked');
+    teraElement.value = selected.value;
+    teraElement.dispatchEvent(new Event('change'));
+}
+
+function changeTeraR() {
+    const teraElement = document.getElementById('teraTypeR');
+    const selected = document.querySelector('input[name="teraRadioR"]:checked');
+    teraElement.value = selected.value;
+    teraElement.dispatchEvent(new Event('change'));
+}

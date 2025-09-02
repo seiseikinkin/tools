@@ -257,3 +257,29 @@ input[type="number"] {
 #header {
     display: flex;
 }
+
+.tera-radio {
+    display: none;
+}
+
+.tera-label {
+    cursor: pointer;
+    display: inline-block;
+    width: 26px !important;
+}
+
+.tera-label img {
+    width: 22px;
+}
+
+.tera-radio + label img {
+    border: 1px solid gray;
+    border-radius: 2px;
+    opacity: 0.3;
+    /* transition: 0.3s; */
+}
+
+.tera-radio:checked + label img {
+    border: 1px solid black;
+    opacity: 1;
+}

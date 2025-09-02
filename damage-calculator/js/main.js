@@ -60,11 +60,13 @@ function updateSprite() {
     const pokemonImageR = pokemonNameR.replaceAll(/\s/g, '-').toLowerCase();
     document.getElementById('pokemonSpriteR').src = 'https://seiseikinkin.github.io/tools/image/minisprites/' + pokemonImageR + '.png';
 
-    const teraTypeL = document.getElementById('teraTypeL').value.toLowerCase();
-    document.getElementById('teraSpriteL').src = 'https://seiseikinkin.github.io/tools/image/teratype-icon/' + teraTypeL + '.png';
+    const teraTypeL = document.getElementById('teraTypeL').value;
+    // document.getElementById('teraSpriteL').src = 'https://seiseikinkin.github.io/tools/image/teratype-icon/' + teraTypeL.toLowerCase() + '.png';
+    document.getElementById('tera' + teraTypeL + 'L').checked = true;
 
-    const teraTypeR = document.getElementById('teraTypeR').value.toLowerCase();
-    document.getElementById('teraSpriteR').src = 'https://seiseikinkin.github.io/tools/image/teratype-icon/' + teraTypeR + '.png';
+    const teraTypeR = document.getElementById('teraTypeR').value;
+    // document.getElementById('teraSpriteR').src = 'https://seiseikinkin.github.io/tools/image/teratype-icon/' + teraTypeR.toLowerCase() + '.png';
+    document.getElementById('tera' + teraTypeR + 'R').checked = true;
 
     for (side of ['L', 'R']) {
         const totalHp = Number(document.getElementById('totalHp' + side).innerText);
