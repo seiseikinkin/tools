@@ -11,7 +11,8 @@
 }
 
 .move-result-subgroup {
-    width: 304px;
+    /* width: 304px; */
+    width: 346px;
     margin: 0px 8px 0px 0px;
     padding: 5px 0px 8px 10px;
     border-radius: 4px;

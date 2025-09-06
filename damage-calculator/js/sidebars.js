@@ -32,6 +32,24 @@ var LEFT_SIDEBAR_NAMES = [
     'Left Sidebar Slot 28',
     'Left Sidebar Slot 29',
     'Left Sidebar Slot 30',
+    'Left Sidebar Slot 31',
+    'Left Sidebar Slot 32',
+    'Left Sidebar Slot 33',
+    'Left Sidebar Slot 34',
+    'Left Sidebar Slot 35',
+    'Left Sidebar Slot 36',
+    'Left Sidebar Slot 37',
+    'Left Sidebar Slot 38',
+    'Left Sidebar Slot 39',
+    'Left Sidebar Slot 40',
+    'Left Sidebar Slot 41',
+    'Left Sidebar Slot 42',
+    'Left Sidebar Slot 43',
+    'Left Sidebar Slot 44',
+    'Left Sidebar Slot 45',
+    'Left Sidebar Slot 46',
+    'Left Sidebar Slot 47',
+    'Left Sidebar Slot 48',
 ];
 var RIGHT_SIDEBAR_NAMES = [
     'Right Sidebar Slot 1',
@@ -64,6 +82,24 @@ var RIGHT_SIDEBAR_NAMES = [
     'Right Sidebar Slot 28',
     'Right Sidebar Slot 29',
     'Right Sidebar Slot 30',
+    'Right Sidebar Slot 31',
+    'Right Sidebar Slot 32',
+    'Right Sidebar Slot 33',
+    'Right Sidebar Slot 34',
+    'Right Sidebar Slot 35',
+    'Right Sidebar Slot 36',
+    'Right Sidebar Slot 37',
+    'Right Sidebar Slot 38',
+    'Right Sidebar Slot 39',
+    'Right Sidebar Slot 40',
+    'Right Sidebar Slot 41',
+    'Right Sidebar Slot 42',
+    'Right Sidebar Slot 43',
+    'Right Sidebar Slot 44',
+    'Right Sidebar Slot 45',
+    'Right Sidebar Slot 46',
+    'Right Sidebar Slot 47',
+    'Right Sidebar Slot 48',
 ];
 
 function addSidebarSlot(pnum) {
@@ -118,7 +154,7 @@ function loadSidebar() {
     for (var i = 0; i < CURRENT_SIDEBARS.length; i++) {
         side = i == 0 ? 'l' : i == 1 ? 'r' : '';
         pID = '#pkmn' + side.toUpperCase();
-        for (var j = 0; j < 30; j++) {
+        for (var j = 0; j < 48; j++) {
             if (j < CURRENT_SIDEBARS[i].length) {
                 displayName = CURRENT_SIDEBARS[i][j];
                 teamslot = pID + (j + 1);
@@ -231,7 +267,7 @@ function checkVisibleButtons(pnum) {
     var side = pnum == 1 ? 'L' : pnum == 2 ? 'R' : '';
     var teamnum = CURRENT_SIDEBARS[pnum - 1].length;
 
-    if (teamnum == 30) $('#sb' + side).hide();
+    if (teamnum == 48) $('#sb' + side).hide();
     else $('#sb' + side).show();
 
     if (teamnum == 0) $('#ed' + side).hide();

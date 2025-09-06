@@ -23,7 +23,8 @@
 }
 
 #p2Sidebar {
-    width: 172px;
+    /* width: 172px; */
+    width: 256px;
 }
 
 .sidebar-info > div {

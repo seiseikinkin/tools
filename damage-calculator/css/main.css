@@ -54,6 +54,8 @@ input[type='text'],
 
 .wrapper {
     margin-top: 16px;
+    max-width: 1434px;
+    min-width: 1434px;
 }
 #damageValues {
     cursor: pointer;
@@ -292,4 +294,12 @@ input[type="number"] {
 
 .btn-ev {
     font-size: 12px;
+}
+
+#capture {
+    text-align: right;
+    position: absolute;
+    /* width: 1336px; */
+    width: 1420px;
+    margin-top: 10px;
 }
