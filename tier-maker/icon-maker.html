@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>画像連結＋キャプション（最大6枚｜並べ替え・90px化・正方形150px）</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 24px;
+                font-family: system-ui, sans-serif;
+                background: #0b1220;
+                color: #e8eefc;
+            }
+            .wrap {
+                max-width: 1000px;
+                margin: 0 auto;
+            }
+            .panel {
+                background: #111a2b;
+                border: 1px solid #1f2a44;
+                border-radius: 16px;
+                box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+                padding: 18px;
+            }
+            .file-button {
+                border: 1px solid #1f2a44;
+                color: #e8eefc;
+                background: rgba(255, 255, 255, 0.06);
+                padding: 10px 14px;
+                border-radius: 12px;
+                cursor: pointer;
+                display: inline-block;
+            }
+            .dropzone {
+                margin-top: 14px;
+                border: 2px dashed #2b3d66;
+                border-radius: 16px;
+                padding: 22px;
+                text-align: center;
+                color: #a9b7d9;
+                background: rgba(22, 34, 61, 0.35);
+            }
+            .controls {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                align-items: center;
+                margin-top: 12px;
+            }
+            .select,
+            .checkbox,
+            .btn,
+            .text {
+                border: 1px solid #1f2a44;
+                background: rgba(255, 255, 255, 0.06);
+                color: #e8eefc;
+                border-radius: 10px;
+                padding: 8px 10px;
+            }
+            .text {
+                min-width: 220px;
+            }
+            .number {
+                width: 90px;
+            }
+            .btn {
+                cursor: pointer;
+            }
+            .btn[disabled] {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+            .preview-grid {
+                margin-top: 16px;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 16px;
+            }
+            .preview-card {
+                background: #111a2b;
+                border: 1px solid #1f2a44;
+                border-radius: 12px;
+                padding: 10px;
+                position: relative;
+            }
+            .preview-card[draggable=\"true\"] {
+                cursor: grab;
+            }
+            .preview-card.dragging {
+                opacity: 0.6;
+                outline: 2px dashed #5a8dff;
+            }
+            .order-badge {
+                position: absolute;
+                top: 8px;
+                left: 8px;
+                font-size: 12px;
+                background: #5a8dff;
+                color: #fff;
+                border-radius: 999px;
+                padding: 2px 7px;
+            }
+            .preview-card img {
+                width: 100%;
+                height: 150px;
+                object-fit: contain;
+                background: #0a0f1c;
+                border-radius: 8px;
+                margin-bottom: 6px;
+            }
+            .meta {
+                font-size: 12px;
+                color: #a9b7d9;
+            }
+            .meta strong {
+                color: #e8eefc;
+            }
+            .hidden {
+                display: none !important;
+            }
+            canvas {
+                display: none;
+            }
+            label.small {
+                font-size: 12px;
+                color: #a9b7d9;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
+            <h1>画像連結＋キャプション（最大6枚）</h1>
+            <p>並べ替え対応。素材は高さ90pxに縮小してから結合。正方形保存は常に150×150px。</p>
+
+            <section class="panel" aria-label="画像の選択と連結">
+                <label for="file" class="file-button">📁 ファイルを選択</label>
+                <input id="file" type="file" accept="image/*" multiple class="hidden" />
+                <div id="dropzone" class="dropzone" tabindex="0">ここに画像をドラッグ＆ドロップ（プレビューでドラッグして順番変更可）</div>
+
+                <div class="controls">
+                    <label
+                        >リサイズ方式：
+                        <select id="mode" class="select">
+                            <option value="original">等倍で結合（基本は90px上限の後）</option>
+                            <option value="fitMax">高さを最大に合わせて等高（90px上限の後）</option>
+                            <option value="fitMin">高さを最小に合わせて等高（90px上限の後）</option>
+                        </select>
+                    </label>
+
+                    <!-- 等倍時の縦位置 -->
+                    <label id="valignWrap" class="select">
+                        縦位置（等倍時）：
+                        <select id="vAlign" class="select" style="margin-left: 6px">
+                            <option value="center">中央揃え</option>
+                            <option value="bottom" selected>下揃え</option>
+                        </select>
+                    </label>
+
+                    <label class="checkbox"> <input type="checkbox" id="gapCheck" /> 画像間の余白 8px（横・縦） </label>
+                    <label
+                        >背景色：
+                        <input type="color" id="bgColor" value="#000000" class="select" />
+                    </label>
+
+                    <!-- 四辺の外側パディング（出力画像の余白） -->
+                    <label class="small">左余白(px)：<input id="padLeft" type="number" class="select number" min="0" max="800" value="8" /></label>
+                    <label class="small">右余白(px)：<input id="padRight" type="number" class="select number" min="0" max="800" value="8" /></label>
+                    <label class="small">上余白(px)：<input id="padTop" type="number" class="select number" min="0" max="800" value="12" /></label>
+                    <label class="small">下余白(px)：<input id="padBottom" type="number" class="select number" min="0" max="800" value="8" /></label>
+
+                    <label class="checkbox"> <input type="checkbox" id="squareCheck" checked /> 正方形（画像は上下中央／テキストは下寄せ／完成サイズは常に150×150） </label>
+
+                    <button id="compose" class="btn" disabled>🧩 連結して保存</button>
+                    <button id="clear" class="btn" disabled>クリア</button>
+                </div>
+
+                <!-- キャプション設定 -->
+                <div class="controls">
+                    <input id="capText" class="text" placeholder="下部に入れるテキスト（空ならなし／複数行は改行）" />
+                    <label class="small">サイズ(px)：<input id="capSize" type="number" class="select number" min="8" max="200" value="13" /></label>
+                    <label class="small">色：<input id="capColor" type="color" class="select" value="#ffffff" /></label>
+                    <label class="checkbox"><input id="capBold" type="checkbox" checked /> 太字</label>
+                    <label class="small"
+                        >テキスト余白(px)：
+                        <input id="capMargin" type="number" class="select number" min="0" max="300" value="12" title="正方形時は下余白／非正方形時は上余白として扱います" />
+                    </label>
+                    <label class="small">最大行幅(%)：<input id="capWidthPct" type="number" class="select number" min="30" max="100" value="94" /></label>
+                    <label class="small">行間：<input id="capLineH" type="number" class="select number" min="1.0" max="2.0" step="0.05" value="1.3" /></label>
+                </div>
+
+                <div id="preview-grid" class="preview-grid"></div>
+                <canvas id="work"></canvas>
+            </section>
+        </div>
+
+        <script>
+            (function () {
+                const MAX_FILES = 6;
+                const TARGET_SQUARE = 150; // 出力の正方形目標サイズ
+                const CAP_HEIGHT_LIMIT = 90; // 素材の高さ上限（≧90は90へ縮小）
+
+                const input = document.getElementById('file');
+                const dropzone = document.getElementById('dropzone');
+                const grid = document.getElementById('preview-grid');
+                const composeBtn = document.getElementById('compose');
+                const clearBtn = document.getElementById('clear');
+                const modeSel = document.getElementById('mode');
+                const vAlignSel = document.getElementById('vAlign');
+                const vAlignWrap = document.getElementById('valignWrap');
+                const gapCheck = document.getElementById('gapCheck');
+                const bgColor = document.getElementById('bgColor');
+                const work = document.getElementById('work');
+
+                // 四辺余白
+                const padLeftInp = document.getElementById('padLeft');
+                const padRightInp = document.getElementById('padRight');
+                const padTopInp = document.getElementById('padTop');
+                const padBottomInp = document.getElementById('padBottom');
+
+                // caption controls
+                const capText = document.getElementById('capText');
+                const capSize = document.getElementById('capSize');
+                const capColor = document.getElementById('capColor');
+                const capBold = document.getElementById('capBold');
+                const capMargin = document.getElementById('capMargin'); // 非正方形: 上余白 / 正方形: 下余白
+                const capWidthPct = document.getElementById('capWidthPct');
+                const capLineH = document.getElementById('capLineH');
+                const squareCheck = document.getElementById('squareCheck');
+
+                let images = []; // [{file, url, el, w, h}]
+                let order = []; // 並び順（imagesのインデックス）
+
+                function humanSize(bytes) {
+                    const u = ['B', 'KB', 'MB', 'GB'];
+                    let i = 0,
+                        n = bytes;
+                    while (n >= 1024 && i < u.length - 1) {
+                        n /= 1024;
+                        i++;
+                    }
+                    return `${n.toFixed(1)} ${u[i]}`;
+                }
+
+                function reset() {
+                    images.forEach((it) => {
+                        try {
+                            URL.revokeObjectURL(it.url);
+                        } catch (_) {}
+                    });
+                    images = [];
+                    order = [];
+                    grid.innerHTML = '';
+                    composeBtn.disabled = true;
+                    clearBtn.disabled = true;
+                }
+
+                function enableActions() {
+                    const ok = images.length > 0;
+                    composeBtn.disabled = !ok;
+                    clearBtn.disabled = !ok;
+                }
+
+                function toggleVAlignVisibility() {
+                    const isOriginal = modeSel.value === 'original';
+                    vAlignWrap.style.opacity = isOriginal ? '1' : '.5';
+                    vAlignWrap.style.pointerEvents = isOriginal ? 'auto' : 'none';
+                    vAlignWrap.title = isOriginal ? '' : '等倍以外では無効';
+                }
+
+                async function readFiles(fileList) {
+                    reset();
+                    const files = Array.from(fileList)
+                        .slice(0, MAX_FILES)
+                        .filter((f) => f.type.startsWith('image/'));
+                    if (files.length === 0) return;
+
+                    await Promise.all(
+                        files.map(async (file) => {
+                            const url = URL.createObjectURL(file);
+                            const el = new Image();
+                            el.decoding = 'async';
+                            el.src = url;
+                            await el.decode().catch(() => {});
+                            images.push({ file, url, el, w: el.naturalWidth, h: el.naturalHeight });
+                        })
+                    );
+                    order = images.map((_, i) => i);
+
+                    renderPreview();
+                    enableActions();
+                }
+
+                // プレビュー描画（ドラッグで並べ替え）
+                function renderPreview() {
+                    grid.innerHTML = '';
+                    order.forEach((idx, pos) => {
+                        const { file, url } = images[idx];
+                        const card = document.createElement('div');
+                        card.className = 'preview-card';
+                        card.setAttribute('draggable', 'true');
+                        card.dataset.index = String(idx);
+
+                        const badge = document.createElement('div');
+                        badge.className = 'order-badge';
+                        badge.textContent = String(pos + 1);
+                        card.appendChild(badge);
+
+                        const img = document.createElement('img');
+                        img.src = url;
+                        const meta = document.createElement('div');
+                        meta.className = 'meta';
+                        meta.innerHTML = `ファイル名: <strong>${file.name}</strong><br>` + `種類: <strong>${file.type || '不明'}</strong><br>` + `サイズ: <strong>${humanSize(file.size)}</strong>`;
+                        card.appendChild(img);
+                        card.appendChild(meta);
+                        grid.appendChild(card);
+                    });
+
+                    // DnD 並べ替え
+                    let dragIdx = null;
+                    grid.querySelectorAll('.preview-card').forEach((card) => {
+                        card.addEventListener('dragstart', (e) => {
+                            dragIdx = Number(card.dataset.index);
+                            card.classList.add('dragging');
+                            e.dataTransfer.setData('text/plain', String(dragIdx));
+                        });
+                        card.addEventListener('dragend', () => card.classList.remove('dragging'));
+                    });
+                    grid.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        const after = getDragAfterElement(grid, e.clientY);
+                        const dragging = grid.querySelector('.preview-card.dragging');
+                        if (!dragging) return;
+                        if (after == null) {
+                            grid.appendChild(dragging);
+                        } else {
+                            grid.insertBefore(dragging, after);
+                        }
+                    });
+                    grid.addEventListener('drop', () => {
+                        // DOM順から order を再構築
+                        const newOrder = [];
+                        grid.querySelectorAll('.preview-card').forEach((c) => {
+                            newOrder.push(Number(c.dataset.index));
+                        });
+                        order = newOrder;
+                        renderPreview(); // バッジ番号更新
+                    });
+
+                    function getDragAfterElement(container, y) {
+                        const els = [...container.querySelectorAll('.preview-card:not(.dragging)')];
+                        return els.reduce(
+                            (closest, child) => {
+                                const box = child.getBoundingClientRect();
+                                const offset = y - box.top - box.height / 2;
+                                if (offset < 0 && offset > closest.offset) {
+                                    return { offset, element: child };
+                                } else {
+                                    return closest;
+                                }
+                            },
+                            { offset: Number.NEGATIVE_INFINITY }
+                        ).element;
+                    }
+                }
+
+                // 改行ルール
+                function computeRows(n) {
+                    if (n <= 3) return [n];
+                    if (n === 4) return [2, 2];
+                    if (n === 5) return [3, 2];
+                    return [3, 3]; // n===6
+                }
+
+                // テキスト折り返し
+                function wrapText(ctx, text, maxWidth) {
+                    const lines = [];
+                    const rawLines = String(text).split(/\n/);
+                    rawLines.forEach((raw) => {
+                        const tokens = /\s/.test(raw) ? raw.split(/(\s+)/) : raw.split('');
+                        let buf = '';
+                        tokens.forEach((tok) => {
+                            const t = buf + tok;
+                            if (ctx.measureText(t).width <= maxWidth || buf === '') {
+                                buf = t;
+                            } else {
+                                lines.push(buf);
+                                buf = tok.trimStart();
+                                if (ctx.measureText(buf).width > maxWidth) {
+                                    let chunk = '';
+                                    for (const ch of tok) {
+                                        const tt = chunk + ch;
+                                        if (ctx.measureText(tt).width <= maxWidth || chunk === '') {
+                                            chunk = tt;
+                                        } else {
+                                            lines.push((buf ? buf : '') + chunk);
+                                            buf = '';
+                                            chunk = ch;
+                                        }
+                                    }
+                                    buf += chunk;
+                                }
+                            }
+                        });
+                        if (buf) lines.push(buf);
+                    });
+                    return lines;
+                }
+
+                function composeAndDownload() {
+                    if (images.length === 0) return;
+
+                    const mode = modeSel.value;
+                    const gap = gapCheck.checked ? 8 : 0;
+                    const bg = bgColor.value || '#000000';
+                    const vAlign = vAlignSel.value; // original時のみ
+                    const toSquare = document.getElementById('squareCheck').checked;
+
+                    // 四辺余白
+                    const padLeft = clamp(Number(padLeftInp.value), 0, 800, 24);
+                    const padRight = clamp(Number(padRightInp.value), 0, 800, 24);
+                    const padTop = clamp(Number(padTopInp.value), 0, 800, 24);
+                    const padBottom = clamp(Number(padBottomInp.value), 0, 800, 24);
+
+                    // 並び順を適用した配列
+                    const seq = order.map((i) => images[i]);
+
+                    // --- 素材の高さ上限 90px を適用して基本描画サイズを作る ---
+                    //   1) まず 90px 上限で各画像の基準サイズを決定
+                    const baseSizes = seq.map((im) => {
+                        const h0 = im.h >= CAP_HEIGHT_LIMIT ? CAP_HEIGHT_LIMIT : im.h;
+                        const s = h0 / im.h;
+                        return { bw: Math.round(im.w * s), bh: Math.round(im.h * s) }; // base width/height after 90px cap
+                    });
+
+                    //   2) その後に mode（original/fitMax/fitMin）を適用
+                    const Hmax = Math.max(...baseSizes.map((b) => b.bh));
+                    const Hmin = Math.min(...baseSizes.map((b) => b.bh));
+                    const targetH = mode === 'fitMax' ? Hmax : mode === 'fitMin' ? Hmin : null;
+
+                    const drawSizes0 = baseSizes.map((b) => {
+                        if (mode === 'original' || targetH == null) return { dw: b.bw, dh: b.bh };
+                        const s = targetH / b.bh;
+                        return { dw: Math.round(b.bw * s), dh: Math.round(b.bh * s) };
+                    });
+
+                    // 行割り当て（並び順どおり）
+                    const rowsConf = computeRows(seq.length);
+                    const rows = [];
+                    let idx = 0;
+                    rowsConf.forEach((count) => {
+                        const idxs = Array.from({ length: count }, (_, k) => idx + k);
+                        const sizes = idxs.map((i) => drawSizes0[i]);
+                        const rowW = sizes.reduce((s, a) => s + a.dw, 0) + gap * Math.max(0, count - 1);
+                        const rowH = Math.max(...sizes.map((s) => s.dh));
+                        rows.push({ indexes: idxs, sizes, rowW, rowH });
+                        idx += count;
+                    });
+
+                    // 結合画像（テキストを除いた）全体のサイズ
+                    const maxRowW0 = Math.max(...rows.map((r) => r.rowW));
+                    const imagesAreaH0 = rows.reduce((s, r) => s + r.rowH, 0) + gap * Math.max(0, rows.length - 1);
+
+                    // --- キャプション計測 ---
+                    const text = capText.value ?? '';
+                    const hasCaption = text.trim().length > 0;
+                    const fontPx = clamp(Number(capSize.value), 8, 200, 28);
+                    const lineH = clamp(Number(capLineH.value), 1.0, 2.0, 1.3);
+                    const ctxTmp = work.getContext('2d');
+                    ctxTmp.font = `${capBold.checked ? '700 ' : ''}${fontPx}px system-ui,-apple-system,Segoe UI,Roboto,'Noto Sans JP',sans-serif`;
+                    const capMaxWidth = Math.max(0.3, Math.min(1.0, Number(capWidthPct.value) / 100 || 0.94)) * maxRowW0;
+                    const lines = hasCaption ? wrapText(ctxTmp, text, capMaxWidth) : [];
+                    const ascent = ctxTmp.measureText('Mg').actualBoundingBoxAscent || fontPx * 0.8;
+                    const descent = ctxTmp.measureText('pq').actualBoundingBoxDescent || fontPx * 0.2;
+                    const baseLineH = ascent + descent;
+                    const capMarginVal = clamp(Number(capMargin.value), 0, 300, 12);
+                    const textBlockH = hasCaption ? Math.ceil(lines.length * baseLineH * lineH) : 0;
+
+                    // 基本コンテンツ幅（テキスト行幅は images 幅基準）
+                    let contentW0 = padLeft + maxRowW0 + padRight;
+                    let imagesAreaH = imagesAreaH0;
+                    let maxRowW = maxRowW0;
+                    let drawSizes = drawSizes0.map((x) => ({ ...x })); // 後でスケーリング反映
+
+                    // --- 正方形サイズ調整（常に150×150） ---
+                    let canvasW = contentW0;
+                    let canvasH;
+
+                    if (toSquare) {
+                        // テキストと余白は固定。画像部分のみ可変で150に合わせる。
+                        // まず「最小でも 150」にする（小さい場合はキャンバスを拡げるだけ）
+                        const minW = TARGET_SQUARE;
+                        const minH = TARGET_SQUARE;
+
+                        // 大きい場合は画像部を縮小して 150 に合わせる
+                        // 150に収まるための画像縮小率 s を計算（横と縦の両制約）
+                        const availW = Math.max(1, TARGET_SQUARE - padLeft - padRight);
+                        const availH = Math.max(1, TARGET_SQUARE - padTop - padBottom - (hasCaption ? textBlockH + capMarginVal : 0));
+                        let s = Math.min(1, availW / maxRowW0, availH / imagesAreaH0); // 縮小のみ（拡大はしない）
+
+                        // 縮小を反映
+                        if (s < 1) {
+                            drawSizes = drawSizes0.map((d) => ({ dw: Math.round(d.dw * s), dh: Math.round(d.dh * s) }));
+                            // 行再計算
+                            let i2 = 0;
+                            const rows2 = [];
+                            rowsConf.forEach((count) => {
+                                const idxs = Array.from({ length: count }, (_, k) => i2 + k);
+                                const sizes = idxs.map((i) => drawSizes[i]);
+                                const rowW = sizes.reduce((sum, a) => sum + a.dw, 0) + gap * Math.max(0, count - 1);
+                                const rowH = Math.max(...sizes.map((z) => z.dh));
+                                rows2.push({ indexes: idxs, sizes, rowW, rowH });
+                                i2 += count;
+                            });
+                            rows.length = 0;
+                            rows.push(...rows2);
+                            maxRowW = Math.max(...rows.map((r) => r.rowW));
+                            imagesAreaH = rows.reduce((sum, r) => sum + r.rowH, 0) + gap * Math.max(0, rows.length - 1);
+                        }
+
+                        // キャンバスはちょうど 150×150。余白値は変更しない。
+                        canvasW = TARGET_SQUARE;
+                        canvasH = TARGET_SQUARE;
+                    } else {
+                        // 非正方形：自然なサイズ
+                        const captionH = hasCaption ? capMarginVal + textBlockH : 0;
+                        canvasW = contentW0;
+                        canvasH = padTop + imagesAreaH + captionH + padBottom;
+                    }
+
+                    // --- 配置計算（正方形時：画像は上下中央、テキストは下寄せ） ---
+                    const ctx = work.getContext('2d');
+
+                    // 横方向のセンタリング（正方形時も非正方形時も）
+                    const offsetX = (canvasW - (padLeft + maxRowW + padRight)) / 2;
+
+                    // 画像上端Y
+                    let imagesTopY;
+                    let captionFirstBaselineY = null;
+
+                    if (!toSquare) {
+                        imagesTopY = padTop;
+                        if (hasCaption) {
+                            const captionTopY = imagesTopY + imagesAreaH;
+                            captionFirstBaselineY = captionTopY + capMarginVal + baseLineH;
+                        }
+                    } else {
+                        // 画像は上下中央（テキスト領域を除いた可用領域内で）
+                        const captionBlockH = hasCaption ? textBlockH + capMarginVal : 0;
+                        const imgAvailTop = padTop;
+                        const imgAvailBottom = canvasH - padBottom - captionBlockH;
+                        const imgAvailHeight = imgAvailBottom - imgAvailTop;
+                        imagesTopY = imgAvailTop + Math.max(0, Math.round((imgAvailHeight - imagesAreaH) / 2));
+
+                        // テキストは下寄せ
+                        if (hasCaption) {
+                            const lastBaseline = canvasH - padBottom - capMarginVal;
+                            captionFirstBaselineY = lastBaseline - (lines.length - 1) * baseLineH * lineH;
+                        }
+                    }
+
+                    // キャンバス生成
+                    work.width = Math.max(1, Math.round(canvasW));
+                    work.height = Math.max(1, Math.round(canvasH));
+                    ctx.fillStyle = bg;
+                    ctx.fillRect(0, 0, work.width, work.height);
+
+                    // 画像を描画（各行を横中央寄せ）
+                    let y = imagesTopY;
+                    rows.forEach((row, rIdx) => {
+                        const rowStartX = offsetX + padLeft + (maxRowW - row.rowW) / 2;
+                        let x = rowStartX;
+                        row.indexes.forEach((imgIndex, k) => {
+                            const src = seq[imgIndex];
+                            const dsz = drawSizes[imgIndex];
+                            let yImg;
+                            if (mode === 'original') {
+                                yImg = vAlign === 'bottom' ? y + row.rowH - dsz.dh : Math.round(y + (row.rowH - dsz.dh) / 2);
+                            } else {
+                                yImg = Math.round(y + (row.rowH - dsz.dh) / 2);
+                            }
+                            ctx.drawImage(src.el, 0, 0, src.w, src.h, x, yImg, dsz.dw, dsz.dh);
+                            x += dsz.dw + (k < row.sizes.length - 1 ? gap : 0);
+                        });
+                        y += row.rowH + (rIdx < rows.length - 1 ? gap : 0);
+                    });
+
+                    // キャプション
+                    if (hasCaption) {
+                        ctx.font = `${capBold.checked ? '700 ' : ''}${fontPx}px system-ui,-apple-system,Segoe UI,Roboto,'Noto Sans JP',sans-serif`;
+                        ctx.textBaseline = 'alphabetic';
+                        ctx.textAlign = 'center';
+                        ctx.fillStyle = capColor.value || '#ffffff';
+                        const centerX = offsetX + padLeft + maxRowW / 2;
+
+                        if (!toSquare) {
+                            let baseline = captionFirstBaselineY;
+                            lines.forEach((line) => {
+                                ctx.fillText(line, centerX, Math.round(baseline));
+                                baseline += baseLineH * lineH;
+                            });
+                        } else {
+                            let baseline = captionFirstBaselineY;
+                            lines.forEach((line) => {
+                                ctx.fillText(line, centerX, Math.round(baseline));
+                                baseline += baseLineH * lineH;
+                            });
+                        }
+                    }
+
+                    // 保存（PNG）
+                    const url = work.toDataURL('image/png');
+                    const a = document.createElement('a');
+                    const ts = new Date().toISOString().replace(/[:.]/g, '-');
+                    a.href = url;
+                    a.download = `concat-${seq.length}imgs-${toSquare ? '150sq' : 'free'}-${ts}.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                }
+
+                function clamp(v, lo, hi, def) {
+                    v = Number.isFinite(v) ? v : def;
+                    return Math.min(hi, Math.max(lo, v));
+                }
+
+                // Events
+                input.addEventListener('change', (e) => {
+                    if (e.target.files) readFiles(e.target.files);
+                });
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach((t) => dropzone.addEventListener(t, (e) => e.preventDefault()));
+                dropzone.addEventListener('drop', (e) => {
+                    if (e.dataTransfer.files) readFiles(e.dataTransfer.files);
+                });
+                dropzone.addEventListener('click', () => input.click());
+                composeBtn.addEventListener('click', composeAndDownload);
+                clearBtn.addEventListener('click', reset);
+                modeSel.addEventListener('change', toggleVAlignVisibility);
+
+                // 初期
+                toggleVAlignVisibility();
+            })();
+        </script>
+    </body>
+</html>

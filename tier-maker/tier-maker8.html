@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Tiermaker風 画像並べ替えアプリ</title>
+        <style>
+            :root {
+                --bg: #0f1115;
+                --panel: #151923;
+                --muted: #8b93a7;
+                --accent: #6aa9ff;
+                --border: #262b36;
+                --tile: #1b2030;
+                --tile-hover: #232a3b;
+                --label: #2a3142;
+                --label-text: #fff;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: #e8ecf3;
+                font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+            }
+            header {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                background: linear-gradient(180deg, #0f1115, rgba(15, 17, 21, 0.85));
+                backdrop-filter: saturate(120%) blur(6px);
+                border-bottom: 1px solid var(--border);
+            }
+            .toolbar {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 12px 16px;
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            .toolbar h1 {
+                font-size: 18px;
+                margin: 0 8px 0 0;
+                font-weight: 700;
+            }
+            .btn {
+                appearance: none;
+                border: 1px solid var(--border);
+                background: var(--panel);
+                color: #e8ecf3;
+                padding: 8px 12px;
+                border-radius: 10px;
+                cursor: pointer;
+                font-weight: 600;
+            }
+            .btn:hover {
+                background: #1a1f2b;
+            }
+            .btn.primary {
+                border-color: #2a6bff;
+                background: #2a6bff;
+                color: white;
+            }
+            .btn.ghost {
+                background: transparent;
+            }
+            input[type='text'],
+            select {
+                background: var(--panel);
+                border: 1px solid var(--border);
+                color: #e8ecf3;
+                border-radius: 10px;
+                padding: 8px 12px;
+            }
+            input[type='file'] {
+                display: none;
+            }
+            .hint {
+                color: var(--muted);
+                font-size: 12px;
+            }
+
+            .wrap {
+                max-width: 1100px;
+                margin: 18px auto;
+                padding: 0 16px 32px;
+            }
+
+            .tiers {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .tier {
+                display: grid;
+                grid-template-columns: 84px 1fr;
+                gap: 0;
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                overflow: hidden;
+                background: var(--panel);
+            }
+            .tier-label {
+                background: var(--label);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 900;
+                color: var(--label-text);
+                font-size: 22px;
+                letter-spacing: 0.5px;
+            }
+            .tier-row {
+                display: flex;
+                /* gap: 10px; */
+                gap: 6px;
+                flex-wrap: wrap;
+                min-height: 96px;
+                /* padding: 10px; */
+                padding: 6px 8px;
+                background: transparent;
+            }
+
+            .pool {
+                margin-top: 18px;
+                border: 1px dashed var(--border);
+                border-radius: 14px;
+            }
+            .pool .tier-row {
+                min-height: 110px;
+            }
+
+            .tile {
+                width: 96px;
+                height: 96px;
+                border-radius: 12px;
+                background: var(--tile);
+                border: 1px solid var(--border);
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                user-select: none;
+                cursor: grab;
+                transition: transform 0.1s ease;
+            }
+            .tile:active {
+                cursor: grabbing;
+            }
+            .tile:hover {
+                background: var(--tile-hover);
+            }
+            .tile img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+            }
+            .tile .remove {
+                position: absolute;
+                top: 6px;
+                right: 6px;
+                border: none;
+                background: rgba(0, 0, 0, 0.55);
+                color: #fff;
+                width: 22px;
+                height: 22px;
+                border-radius: 999px;
+                cursor: pointer;
+                font-size: 13px;
+                line-height: 22px;
+                text-align: center;
+            }
+
+            .placeholder {
+                width: 96px;
+                height: 96px;
+                border-radius: 12px;
+                border: 2px dashed var(--accent);
+                opacity: 0.6;
+            }
+
+            .controls {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .help {
+                margin-top: 10px;
+                background: rgba(106, 169, 255, 0.08);
+                border: 1px solid rgba(106, 169, 255, 0.25);
+                padding: 10px 12px;
+                border-radius: 12px;
+                font-size: 13px;
+            }
+
+            .footer-note {
+                margin-top: 18px;
+                color: var(--muted);
+                font-size: 12px;
+                text-align: center;
+            }
+
+            @media (max-width: 560px) {
+                .tier {
+                    grid-template-columns: 64px 1fr;
+                }
+                .tier-label {
+                    font-size: 18px;
+                }
+                .tile,
+                .placeholder {
+                    width: 80px;
+                    height: 80px;
+                }
+                .tier-row {
+                    min-height: 88px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="toolbar">
+                <h1>Tiermaker風 画像並べ替え</h1>
+                <label class="btn" for="fileInput">画像を追加</label>
+                <input id="fileInput" type="file" accept="image/*" multiple />
+
+                <div class="controls">
+                    <button class="btn" id="addTierBtn">段を追加</button>
+                    <button class="btn ghost" id="clearAllBtn">全てクリア</button>
+                    <button class="btn primary" id="exportBtn">JSONを書き出し</button>
+                    <button class="btn" id="importBtn">JSONを読み込み</button>
+                    <input id="importInput" type="file" accept="application/json" hidden />
+                    <button class="btn" id="exportImageBtn">画像で出力 (PNG)</button>
+                </div>
+                <div class="hint">ドラッグ＆ドロップで行内の並べ替え・段間の移動ができます。未配置のエリアにローカル画像ファイルを直接ドロップして追加もできます。</div>
+            </div>
+        </header>
+
+        <main class="wrap">
+            <section class="tiers" id="tiers">
+                <!-- 既定の段 -->
+                <div class="tier" data-tier="S">
+                    <div class="tier-label" style="background: #ff4757">S</div>
+                    <div class="tier-row droppable" aria-label="S"></div>
+                </div>
+                <div class="tier" data-tier="A">
+                    <div class="tier-label" style="background: #ffa502">A</div>
+                    <div class="tier-row droppable" aria-label="A"></div>
+                </div>
+                <div class="tier" data-tier="B">
+                    <div class="tier-label" style="background: #2ed573">B</div>
+                    <div class="tier-row droppable" aria-label="B"></div>
+                </div>
+                <div class="tier" data-tier="C">
+                    <div class="tier-label" style="background: #1e90ff">C</div>
+                    <div class="tier-row droppable" aria-label="C"></div>
+                </div>
+                <div class="tier" data-tier="D">
+                    <div class="tier-label" style="background: #5352ed">D</div>
+                    <div class="tier-row droppable" aria-label="D"></div>
+                </div>
+
+                <!-- 未配置プール -->
+                <div class="tier pool" data-tier="UNRANKED">
+                    <div class="tier-label" style="background: #3b3f51">未配置</div>
+                    <div class="tier-row droppable" id="unrankedRow" aria-label="未配置"></div>
+                </div>
+            </section>
+
+            <div class="help">
+                <strong>使い方</strong><br />
+                1) 上の「画像を追加」から複数画像を読み込みます。<br />
+                2) 画像タイルをドラッグして、同じ行内の任意の位置に並べ替えできます。別の段へ移動も可能です。<br />
+                3) 右上の×でタイルを削除。段の追加・保存/読み込み（JSON）にも対応。<br />
+            </div>
+
+            <p class="footer-note">HTML/CSS/JSのみで動作。データはローカルで完結します。</p>
+        </main>
+
+        <script>
+            // ===== 初期配置: 相対フォルダから PNG を自動読み込み =====
+            // 設定値：必要に応じて変更してください
+            const DEFAULT_IMAGE_DIR = './images'; // 例: /images, ./assets/pngs など
+            const DEFAULT_MANIFEST = 'manifest.json'; // 任意（無ければ自動探索）
+
+            async function loadDefaultImagesFromFolder(dir = DEFAULT_IMAGE_DIR, manifest = DEFAULT_MANIFEST) {
+                const poolRow = document.getElementById('unrankedRow') || document.querySelector('.pool .tier-row');
+                if (!poolRow) return;
+
+                // 1) manifest.json があればそれに従って読み込む
+                try {
+                    const res = await fetch(`${dir}/${manifest}`, { cache: 'no-store' });
+                    if (res.ok) {
+                        const list = await res.json();
+                        const files = Array.isArray(list) ? list : Array.isArray(list.images) ? list.images : [];
+                        for (const name of files) {
+                            if (!/\.png$/i.test(name)) continue;
+                            const url = `${dir}/${name}`;
+                            poolRow.appendChild(makeTile(url));
+                        }
+                        if (files.length) return; // 読み込めたら終了
+                    }
+                } catch (_) {
+                    /* manifest が無い/失敗しても無視して次へ */
+                }
+            }
+
+            // DOM 準備完了後に自動読み込み
+            document.addEventListener('DOMContentLoaded', () => {
+                loadDefaultImagesFromFolder(DEFAULT_IMAGE_DIR);
+            });
+
+            const $ = (sel, root = document) => root.querySelector(sel);
+            const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+            let dragged = null;
+            let placeholder = null;
+
+            function createPlaceholder() {
+                const ph = document.createElement('div');
+                ph.className = 'placeholder';
+                return ph;
+            }
+
+            function getDropContainer(el) {
+                return el.closest('.tier-row');
+            }
+
+            function getAfterElement(container, x) {
+                const tiles = [...container.querySelectorAll('.tile:not(.dragging)')];
+                let closest = { offset: Number.NEGATIVE_INFINITY, element: null };
+                for (const child of tiles) {
+                    const box = child.getBoundingClientRect();
+                    const offset = x - box.left - box.width / 2;
+                    if (offset < 0 && offset > closest.offset) {
+                        closest = { offset, element: child };
+                    }
+                }
+                return closest.element;
+            }
+
+            function onPointerMove(e) {
+                if (!dragged) return;
+                const pointX = e.clientX;
+                const el = document.elementFromPoint(pointX, e.clientY);
+                const container = el && getDropContainer(el);
+                if (!container) return;
+
+                if (!placeholder) placeholder = createPlaceholder();
+
+                const after = getAfterElement(container, pointX);
+                if (after == null) {
+                    container.appendChild(placeholder);
+                } else {
+                    container.insertBefore(placeholder, after);
+                }
+            }
+
+            function onPointerUp(e) {
+                if (!dragged) return;
+                document.removeEventListener('pointermove', onPointerMove);
+                document.removeEventListener('pointerup', onPointerUp, true);
+
+                const el = document.elementFromPoint(e.clientX, e.clientY);
+                const container = el && getDropContainer(el);
+
+                if (container) {
+                    if (placeholder && placeholder.parentNode === container) {
+                        container.insertBefore(dragged, placeholder);
+                    } else {
+                        container.appendChild(dragged);
+                    }
+                }
+
+                dragged.classList.remove('dragging');
+                dragged.style.transform = '';
+                if (placeholder && placeholder.parentNode) {
+                    placeholder.parentNode.removeChild(placeholder);
+                }
+                placeholder = null;
+                dragged = null;
+            }
+
+            function makeTile(imgURL) {
+                const tile = document.createElement('div');
+                tile.className = 'tile';
+                tile.draggable = false;
+
+                const img = document.createElement('img');
+                img.src = imgURL;
+                img.alt = '';
+                tile.appendChild(img);
+
+                const rm = document.createElement('button');
+                rm.className = 'remove';
+                rm.title = '削除';
+                rm.textContent = '×';
+
+                // ここを修正：pointerdown と click 両方でイベント伝播を止める
+                rm.addEventListener('pointerdown', (e) => {
+                    e.stopPropagation(); // ドラッグ開始を防止
+                });
+                rm.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    tile.remove();
+                });
+
+                tile.appendChild(rm);
+
+                tile.addEventListener('pointerdown', (e) => {
+                    if (e.button !== 0) return;
+                    dragged = tile;
+                    tile.classList.add('dragging');
+                    const rect = tile.getBoundingClientRect();
+                    const shiftX = e.clientX - rect.left;
+                    const shiftY = e.clientY - rect.top;
+
+                    placeholder = createPlaceholder();
+                    tile.parentNode.insertBefore(placeholder, tile.nextSibling);
+
+                    const startLeft = rect.left;
+                    const startTop = rect.top;
+
+                    function moveAt(e2) {
+                        const dx = e2.clientX - startLeft - shiftX;
+                        const dy = e2.clientY - startTop - shiftY;
+                        tile.style.transform = `translate(${dx}px, ${dy}px)`;
+                    }
+                    moveAt(e);
+
+                    document.addEventListener('pointermove', onPointerMove);
+                    document.addEventListener('pointerup', onPointerUp, true);
+                });
+
+                return tile;
+            }
+
+            function addImagesToPool(files) {
+                const pool = document.querySelector('.pool .tier-row');
+                for (const file of files) {
+                    if (!file.type.startsWith('image/')) continue;
+                    const url = URL.createObjectURL(file);
+                    pool.appendChild(makeTile(url));
+                }
+            }
+
+            $('#fileInput').addEventListener('change', (e) => {
+                addImagesToPool(e.target.files);
+                e.target.value = '';
+            });
+
+            $('#clearAllBtn').addEventListener('click', () => {
+                $$('.tile').forEach((t) => t.remove());
+            });
+
+            function snapshot() {
+                const data = [];
+                $$('.tier').forEach((tier) => {
+                    const name = tier.dataset.tier;
+                    const images = $$('img', tier).map((img) => img.src);
+                    data.push({ tier: name, images });
+                });
+                return data;
+            }
+
+            $('#exportBtn').addEventListener('click', () => {
+                const data = snapshot();
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'tiers.json';
+                a.click();
+                URL.revokeObjectURL(a.href);
+            });
+
+            $('#importBtn').addEventListener('click', () => $('#importInput').click());
+            $('#importInput').addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                try {
+                    const text = await file.text();
+                    const data = JSON.parse(text);
+                    $$('.tile').forEach((t) => t.remove());
+                    const tierNames = new Set($$('.tier').map((t) => t.dataset.tier));
+                    for (const entry of data) {
+                        if (!tierNames.has(entry.tier)) {
+                            const tier = document.createElement('div');
+                            tier.className = 'tier';
+                            tier.dataset.tier = entry.tier;
+                            tier.innerHTML = `
+              <div class="tier-label">${entry.tier}</div>
+              <div class="tier-row droppable" aria-label="${entry.tier}"></div>
+            `;
+                            $('#tiers').insertBefore(tier, $('.pool'));
+                        }
+                    }
+                    for (const entry of data) {
+                        const row = $(`.tier[data-tier="${CSS.escape(entry.tier)}"] .tier-row`);
+                        if (!row) continue;
+                        for (const src of entry.images) {
+                            row.appendChild(makeTile(src));
+                        }
+                    }
+                } catch (err) {
+                    alert('JSONの読み込みに失敗しました: ' + err.message);
+                } finally {
+                    e.target.value = '';
+                }
+            });
+
+            document.addEventListener('dragstart', (e) => e.preventDefault());
+
+            // === 追加機能: 未配置へのファイルD&D, 次の英字で段を自動追加, 画像出力 ===
+
+            // 未配置エリアへのファイル ドラッグ&ドロップ追加
+            (function () {
+                const unranked = document.getElementById('unrankedRow');
+                if (!unranked) return;
+                unranked.addEventListener('dragover', (ev) => {
+                    ev.preventDefault();
+                });
+                unranked.addEventListener('drop', (ev) => {
+                    ev.preventDefault();
+                    const files = ev.dataTransfer && ev.dataTransfer.files;
+                    if (files && files.length) {
+                        addImagesToPool(files);
+                    }
+                });
+            })();
+
+            // 次のアルファベット段名を返す（既存 A〜Z のうち最大の次）。Z の次は Z+1, Z+2...
+            function getNextTierLetter() {
+                const names = $$('.tier')
+                    .map((t) => t.dataset.tier)
+                    .filter((n) => n && n !== 'UNRANKED');
+                const letters = names.filter((n) => n.length === 1 && n >= 'A' && n <= 'Z');
+                let next = 'A';
+                if (letters.length) {
+                    const maxChar = letters.reduce((a, b) => (a > b ? a : b));
+                    if (maxChar === 'Z') {
+                        const zExtras = names
+                            .filter((n) => n.startsWith('Z+'))
+                            .map((n) => parseInt(n.slice(2), 10))
+                            .filter(Number.isFinite);
+                        const maxNum = zExtras.length ? Math.max(...zExtras) : 0;
+                        next = 'Z+' + (maxNum + 1);
+                    } else {
+                        next = String.fromCharCode(maxChar.charCodeAt(0) + 1);
+                    }
+                } else {
+                    next = 'A';
+                }
+                return next;
+            }
+
+            // 段の追加は最大3つまで (E, F, G 固定)
+            function getNextTierLetterLimited() {
+                const allowed = ['E', 'F', 'G'];
+                const existing = new Set($$('.tier').map((t) => t.dataset.tier));
+                for (const c of allowed) {
+                    if (!existing.has(c)) return c;
+                }
+                return null; // 既に E,F,G が存在
+            }
+
+            // 「段を追加」クリック: E→F→G の順で最大3つまで
+            document.getElementById('addTierBtn').addEventListener(
+                'click',
+                (ev) => {
+                    ev.stopPropagation();
+                    ev.preventDefault();
+
+                    const name = getNextTierLetterLimited();
+                    if (!name) {
+                        alert('追加できる段は E, F, G の3つまでです');
+                        return;
+                    }
+
+                    const tier = document.createElement('div');
+                    tier.className = 'tier';
+                    tier.dataset.tier = name;
+                    tier.innerHTML = `
+    <div class="tier-label">${name}</div>
+    <div class="tier-row droppable" aria-label="${name}"></div>
+  `;
+                    document.getElementById('tiers').insertBefore(tier, document.querySelector('.pool'));
+                },
+                true
+            );
+
+            // ---- 画像出力（PNG）----
+            function colorOf(el) {
+                const cs = getComputedStyle(el);
+                return cs.backgroundColor || '#2a3142';
+            }
+
+            async function exportImage() {
+                const tierEls = $$('.tier').filter((t) => t.dataset.tier !== 'UNRANKED');
+                const tileSize = 96;
+                const gap = 10;
+                const pad = 10;
+                const labelW = 84;
+                const rowGap = 8;
+
+                const tiers = await Promise.all(
+                    tierEls.map(async (tier) => {
+                        const labelEl = tier.querySelector('.tier-label');
+                        const label = ((labelEl && labelEl.textContent) || '').trim();
+                        const labelBg = colorOf(labelEl || tier);
+                        const imgs = $$('img', tier).map((img) => img.src);
+                        const bitmaps = [];
+                        for (const src of imgs) {
+                            try {
+                                const resp = await fetch(src);
+                                const blob = await resp.blob();
+                                bitmaps.push(await createImageBitmap(blob));
+                            } catch (e) {}
+                        }
+                        return { label, labelBg, bitmaps };
+                    })
+                );
+
+                const widths = tiers.map((t) => labelW + pad * 2 + (t.bitmaps.length ? t.bitmaps.length * tileSize + (t.bitmaps.length - 1) * gap : 0));
+                const cw = Math.max(320, ...widths);
+                const rowH = pad * 2 + Math.max(tileSize, 96);
+                const ch = tiers.length * rowH + (tiers.length - 1) * rowGap;
+
+                const canvas = document.createElement('canvas');
+                canvas.width = cw;
+                canvas.height = ch;
+                const ctx = canvas.getContext('2d');
+
+                ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg') || '#0f1115';
+                ctx.fillRect(0, 0, cw, ch);
+
+                let y = 0;
+                for (const t of tiers) {
+                    ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--panel') || '#151923';
+                    ctx.fillRect(0, y, cw, rowH);
+                    ctx.fillStyle = t.labelBg || '#2a3142';
+                    ctx.fillRect(0, y, labelW, rowH);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 22px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(t.label, labelW / 2, y + rowH / 2);
+                    let x = labelW + pad;
+                    for (const bmp of t.bitmaps) {
+                        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--tile') || '#1b2030';
+                        ctx.fillRect(x, y + pad, tileSize, tileSize);
+                        ctx.drawImage(bmp, x, y + pad, tileSize, tileSize);
+                        x += tileSize + gap;
+                    }
+                    y += rowH + rowGap;
+                }
+
+                canvas.toBlob((blob) => {
+                    if (!blob) {
+                        alert('画像の生成に失敗しました');
+                        return;
+                    }
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'tierboard.png';
+                    a.click();
+                    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+                }, 'image/png');
+            }
+
+            document.getElementById('exportImageBtn').addEventListener('click', exportImage);
+        </script>
+    </body>
+</html>
