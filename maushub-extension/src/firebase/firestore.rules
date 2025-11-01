@@ -1,0 +1,26 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ユーザープロフィール
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // PokePasteデータ
+    match /pokepastes/{pokepasteId} {
+      // 作成: 認証されたユーザーが自分のuserIdでドキュメントを作成
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      // 読み取り・更新・削除: 認証されたユーザーが自分のデータのみアクセス可能
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+    
+    // 設定ドキュメント（許可されたユーザーリストなど）
+    match /config/{document} {
+      // 読み取りのみ許可（認証が必要）
+      allow read: if request.auth != null;
+      // 書き込みは管理者のみ（必要に応じて管理者UID制限を追加）
+      allow write: if false; // 管理者コンソールからのみ変更可能
+    }
+  }
+}
