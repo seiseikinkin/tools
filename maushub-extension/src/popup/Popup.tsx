@@ -7,6 +7,8 @@ interface PokePasteItem {
     title: string;
     timestamp: number;
     id: string;
+    author?: string;
+    pokemonNames?: string[];
 }
 
 const Popup: React.FC = () => {
@@ -471,6 +473,29 @@ const Popup: React.FC = () => {
                                                 >
                                                     {item.title}
                                                 </div>
+                                                {item.author && (
+                                                    <div
+                                                        style={{
+                                                            fontSize: "9px",
+                                                            color: darkTheme.secondary,
+                                                            marginBottom: "2px",
+                                                        }}
+                                                    >
+                                                        👤 by {item.author}
+                                                    </div>
+                                                )}
+                                                {item.pokemonNames && item.pokemonNames.length > 0 && (
+                                                    <div
+                                                        style={{
+                                                            fontSize: "9px",
+                                                            color: darkTheme.warning,
+                                                            marginBottom: "3px",
+                                                            wordBreak: "break-word",
+                                                        }}
+                                                    >
+                                                        🎮 {item.pokemonNames.join(", ")}
+                                                    </div>
+                                                )}
                                                 <div
                                                     style={{
                                                         fontSize: "9px",

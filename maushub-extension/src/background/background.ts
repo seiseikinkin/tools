@@ -1,6 +1,7 @@
 // Chrome拡張のバックグラウンドスクリプト
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, getDocs, query, where, orderBy } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 // Firebase設定
 const firebaseConfig = {
@@ -15,6 +16,7 @@ const firebaseConfig = {
 // Firebase初期化
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 let isInitialized = false;
 
@@ -54,10 +56,28 @@ interface PokePasteItem {
     title: string;
     timestamp: number;
     id: string;
+    author?: string;
+    pokemonNames?: string[];
+}
+
+interface UserProfile {
+    uid: string;
+    email: string;
+    displayName: string;
+    photoURL?: string;
+    createdAt: number;
+    lastLoginAt: number;
+}
+
+interface ExtensionMessage {
+    action?: string;
+    type?: string;
+    user?: UserProfile;
+    error?: string;
 }
 
 // 認証成功時の処理
-async function handleAuthSuccess(user: any, sendResponse: (response?: unknown) => void) {
+async function handleAuthSuccess(user: UserProfile, sendResponse: (response?: unknown) => void) {
     console.log("handleAuthSuccess called with user:", user);
     try {
         const userProfile = {
@@ -90,7 +110,7 @@ async function handleAuthSuccess(user: any, sendResponse: (response?: unknown) =
 }
 
 // メッセージを受信したときの処理
-chrome.runtime.onMessage.addListener((request: any, sender: chrome.runtime.MessageSender, sendResponse: (response?: unknown) => void) => {
+chrome.runtime.onMessage.addListener((request: ExtensionMessage, sender: chrome.runtime.MessageSender, sendResponse: (response?: unknown) => void) => {
     console.log("Background received message:", request, "from:", sender);
 
     // 初期化されていない場合は初期化を実行
@@ -180,7 +200,34 @@ async function handleAddPokePaste(sendResponse: (response?: unknown) => void) {
             return;
         }
 
-        // 現在のユーザーを取得
+        // Firebase Authenticationからユーザーを取得
+        if (!auth.currentUser) {
+            // Chrome拡張機能のストレージからユーザー情報を取得してFirebase Authに復元
+            const storedUser = await getCurrentUser();
+            if (!storedUser) {
+                sendResponse({
+                    success: false,
+                    error: "User not authenticated. Please login first.",
+                });
+                return;
+            }
+
+            // カスタムトークンを使用してFirebase Authにサインイン
+            // 注意: 本番環境では、サーバーサイドでカスタムトークンを生成する必要があります
+            try {
+                // ここでは、ユーザーIDをそのまま使用（開発用）
+                // 本番環境では適切なカスタムトークン認証を実装してください
+                console.log("Firebase Auth user not found, using stored user:", storedUser.uid);
+            } catch (error) {
+                console.error("Firebase Auth error:", error);
+                sendResponse({
+                    success: false,
+                    error: "Authentication error. Please login again.",
+                });
+                return;
+            }
+        }
+
         const currentUser = await getCurrentUser();
         if (!currentUser) {
             sendResponse({
@@ -190,12 +237,43 @@ async function handleAddPokePaste(sendResponse: (response?: unknown) => void) {
             return;
         }
 
+        // コンテンツスクリプトからPokePaste情報を取得
+        let pokePasteInfo = { author: null, pokemonNames: [] };
+        try {
+            console.log("Sending message to content script...");
+            const response = await chrome.tabs.sendMessage(activeTab.id!, { action: "extractPokePasteInfo" });
+            console.log("Content script response:", response);
+            
+            if (response) {
+                pokePasteInfo = response;
+                console.log("Extracted PokePaste info:", pokePasteInfo);
+                console.log("Author:", pokePasteInfo.author);
+                console.log("Pokemon count:", pokePasteInfo.pokemonNames?.length || 0);
+
+                // ハイフンを含むポケモン名のデバッグ情報
+                if (pokePasteInfo.pokemonNames && pokePasteInfo.pokemonNames.length > 0) {
+                    pokePasteInfo.pokemonNames.forEach((name: string, index: number) => {
+                        console.log(`Pokemon ${index + 1}: "${name}" (contains hyphen: ${name.includes("-")})`);
+                    });
+                } else {
+                    console.warn("No Pokemon names extracted!");
+                }
+            } else {
+                console.warn("No response from content script");
+            }
+        } catch (error) {
+            console.error("Error communicating with content script:", error);
+            console.error("Error details:", error instanceof Error ? error.message : "Unknown error");
+        }
+
         // 新しいアイテムを作成
         const newItem = {
             url: activeTab.url,
             title: activeTab.title || "No title",
             timestamp: Date.now(),
             userId: currentUser.uid,
+            author: pokePasteInfo.author,
+            pokemonNames: pokePasteInfo.pokemonNames,
         };
 
         try {
@@ -265,6 +343,8 @@ async function handleGetPokePasteList(sendResponse: (response?: unknown) => void
                 url: data.url as string,
                 title: data.title as string,
                 timestamp: data.timestamp as number,
+                author: (data.author as string) || undefined,
+                pokemonNames: (data.pokemonNames as string[]) || undefined,
             });
         });
 

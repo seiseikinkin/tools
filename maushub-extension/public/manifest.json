@@ -33,6 +33,11 @@
             "matches": ["https://hayatosum.github.io/*"],
             "js": ["content.js"],
             "run_at": "document_end"
+        },
+        {
+            "matches": ["https://pokepast.es/*"],
+            "js": ["pokepaste-extractor.js"],
+            "run_at": "document_end"
         }
     ]
 }
